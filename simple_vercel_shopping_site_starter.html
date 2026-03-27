@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f5f5;
+    }
+    header {
+      background: #111;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      background: #222;
+      padding: 0.5rem;
+    }
+    nav button {
+      background: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .container {
+      padding: 1rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .card button {
+      margin-top: 0.5rem;
+      width: 100%;
+      padding: 0.5rem;
+      border: none;
+      background: black;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #111;
+      color: white;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Shop</h1>
+    <p>Simple Store Starter</p>
+  </header>
+
+  <nav>
+    <button onclick="filterProducts('all')">All</button>
+    <button onclick="filterProducts('clothing')">Clothing</button>
+    <button onclick="filterProducts('tech')">Tech</button>
+    <button onclick="filterProducts('other')">Other</button>
+  </nav>
+
+  <div class="container">
+    <div class="grid" id="productGrid"></div>
+  </div>
+
+  <footer>
+    <p>© 2026 My Shop</p>
+  </footer>
+
+  <script>
+    const products = [
+      { name: "T-Shirt", category: "clothing", price: "$20", img: "https://via.placeholder.com/200" },
+      { name: "Laptop", category: "tech", price: "$999", img: "https://via.placeholder.com/200" },
+      { name: "Headphones", category: "tech", price: "$50", img: "https://via.placeholder.com/200" },
+      { name: "Jacket", category: "clothing", price: "$60", img: "https://via.placeholder.com/200" },
+      { name: "Random Item", category: "other", price: "$10", img: "https://via.placeholder.com/200" }
+    ];
+
+    const grid = document.getElementById('productGrid');
+
+    function displayProducts(list) {
+      grid.innerHTML = "";
+      list.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${p.img}" />
+          <h3>${p.name}</h3>
+          <p>${p.price}</p>
+          <button onclick="alert('Added to cart (placeholder)')">Add to Cart</button>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterProducts(category) {
+      if (category === 'all') {
+        displayProducts(products);
+      } else {
+        displayProducts(products.filter(p => p.category === category));
+      }
+    }
+
+    displayProducts(products);
+  </script>
+</body>
+</html>
