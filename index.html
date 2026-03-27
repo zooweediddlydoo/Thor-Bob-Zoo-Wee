@@ -52,11 +52,14 @@
     }
     .container {
       padding: 1rem 2rem;
+      display: flex;
+      gap: 2rem;
     }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 1.5rem;
+      flex: 1;
     }
     .card {
       background: white;
@@ -103,7 +106,7 @@
       background: white;
       padding: 2rem;
       border-radius: 12px;
-      max-width: 450px;
+      max-width: 500px;
       width: 100%;
       text-align: center;
       position: relative;
@@ -114,25 +117,21 @@
       border-radius: 12px;
       margin-bottom: 1rem;
     }
-    .close-btn {
-      background: #dc3545;
-      color: white;
+    .close-btn, .add-cart {
       border: none;
       padding: 0.5rem 1rem;
       cursor: pointer;
       border-radius: 8px;
-      margin-top: 1rem;
       font-weight: bold;
+      margin-top: 1rem;
+    }
+    .close-btn {
+      background: #dc3545;
+      color: white;
     }
     .add-cart {
       background: #198754;
       color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      margin-top: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
     }
     .modal-content select, .modal-content input {
       margin-top: 0.5rem;
@@ -140,6 +139,35 @@
       width: 80%;
       border-radius: 8px;
       border: 1px solid #ccc;
+    }
+    /* Cart Sidebar */
+    .cart {
+      width: 300px;
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 80px;
+      height: fit-content;
+    }
+    .cart h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      align-items: center;
+    }
+    .cart-item button {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      cursor: pointer;
     }
     footer {
       text-align: center;
@@ -167,6 +195,11 @@
 
   <div class="container">
     <div class="grid" id="productGrid"></div>
+    <div class="cart">
+      <h2>Cart</h2>
+      <div id="cartItems"></div>
+      <p id="cartTotal"><strong>Total:</strong> $0.00</p>
+    </div>
   </div>
 
   <div class="modal" id="productModal">
@@ -178,7 +211,7 @@
       <p id="modalShipping">Shipping: $4.99</p>
       <div id="sizeSelectContainer"></div>
       <input type="number" id="modalQuantity" min="1" value="1"/>
-      <button class="add-cart" onclick="alert('Added to cart (placeholder)')">Add to Cart</button>
+      <button class="add-cart" onclick="addToCart()">Add to Cart</button>
       <button class="close-btn" onclick="closeModal()">Close</button>
     </div>
   </div>
@@ -189,51 +222,89 @@
 
   <script>
     const products = [
+      // Set 1
       {
-        name: "Posture-Correcting Wearable",
+        name: "AlignMate Posture Sensor",
         category: "health",
-        price: "$39.99",
-        img: "https://via.placeholder.com/200?text=Posture+Wearable",
-        desc: "Minimalist shoulder sensors designed to improve posture in 14 days without being noticed.",
+        price: 39.99,
+        img: "https://via.placeholder.com/200?text=AlignMate",
+        desc: "Discrete shoulder sensors that vibrate to remind you to straighten up, helping reduce back pain and improve confidence within 14 days.",
         sizes: ["S","M","L"]
       },
       {
-        name: "Pet Anxiety Relief Toy",
+        name: "CalmCompanion Pet Wrap",
         category: "pets",
-        price: "$24.99",
-        img: "https://via.placeholder.com/200?text=Pet+Toy",
-        desc: "Heartbeat plush or anxiety wrap for calming your pet while you're away."
+        price: 24.99,
+        img: "https://via.placeholder.com/200?text=CalmCompanion",
+        desc: "Weighted anxiety wrap for dogs and cats that mimics a heartbeat to soothe stress while you're away."
       },
       {
-        name: "Car Interior Organizer",
+        name: "AutoTidy Organizer",
         category: "car",
-        price: "$19.99",
-        img: "https://via.placeholder.com/200?text=Car+Organizer",
-        desc: "Hidden storage and gap fillers for a clutter-free and convenient car interior."
+        price: 19.99,
+        img: "https://via.placeholder.com/200?text=AutoTidy",
+        desc: "Compact multi-compartment organizer that fits gaps and cup holders, keeping your car interior neat and accessible."
       },
       {
-        name: "Shower Convenience Foot Scrubber",
+        name: "SudsMaster Foot Scrubber",
         category: "home",
-        price: "$14.99",
-        img: "https://via.placeholder.com/200?text=Shower+Scrubber",
-        desc: "Upgrade your shower experience with easy-to-use scrubbers and anti-slip accessories."
+        price: 14.99,
+        img: "https://via.placeholder.com/200?text=SudsMaster",
+        desc: "Ergonomic shower foot scrubber with anti-slip suction for effortless cleaning and spa-like relaxation."
       },
       {
-        name: "LED Functional Lighting",
+        name: "GlowPath LED Motion Light",
         category: "home",
-        price: "$29.99",
-        img: "https://via.placeholder.com/200?text=LED+Lighting",
-        desc: "Motion-sensor lights for closets, under-bed, or night safety."
+        price: 29.99,
+        img: "https://via.placeholder.com/200?text=GlowPath",
+        desc: "Motion-activated LED strips for closets, hallways, or under furniture, ensuring safety and ambient lighting."
       },
       {
-        name: "Kitchen Micro Tool Set",
+        name: "ChefEase Micro Tool Kit",
         category: "kitchen",
-        price: "$22.99",
-        img: "https://via.placeholder.com/200?text=Kitchen+Tools",
-        desc: "Smart peelers, oil sprayers, and sealing clips for faster cooking convenience."
+        price: 22.99,
+        img: "https://via.placeholder.com/200?text=ChefEase",
+        desc: "Multi-functional kitchen set including ergonomic peelers, oil sprayers, and sealing clips to speed up prep work."
+      },
+      // Set 2
+      {
+        name: "NeckRelief Massager",
+        category: "health",
+        price: 49.99,
+        img: "https://via.placeholder.com/200?text=NeckRelief",
+        desc: "Portable neck and shoulder massager with heat function that relaxes stiff muscles and improves posture."
+      },
+      {
+        name: "FurFriend Grooming Kit",
+        category: "pets",
+        price: 34.99,
+        img: "https://via.placeholder.com/200?text=FurFriend",
+        desc: "Complete grooming kit including brushes, nail clippers, and deshedding tools to maintain your pet's coat healthy and shiny."
+      },
+      {
+        name: "SmartGrip Cup Holder",
+        category: "car",
+        price: 17.99,
+        img: "https://via.placeholder.com/200?text=SmartGrip",
+        desc: "Expandable cup holder with anti-slip lining that securely holds beverages while driving."
+      },
+      {
+        name: "EcoFoam Bath Pillow",
+        category: "home",
+        price: 27.99,
+        img: "https://via.placeholder.com/200?text=EcoFoam",
+        desc: "Memory foam bath pillow with suction pads that conform to your neck and back for ultimate relaxation in the tub."
+      },
+      {
+        name: "KitchenWiz Smart Spatula",
+        category: "kitchen",
+        price: 18.99,
+        img: "https://via.placeholder.com/200?text=KitchenWiz",
+        desc: "Heat-resistant spatula with built-in measuring markings and ergonomic grip, perfect for precise cooking."
       }
     ];
 
+    const cart = [];
     const grid = document.getElementById('productGrid');
     const modal = document.getElementById('productModal');
     const modalImg = document.getElementById('modalImg');
@@ -243,6 +314,9 @@
     const modalShipping = document.getElementById('modalShipping');
     const sizeSelectContainer = document.getElementById('sizeSelectContainer');
     const modalQuantity = document.getElementById('modalQuantity');
+    const cartItemsDiv = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    let currentProduct = null;
 
     function displayProducts(list) {
       grid.innerHTML = "";
@@ -252,7 +326,7 @@
         card.innerHTML = `
           <img src="${p.img}" />
           <h3>${p.name}</h3>
-          <p>${p.price}</p>
+          <p>$${p.price.toFixed(2)}</p>
         `;
         card.addEventListener('click', () => openModal(p));
         grid.appendChild(card);
@@ -268,11 +342,12 @@
     }
 
     function openModal(product) {
+      currentProduct = product;
       modal.style.display = 'flex';
       modalImg.src = product.img;
       modalName.textContent = product.name;
       modalDesc.textContent = product.desc;
-      modalPrice.textContent = "Price: " + product.price;
+      modalPrice.textContent = "Price: $" + product.price.toFixed(2);
       modalQuantity.value = 1;
 
       if(product.sizes) {
@@ -281,6 +356,48 @@
         sizeSelectContainer.innerHTML = "";
       }
     }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    function addToCart() {
+      const qty = parseInt(modalQuantity.value);
+      const size = document.getElementById('modalSize') ? document.getElementById('modalSize').value : null;
+      const cartItem = {...currentProduct, qty, size};
+      cart.push(cartItem);
+      updateCart();
+      closeModal();
+    }
+
+    function updateCart() {
+      cartItemsDiv.innerHTML = "";
+      let total = 0;
+      cart.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+        const sizeText = item.size ? ` (${item.size})` : "";
+        itemDiv.innerHTML = `<span>${item.name}${sizeText} x${item.qty}</span> 
+                             <button onclick="removeCartItem(${index})">X</button>`;
+        cartItemsDiv.appendChild(itemDiv);
+        total += item.price * item.qty;
+      });
+      cartTotal.innerHTML = "<strong>Total:</strong> $" + total.toFixed(2);
+    }
+
+    function removeCartItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    modal.addEventListener('click', e => {
+      if(e.target === modal) closeModal();
+    });
+
+    displayProducts(products);
+  </script>
+</body>
+</html>
 
     function closeModal() {
       modal.style.display = 'none';
