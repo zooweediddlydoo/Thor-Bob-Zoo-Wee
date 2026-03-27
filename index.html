@@ -3,55 +3,90 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Shop</title>
+  <title>DailyFix Dropshipping</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      background: #f5f5f5;
+      background: #f0f4f8;
+      color: #333;
     }
     header {
-      background: #111;
+      background: #0d6efd;
       color: white;
-      padding: 1rem;
+      padding: 1.5rem;
       text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    header p {
+      margin: 0.3rem 0 0;
+      font-size: 1rem;
     }
     nav {
       display: flex;
       justify-content: center;
       gap: 1rem;
-      background: #222;
+      background: #ffffff;
       padding: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
     nav button {
-      background: white;
+      background: #0d6efd;
       border: none;
+      color: white;
       padding: 0.5rem 1rem;
       cursor: pointer;
-      border-radius: 6px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    nav button:hover {
+      background: #0b5ed7;
     }
     .container {
-      padding: 1rem;
+      padding: 1rem 2rem;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
     }
     .card {
       background: white;
       padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
     .card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-6px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.12);
     }
     .card img {
       width: 100%;
-      border-radius: 8px;
+      border-radius: 10px;
+      margin-bottom: 0.8rem;
+    }
+    .card h3 {
+      margin: 0.5rem 0 0.3rem;
+      font-size: 1.1rem;
+    }
+    .card p {
+      margin: 0;
+      font-weight: bold;
+      color: #0d6efd;
     }
     .modal {
       display: none;
@@ -62,48 +97,54 @@
       justify-content: center;
       align-items: center;
       z-index: 1000;
+      padding: 1rem;
     }
     .modal-content {
       background: white;
       padding: 2rem;
-      border-radius: 10px;
-      max-width: 400px;
-      width: 90%;
+      border-radius: 12px;
+      max-width: 450px;
+      width: 100%;
       text-align: center;
+      position: relative;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
     }
     .modal-content img {
       width: 100%;
-      border-radius: 8px;
+      border-radius: 12px;
+      margin-bottom: 1rem;
     }
     .close-btn {
-      background: red;
+      background: #dc3545;
       color: white;
       border: none;
       padding: 0.5rem 1rem;
       cursor: pointer;
-      border-radius: 6px;
+      border-radius: 8px;
       margin-top: 1rem;
+      font-weight: bold;
+    }
+    .add-cart {
+      background: #198754;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      margin-top: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
     }
     .modal-content select, .modal-content input {
       margin-top: 0.5rem;
       padding: 0.5rem;
       width: 80%;
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid #ccc;
-    }
-    .add-cart {
-      background: black;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      margin-top: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
     }
     footer {
       text-align: center;
       padding: 1rem;
-      background: #111;
+      background: #0d6efd;
       color: white;
       margin-top: 2rem;
     }
@@ -111,28 +152,30 @@
 </head>
 <body>
   <header>
-    <h1>My Shop</h1>
-    <p>Simple Store Starter</p>
+    <h1>DailyFix Dropshipping</h1>
+    <p>Trendy Products Ready for Your Store</p>
   </header>
 
   <nav>
     <button onclick="filterProducts('all')">All</button>
-    <button onclick="filterProducts('clothing')">Clothing</button>
-    <button onclick="filterProducts('tech')">Tech</button>
-    <button onclick="filterProducts('other')">Other</button>
+    <button onclick="filterProducts('health')">Health</button>
+    <button onclick="filterProducts('pets')">Pets</button>
+    <button onclick="filterProducts('car')">Car</button>
+    <button onclick="filterProducts('home')">Home</button>
+    <button onclick="filterProducts('kitchen')">Kitchen</button>
   </nav>
 
   <div class="container">
     <div class="grid" id="productGrid"></div>
   </div>
 
-  <!-- Modal for product details -->
   <div class="modal" id="productModal">
     <div class="modal-content" id="modalContent">
       <img id="modalImg" src="" />
       <h2 id="modalName"></h2>
       <p id="modalDesc"></p>
       <p id="modalPrice"></p>
+      <p id="modalShipping">Shipping: $4.99</p>
       <div id="sizeSelectContainer"></div>
       <input type="number" id="modalQuantity" min="1" value="1"/>
       <button class="add-cart" onclick="alert('Added to cart (placeholder)')">Add to Cart</button>
@@ -141,20 +184,54 @@
   </div>
 
   <footer>
-    <p>© 2026 My Shop</p>
+    <p>© 2026 DailyFix Dropshipping</p>
   </footer>
 
   <script>
     const products = [
-      { name: "T-Shirt", category: "clothing", price: "$20", img: "https://via.placeholder.com/200", desc: "Comfortable cotton T-shirt", sizes: ["S","M","L","XL"] },
-      { name: "Jacket", category: "clothing", price: "$60", img: "https://via.placeholder.com/200", desc: "Warm winter jacket", sizes: ["S","M","L","XL"] },
-      { name: "Sneakers", category: "clothing", price: "$80", img: "https://via.placeholder.com/200", desc: "Stylish sneakers", sizes: ["7","8","9","10","11"] },
-      { name: "Laptop", category: "tech", price: "$999", img: "https://via.placeholder.com/200", desc: "Powerful laptop for work and gaming" },
-      { name: "Headphones", category: "tech", price: "$50", img: "https://via.placeholder.com/200", desc: "High-quality over-ear headphones" },
-      { name: "Smartwatch", category: "tech", price: "$150", img: "https://via.placeholder.com/200", desc: "Track your fitness and notifications" },
-      { name: "Coffee Mug", category: "other", price: "$12", img: "https://via.placeholder.com/200", desc: "Ceramic mug for your morning coffee" },
-      { name: "Notebook", category: "other", price: "$8", img: "https://via.placeholder.com/200", desc: "100-page lined notebook" },
-      { name: "Water Bottle", category: "other", price: "$15", img: "https://via.placeholder.com/200", desc: "Reusable stainless steel bottle" }
+      {
+        name: "Posture-Correcting Wearable",
+        category: "health",
+        price: "$39.99",
+        img: "https://via.placeholder.com/200?text=Posture+Wearable",
+        desc: "Minimalist shoulder sensors designed to improve posture in 14 days without being noticed.",
+        sizes: ["S","M","L"]
+      },
+      {
+        name: "Pet Anxiety Relief Toy",
+        category: "pets",
+        price: "$24.99",
+        img: "https://via.placeholder.com/200?text=Pet+Toy",
+        desc: "Heartbeat plush or anxiety wrap for calming your pet while you're away."
+      },
+      {
+        name: "Car Interior Organizer",
+        category: "car",
+        price: "$19.99",
+        img: "https://via.placeholder.com/200?text=Car+Organizer",
+        desc: "Hidden storage and gap fillers for a clutter-free and convenient car interior."
+      },
+      {
+        name: "Shower Convenience Foot Scrubber",
+        category: "home",
+        price: "$14.99",
+        img: "https://via.placeholder.com/200?text=Shower+Scrubber",
+        desc: "Upgrade your shower experience with easy-to-use scrubbers and anti-slip accessories."
+      },
+      {
+        name: "LED Functional Lighting",
+        category: "home",
+        price: "$29.99",
+        img: "https://via.placeholder.com/200?text=LED+Lighting",
+        desc: "Motion-sensor lights for closets, under-bed, or night safety."
+      },
+      {
+        name: "Kitchen Micro Tool Set",
+        category: "kitchen",
+        price: "$22.99",
+        img: "https://via.placeholder.com/200?text=Kitchen+Tools",
+        desc: "Smart peelers, oil sprayers, and sealing clips for faster cooking convenience."
+      }
     ];
 
     const grid = document.getElementById('productGrid');
@@ -163,12 +240,13 @@
     const modalName = document.getElementById('modalName');
     const modalDesc = document.getElementById('modalDesc');
     const modalPrice = document.getElementById('modalPrice');
+    const modalShipping = document.getElementById('modalShipping');
     const sizeSelectContainer = document.getElementById('sizeSelectContainer');
     const modalQuantity = document.getElementById('modalQuantity');
 
     function displayProducts(list) {
       grid.innerHTML = "";
-      list.forEach((p, index) => {
+      list.forEach(p => {
         const card = document.createElement('div');
         card.className = 'card';
         card.innerHTML = `
@@ -182,7 +260,7 @@
     }
 
     function filterProducts(category) {
-      if (category === 'all') {
+      if(category === 'all') {
         displayProducts(products);
       } else {
         displayProducts(products.filter(p => p.category === category));
@@ -194,10 +272,10 @@
       modalImg.src = product.img;
       modalName.textContent = product.name;
       modalDesc.textContent = product.desc;
-      modalPrice.textContent = product.price;
+      modalPrice.textContent = "Price: " + product.price;
       modalQuantity.value = 1;
 
-      if(product.sizes){
+      if(product.sizes) {
         sizeSelectContainer.innerHTML = `<select id="modalSize">${product.sizes.map(s => `<option>${s}</option>`).join('')}</select>`;
       } else {
         sizeSelectContainer.innerHTML = "";
@@ -208,7 +286,6 @@
       modal.style.display = 'none';
     }
 
-    // Close modal if clicking outside content
     modal.addEventListener('click', e => {
       if(e.target === modal) closeModal();
     });
