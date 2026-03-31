@@ -13,6 +13,415 @@
             --border: #333333;
             --font-main: 'Lora', serif;
             --font-heading: 'Playfair Display', serif;
+            /* 3D Button Variables */
+            --btn-shadow: 0 4px 0px var(--text);
+            --btn-shadow-hover: 0 8px 0px var(--text);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+        }
+
+        /* --- THE 3D DYNAMIC BUTTONS --- */
+        button, .cat-card, .size-tile, .thumb-item, .back-btn-box {
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            border: 2px solid var(--text);
+            border-radius: 10px;
+            background: white;
+            font-family: var(--font-main);
+            box-shadow: var(--btn-shadow);
+            position: relative;
+            top: 0;
+        }
+
+        button:hover, .cat-card:hover, .size-tile:hover, .thumb-item:hover, .back-btn-box:hover {
+            top: -4px;
+            box-shadow: var(--btn-shadow-hover);
+        }
+
+        button:active, .cat-card:active {
+            top: 2px;
+            box-shadow: 0 2px 0px var(--text);
+        }
+
+        /* Nav */
+        nav {
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--text);
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-style: italic;
+        }
+
+        .nav-links button {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+
+        /* Home Page Split Layout */
+        .home-hero {
+            display: flex;
+            min-height: 70vh;
+            border-bottom: 2px solid var(--text);
+        }
+
+        .hero-side {
+            flex: 1;
+            padding: 5rem 10%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-left {
+            background-color: var(--accent);
+            border-right: 2px solid var(--text);
+        }
+
+        .hero-left h2 { font-family: var(--font-heading); margin-bottom: 1.5rem; font-size: 2.2rem; }
+        .hero-right h1 { font-family: var(--font-heading); font-size: 3.5rem; margin-bottom: 1rem; }
+
+        /* Categories */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 20px;
+        }
+
+        .cat-card {
+            padding: 60px 20px;
+            text-align: center;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        /* Shop Grid */
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .product-card { text-align: center; cursor: pointer; }
+
+        .img-box {
+            border: 2px solid var(--text);
+            border-radius: 12px;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+            margin-bottom: 15px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        .product-card:hover .img-box {
+            background: var(--accent);
+            transform: scale(1.02);
+        }
+
+        /* --- PRODUCT PAGE --- */
+        #product-page {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 2000;
+            display: none;
+            overflow-y: auto;
+            padding: 100px 5% 40px;
+        }
+
+        .back-btn-box {
+            display: inline-block;
+            padding: 8px 15px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .product-layout {
+            display: flex;
+            gap: 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-gallery { flex: 1.2; display: flex; gap: 20px; }
+        .thumb-column { display: flex; flex-direction: column; gap: 15px; }
+        .thumb-item { width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
+        .thumb-item.active { background: var(--text); color: white; }
+
+        .main-display {
+            flex: 1;
+            aspect-ratio: 1/1;
+            border: 2px solid var(--text);
+            border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10rem;
+            background: var(--accent);
+        }
+
+        .product-buying { flex: 0.8; }
+        .product-buying h1 { font-family: var(--font-heading); font-size: 3rem; }
+        .price-tag { font-size: 2rem; font-weight: bold; margin: 15px 0; }
+        
+        .size-grid { display: flex; flex-direction: column; gap: 12px; margin: 20px 0 30px; }
+        .size-tile { padding: 15px; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+        .size-tile span { opacity: 0.6; font-size: 0.85rem; font-weight: normal; }
+        .size-tile.selected { background: var(--text); color: white; border-color: var(--text); }
+
+        .add-btn {
+            width: 100%; padding: 20px;
+            background: var(--text); color: white;
+            text-transform: uppercase; letter-spacing: 2px; font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Cart Sidebar */
+        #cart-sidebar {
+            position: fixed;
+            right: -100%; top: 0;
+            width: 400px; height: 100%;
+            background: white;
+            border-left: 3px solid var(--text);
+            z-index: 3000;
+            padding: 40px;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #cart-sidebar.active { right: 0; }
+
+        .hidden { display: none; }
+        footer { border-top: 2px solid var(--text); padding: 60px; text-align: center; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo" onclick="showHome()">Thor & Pearl Co.</div>
+        <div class="nav-links">
+            <button onclick="showHome()">Home</button>
+            <button onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
+        </div>
+    </nav>
+
+    <div id="home-page">
+        <div class="home-hero">
+            <div class="hero-side hero-left">
+                <h2>Our Story</h2>
+                <p>It all began one humid July afternoon. Two best friends realized that while life was changing fast, the joy of a dog remains constant. With one of us already a dedicated dog parent, we decided that summer was the perfect time to make a big decision. We set out to create toys and treats that were as playful as our own pets. At a young age, we learned that the best businesses start with a simple, great idea and a lot of heart.</p>
+            </div>
+            <div class="hero-side hero-right">
+                <h1>Happy Tails & Cozy Details</h1>
+                <p>Hand-picked treasures for your favorite four-legged friends, curated with love and a touch of summer magic.</p>
+            </div>
+        </div>
+
+        <div class="category-grid">
+            <div class="cat-card" onclick="openCategory('Costumes')">Wag-worthy Costumes</div>
+            <div class="cat-card" onclick="openCategory('Snuggle')">Sweet Dreams & Snuggles</div>
+            <div class="cat-card" onclick="openCategory('Play')">Tough Toys & Fun</div>
+        </div>
+    </div>
+
+    <div id="shop-page" class="hidden">
+        <div style="padding: 4rem 2rem 2rem; text-align: center;">
+            <div class="back-btn-box" onclick="showHome()">← Back to Home</div>
+            <h2 id="category-title" style="font-family: var(--font-heading); font-size: 3rem; margin-top: 20px;">Category</h2>
+        </div>
+        <div class="products-container" id="product-list"></div>
+    </div>
+
+    <div id="product-page"></div>
+
+    <div id="cart-sidebar">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+            <h2 style="font-family: var(--font-heading); font-size: 2rem;">Your Basket</h2>
+            <span style="cursor:pointer; font-size:2rem;" onclick="toggleCart()">&times;</span>
+        </div>
+        <div id="cart-list" style="max-height: 70%; overflow-y:auto;"></div>
+        <div style="margin-top:20px; border-top:2px solid var(--text); padding-top:20px;">
+            <div style="display:flex; justify-content:space-between; font-weight:bold; margin-bottom:20px; font-size:1.2rem;">
+                <span>Total</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button class="add-btn" onclick="alert('Checking out...')">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <footer>
+        Est. 2024 • Built with Summer Spirit & Puppy Love.
+    </footer>
+
+    <script>
+        const inventory = [
+            { id: 1, cat: 'Costumes', name: 'The Fancy Hotdog', price: 28, icon: '🌭', desc: 'A boutique classic. Features plush buns and an adjustable velcro strap for a snug fit.', hasSizes: true },
+            { id: 2, cat: 'Costumes', name: 'Space Explorer', price: 35, icon: '🚀', desc: 'Metallic silver jumpsuit with a lightweight helmet. Perfect for out-of-this-world walks.', hasSizes: true },
+            { id: 3, cat: 'Snuggle', name: 'Deep Sleep Pillow', price: 45, icon: '☁️', desc: 'Orthopedic foam core wrapped in buttery-soft faux fur.', hasSizes: false },
+            { id: 4, cat: 'Snuggle', name: 'Calming Blanket', price: 30, icon: '🛋️', desc: 'Weighted micro-beads help soothe anxiety during storms or fireworks.', hasSizes: false },
+            { id: 5, cat: 'Play', name: 'Indestructible Bone', price: 15, icon: '🦴', desc: 'Natural rubber toy that survives even the most aggressive chewers.', hasSizes: false },
+            { id: 6, cat: 'Play', name: 'Ball Launcher', price: 20, icon: '🎾', desc: 'Ergonomic handle allows for long-distance fetch without arm fatigue.', hasSizes: false }
+        ];
+
+        let cart = [];
+        const viewIcons = ['📸', '🔍', '✨']; 
+
+        function showHome() {
+            document.getElementById('home-page').style.display = 'block';
+            document.getElementById('shop-page').classList.add('hidden');
+            document.getElementById('product-page').style.display = 'none';
+            window.scrollTo(0,0);
+        }
+
+        function openCategory(cat) {
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('shop-page').classList.remove('hidden');
+            document.getElementById('category-title').innerText = cat;
+            
+            const list = document.getElementById('product-list');
+            list.innerHTML = '';
+            
+            inventory.filter(p => p.cat === cat).forEach(p => {
+                list.innerHTML += `
+                    <div class="product-card" onclick="viewProduct(${p.id})">
+                        <div class="img-box">${p.icon}</div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.5rem;">${p.name}</h3>
+                        <p style="font-weight:bold;">$${p.price}.00</p>
+                    </div>
+                `;
+            });
+            window.scrollTo(0,0);
+        }
+
+        function viewProduct(id) {
+            const p = inventory.find(i => i.id === id);
+            const page = document.getElementById('product-page');
+            
+            let sizeHtml = p.hasSizes ? `
+                <label style="font-weight:bold; text-transform:uppercase; font-size:0.8rem; letter-spacing:1px;">Select Size & Fit</label>
+                <div class="size-grid">
+                    <div class="size-tile" onclick="selectSize(this)">Small <span>Fits: Yorkies, Chihuahuas</span></div>
+                    <div class="size-tile selected" onclick="selectSize(this)">Medium <span>Fits: Beagles, Corgis</span></div>
+                    <div class="size-tile" onclick="selectSize(this)">Large <span>Fits: Labs, Goldens</span></div>
+                    <div class="size-tile" onclick="selectSize(this)">Extra Large <span>Fits: Great Danes, Huskies</span></div>
+                </div>
+            ` : '';
+
+            page.innerHTML = `
+                <div class="back-btn-box" onclick="closeProductPage()">← Back to ${p.cat}</div>
+                <div class="product-layout">
+                    <div class="product-gallery">
+                        <div class="thumb-column">
+                            <div class="thumb-item active" onclick="swapView(this, '${p.icon}')">${p.icon}</div>
+                            <div class="thumb-item" onclick="swapView(this, '${viewIcons[0]}')">${viewIcons[0]}</div>
+                            <div class="thumb-item" onclick="swapView(this, '${viewIcons[1]}')">${viewIcons[1]}</div>
+                        </div>
+                        <div class="main-display" id="main-view">${p.icon}</div>
+                    </div>
+                    <div class="product-buying">
+                        <h1>${p.name}</h1>
+                        <div class="price-tag">$${p.price}.00</div>
+                        <p style="margin-bottom:30px; line-height:1.8; font-size:1.1rem;">${p.desc}</p>
+                        ${sizeHtml}
+                        <button class="add-btn" onclick="addToCart(${p.id})">Add to Basket</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('shop-page').classList.add('hidden');
+            page.style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function closeProductPage() {
+            document.getElementById('product-page').style.display = 'none';
+            document.getElementById('shop-page').classList.remove('hidden');
+        }
+
+        function swapView(el, icon) {
+            document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('main-view').innerText = icon;
+        }
+
+        function selectSize(el) {
+            document.querySelectorAll('.size-tile').forEach(t => t.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function addToCart(id) {
+            const p = inventory.find(i => i.id === id);
+            const size = p.hasSizes ? document.querySelector('.size-tile.selected').firstChild.textContent.trim() : 'Standard';
+            cart.push({ ...p, selectedSize: size });
+            updateCartUI();
+            toggleCart(true);
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const list = document.getElementById('cart-list');
+            let total = 0;
+            list.innerHTML = '';
+            cart.forEach(item => {
+                total += item.price;
+                list.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; padding:20px 0; border-bottom:1px solid #eee;">
+                        <div><strong style="font-size:1.1rem;">${item.name}</strong><br><small>Size: ${item.selectedSize}</small></div>
+                        <span style="font-weight:bold;">$${item.price}.00</span>
+                    </div>
+                `;
+            });
+            document.getElementById('cart-total').innerText = `$${total}.00`;
+        }
+
+        function toggleCart(forceOpen = false) {
+            const side = document.getElementById('cart-sidebar');
+            if (forceOpen) side.classList.add('active');
+            else side.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thor & Pearl Co. | Friendly Finds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --accent: #f9f9f9;
+            --border: #333333;
+            --font-main: 'Lora', serif;
+            --font-heading: 'Playfair Display', serif;
             --btn-shadow: 0 4px 0px var(--text);
             --btn-shadow-hover: 0 8px 0px var(--text);
             --sparkle-color: #ffd700;
