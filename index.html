@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thor & Pearl Co. | 2026 Summer Collection</title>
+    <title>Thor & Pearl Co. | 2026 Collection</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,7 +13,6 @@
             --border: #333333;
             --font-main: 'Lora', serif;
             --font-heading: 'Playfair Display', serif;
-            /* Extra Thick 3D Shadows */
             --btn-shadow: 0 8px 0px var(--text);
             --btn-shadow-hover: 0 12px 0px var(--text);
         }
@@ -27,7 +26,7 @@
             line-height: 1.6;
         }
 
-        /* --- THE DYNAMIC 3D TOOLKIT --- */
+        /* --- 3D INTERACTIVE BUTTONS --- */
         .btn-3d, .cat-card, .size-tile, .pay-option, .back-btn-box {
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -43,6 +42,7 @@
             justify-content: center;
             text-decoration: none;
             color: var(--text);
+            padding: 15px 30px;
         }
 
         .btn-3d:hover, .cat-card:hover, .size-tile:hover, .pay-option:hover, .back-btn-box:hover {
@@ -50,25 +50,28 @@
             box-shadow: var(--btn-shadow-hover);
         }
 
-        .btn-3d:active, .cat-card:active {
+        .btn-3d:active {
             top: 4px;
             box-shadow: 0 2px 0px var(--text);
         }
 
-        /* --- SPARKLE ANIMATION --- */
-        .sparkle-item::after {
-            content: '✨';
+        /* --- DYNAMIC SPRING SALE ARROW --- */
+        .sale-pointer {
             position: absolute;
-            top: -15px;
-            right: -15px;
-            font-size: 2rem;
-            animation: float-sparkle 1.5s infinite ease-in-out;
-            pointer-events: none;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-heading);
+            font-weight: bold;
+            color: var(--text);
+            animation: bounce-arrow 1.2s infinite;
+            white-space: nowrap;
+            font-size: 1.1rem;
         }
 
-        @keyframes float-sparkle {
-            0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
-            50% { transform: translateY(-10px) scale(1.3); opacity: 0.5; }
+        @keyframes bounce-arrow {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, -15px); }
         }
 
         /* Navigation */
@@ -85,103 +88,82 @@
         }
 
         .logo { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 700; font-style: italic; cursor: pointer; }
-        .nav-btns { display: flex; gap: 20px; }
-        .nav-btns button { padding: 12px 25px; font-size: 1rem; }
-
+        
         .banner {
             background: var(--text);
             color: white;
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             font-family: var(--font-heading);
-            font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
         }
 
-        /* Page Layouts */
+        /* Views */
         .view-section { display: none; padding: 40px 5%; min-height: 80vh; }
         .active { display: block; }
 
-        /* Home Hero */
-        .hero { text-align: center; padding: 80px 0; background: var(--accent); border-bottom: 3px solid var(--text); margin: -40px -5% 40px -5%; }
+        .hero { text-align: center; padding: 100px 0; background: var(--accent); border-bottom: 3px solid var(--text); margin: -40px -5% 60px -5%; }
         .hero h1 { font-family: var(--font-heading); font-size: 4.5rem; margin-bottom: 10px; }
 
-        /* Categories */
+        /* Grid */
         .cat-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-bottom: 80px;
-        }
-        .cat-card { padding: 80px 20px; font-size: 1.8rem; font-family: var(--font-heading); text-align: center; }
-
-        /* Product Display */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto 100px;
         }
-        .p-card { text-align: center; cursor: pointer; position: relative; }
+        .cat-card { padding: 90px 20px; font-size: 1.8rem; font-family: var(--font-heading); text-align: center; position: relative; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 50px; }
+        .p-card { text-align: center; cursor: pointer; }
         .p-img { 
             border: 3px solid var(--text); border-radius: 20px; aspect-ratio: 1/1; 
             display: flex; align-items: center; justify-content: center; 
-            font-size: 6rem; background: white; transition: 0.3s;
-            margin-bottom: 20px; position: relative;
-        }
-        .p-card:hover .p-img { background: var(--accent); }
-        .half-off-tag {
-            position: absolute; top: 10px; left: 10px; background: #ff4757; color: white;
-            padding: 5px 12px; border-radius: 8px; font-weight: bold; z-index: 10;
+            font-size: 6rem; background: white; margin-bottom: 20px;
         }
 
-        /* Product Detail */
-        .detail-container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1200px; margin: 0 auto; }
-        .detail-img { 
-            border: 3px solid var(--text); border-radius: 30px; aspect-ratio: 1/1; 
-            display: flex; align-items: center; justify-content: center; 
-            font-size: 12rem; background: var(--accent); 
-        }
-        .label-pill { 
-            display: inline-block; padding: 6px 15px; border: 2px solid var(--text); 
-            border-radius: 20px; font-size: 0.85rem; background: #eee; margin-bottom: 15px;
-        }
-        .size-list { display: flex; flex-direction: column; gap: 15px; margin: 25px 0; }
-        .size-tile { justify-content: space-between; padding: 20px; }
+        /* Detail */
+        .detail-container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1100px; margin: 0 auto; }
+        .detail-img { border: 3px solid var(--text); border-radius: 30px; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; font-size: 10rem; background: var(--accent); }
+        .size-tile { justify-content: space-between; padding: 18px; margin-bottom: 10px; width: 100%; }
         .size-tile.selected { background: var(--text); color: white; }
 
-        /* Story Section */
-        .story-box { 
-            background: var(--accent); padding: 80px 10%; border-top: 3px solid var(--text); 
-            margin: 80px -5.5% -40px -5.5%; text-align: center; 
+        /* Story & Contact Sections */
+        .story-box { background: var(--accent); padding: 100px 10%; border-top: 3px solid var(--text); text-align: center; margin: 80px -5.5% 0 -5.5%; }
+        
+        .contact-panel {
+            background: white;
+            padding: 80px 10%;
+            border-top: 3px solid var(--text);
+            margin: 0 -5.5% -40px -5.5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
         }
-        .story-box h2 { font-family: var(--font-heading); font-size: 3rem; margin-bottom: 20px; }
-        .story-box p { max-width: 800px; margin: 0 auto; font-size: 1.2rem; }
+
+        .contact-col h3 { font-family: var(--font-heading); font-size: 2rem; margin-bottom: 20px; }
+        .contact-col p { margin-bottom: 10px; }
+        .contact-col a { color: var(--text); font-weight: bold; }
 
         /* Checkout */
-        .checkout-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; max-width: 1200px; margin: 0 auto; }
-        .pay-list { display: flex; flex-direction: column; gap: 20px; margin-top: 30px; }
-        .pay-option { padding: 25px; width: 100%; font-size: 1.2rem; }
-
-        /* Cart Sidebar */
+        .checkout-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; max-width: 1100px; margin: 40px auto; }
+        
+        /* Sidebar */
         #cart-sidebar {
             position: fixed; right: -500px; top: 0; width: 450px; height: 100%;
             background: white; border-left: 4px solid var(--text); z-index: 2000;
             padding: 40px; transition: 0.4s ease;
         }
         #cart-sidebar.open { right: 0; }
-        .cart-item { display: flex; justify-content: space-between; padding: 20px 0; border-bottom: 2px solid #eee; }
 
-        footer { border-top: 3px solid var(--text); padding: 50px; text-align: center; margin-top: 80px; font-style: italic; }
-
-        @media (max-width: 768px) {
-            .detail-container, .checkout-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.5rem; }
-        }
+        footer { border-top: 3px solid var(--text); padding: 40px; text-align: center; background: var(--accent); font-style: italic; }
     </style>
 </head>
 <body>
 
-    <div class="banner">🌸 SPRING SALE: BUY 1 COSTUME, GET 1 FREE! + 50% OFF SPACE EXPLORER! ✨</div>
+    <div class="banner">SPRING SALE: 50% OFF ALL SNUGGLE & SLEEP ITEMS! 🌸</div>
 
     <nav>
         <div class="logo" onclick="showPage('home')">Thor & Pearl Co.</div>
@@ -193,27 +175,45 @@
 
     <div id="home" class="view-section active">
         <div class="hero">
-            <h1>Thor & Pearl <span style="font-style: italic;">Co.</span></h1>
-            <p>High-quality goods for the companions of a lifetime.</p>
+            <h1>Thor & Pearl Co.</h1>
+            <p>Boutique essentials for your best friend.</p>
         </div>
 
         <div class="cat-grid">
-            <div class="cat-card sparkle-item" onclick="openCat('Costumes')">Wag-worthy Costumes</div>
-            <div class="cat-card" onclick="openCat('Snuggle')">Sweet Dreams & Snuggles</div>
+            <div class="cat-card" onclick="openCat('Costumes')">Wag-worthy Costumes</div>
+            
+            <div class="cat-card" onclick="openCat('Snuggle')">
+                <div class="sale-pointer">⬇ SPRING SALE! ⬇</div>
+                Sweet Dreams & Snuggles
+            </div>
+            
             <div class="cat-card" onclick="openCat('Play')">Tough Toys & Fun</div>
         </div>
 
         <div class="story-box">
             <h2>Our Story ✨</h2>
-            <p>It all began one humid June afternoon in 2026. Two best friends realized that while life was changing fast, the joy of a dog remains constant. With one of us already a dedicated dog parent, we decided that summer was the perfect time to make a big decision at a young age. We set out to create toys and treats that were as playful as our own pets, proving that great ideas often start with a simple bond.</p>
+            <p>It all began one humid June afternoon in 2026. Two best friends realized that while life was changing fast, the joy of a dog remains constant. With one of us already a dedicated dog parent, we decided that summer was the perfect time to make a big decision at a young age. We set out to create toys and treats that were as playful as our own pets.</p>
+        </div>
+
+        <div class="contact-panel">
+            <div class="contact-col">
+                <h3>Get in Touch</h3>
+                <p>Email: <a href="mailto:hello@thorandpearl.com">hello@thorandpearl.com</a></p>
+                <p>Instagram: <a href="#">@ThorAndPearlCo</a></p>
+                <p>Location: Worldwide Shipping 🌎</p>
+            </div>
+            <div class="contact-col">
+                <h3>Meet the Founders</h3>
+                <p><strong>Owner & Visionary:</strong> [Your Name]</p>
+                <p><strong>Owner & Creative Lead:</strong> [Friend's Name]</p>
+                <p>Establishing quality pet care since 2026.</p>
+            </div>
         </div>
     </div>
 
     <div id="category" class="view-section">
-        <div style="margin-bottom: 40px;">
-            <button class="back-btn-box" onclick="showPage('home')">← Back to Categories</button>
-            <h2 id="cat-title" style="font-family: var(--font-heading); font-size: 3.5rem; margin-top: 20px;">Category</h2>
-        </div>
+        <button class="back-btn-box" onclick="showPage('home')">← Back to Home</button>
+        <h2 id="cat-title" style="font-family: var(--font-heading); font-size: 3.5rem; margin: 30px 0;">Category</h2>
         <div class="product-grid" id="product-list"></div>
     </div>
 
@@ -222,24 +222,22 @@
     </div>
 
     <div id="checkout" class="view-section">
-        <button class="back-btn-box" onclick="showPage('home')">← Cancel & Back</button>
-        <div class="checkout-grid" style="margin-top: 40px;">
+        <button class="back-btn-box" onclick="showPage('home')">← Cancel</button>
+        <div class="checkout-grid">
             <div>
-                <h2 style="font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 30px;">Your Order</h2>
+                <h2 style="font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 20px;">Your Basket</h2>
                 <div id="checkout-items"></div>
-                <div id="bogo-msg" style="color: #ff4757; font-weight: bold; margin: 20px 0; display: none;">🔥 BOGO DISCOUNT APPLIED!</div>
+                <div id="sale-msg" style="color: #ff4757; font-weight: bold; margin: 20px 0; display: none;">🌸 SPRING SNUGGLE DISCOUNT APPLIED!</div>
                 <div style="border-top: 4px solid var(--text); padding-top: 20px; font-size: 2rem; display: flex; justify-content: space-between;">
                     <strong>Total:</strong>
                     <span id="checkout-total">$0.00</span>
                 </div>
             </div>
-            <div>
-                <h2 style="font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 30px;">Payment</h2>
-                <div class="pay-list">
-                    <div class="pay-option">💳 Credit / Debit Card</div>
-                    <div class="pay-option">📱 Apple / Google Pay</div>
-                    <button class="pay-option btn-3d" style="background: var(--text); color: white;" onclick="alert('Order Successful! See you in the summer!')">Complete Purchase</button>
-                </div>
+            <div class="pay-list" style="display: flex; flex-direction: column; gap: 15px;">
+                <h2 style="font-family: var(--font-heading); font-size: 2.5rem;">Payment</h2>
+                <div class="pay-option">💳 Credit / Debit Card</div>
+                <div class="pay-option">📱 Mobile Wallet</div>
+                <button class="btn-3d" style="background: var(--text); color: white; width: 100%; margin-top: 20px;" onclick="alert('Order Placed! Thank you.')">Pay Now</button>
             </div>
         </div>
     </div>
@@ -249,27 +247,28 @@
             <h2 style="font-family: var(--font-heading); font-size: 2rem;">Basket</h2>
             <span style="font-size: 2.5rem; cursor: pointer;" onclick="toggleCart(false)">&times;</span>
         </div>
-        <div id="cart-items-list" style="max-height: 60%; overflow-y: auto;"></div>
+        <div id="cart-items-list"></div>
         <div style="margin-top: 30px; border-top: 3px solid var(--text); padding-top: 20px;">
             <div style="display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: bold; margin-bottom: 30px;">
                 <span>Total:</span>
                 <span id="cart-total-val">$0.00</span>
             </div>
-            <button class="btn-3d" style="width: 100%; background: var(--text); color: white; padding: 20px;" onclick="showPage('checkout')">Secure Checkout</button>
+            <button class="btn-3d" style="width: 100%; background: var(--text); color: white;" onclick="showPage('checkout')">Checkout</button>
         </div>
     </div>
 
-    <footer>Est. 2026 • Curated with Puppy Love & Summer Spirit.</footer>
+    <footer>Thor & Pearl Co. • Established 2026</footer>
 
     <script>
         const products = [
-            { id: 1, cat: 'Costumes', name: 'The Fancy Hotdog', price: 28, icon: '🌭', mat: 'Cotton-Poly Blend', info: 'Best for silly, patient pups.', sizes: true },
-            { id: 2, cat: 'Costumes', name: 'Space Explorer', price: 35, icon: '🚀', mat: 'Reflective Aero-Mesh', info: 'Best for brave adventure dogs.', sizes: true, discount: 0.5 },
-            { id: 3, cat: 'Costumes', name: 'Sweet Banana', price: 24, icon: '🍌', mat: 'Breathable Cotton', info: 'Fits comedic and playful dogs.', sizes: true },
-            { id: 4, cat: 'Snuggle', name: 'Electric Mode-3 Brush', price: 55, icon: '💆‍♂️', mat: 'Silicone & Electronics', info: 'Best for high-energy dogs needing a spa moment.', sizes: false },
-            { id: 5, cat: 'Snuggle', name: 'Deep Sleep Pillow', price: 45, icon: '☁️', mat: 'Memory Foam', info: 'Fits senior dogs or heavy sleepers.', sizes: false },
-            { id: 6, cat: 'Play', name: 'Pro-Tough Frisbee', price: 22, icon: '🥏', mat: 'Heavy-Duty Rubber', info: 'Built for high-drive Border Collies.', sizes: false },
-            { id: 7, cat: 'Play', name: 'Indestructible Bone', price: 18, icon: '🦴', mat: 'Natural Resin', info: 'Best for aggressive chewers.', sizes: false }
+            { id: 1, cat: 'Costumes', name: 'The Fancy Hotdog', price: 28, icon: '🌭', mat: 'Cotton-Poly', sizes: true },
+            { id: 2, cat: 'Costumes', name: 'Space Explorer', price: 35, icon: '🚀', mat: 'Aero-Mesh', sizes: true },
+            { id: 3, cat: 'Costumes', name: 'Sweet Banana', price: 24, icon: '🍌', mat: 'Cotton', sizes: true },
+            { id: 4, cat: 'Snuggle', name: 'Electric Spa Brush', price: 55, icon: '💆‍♂️', fit: 'Long-haired breeds', sizes: false, isSale: true },
+            { id: 5, cat: 'Snuggle', name: 'Deep Sleep Pillow', price: 45, icon: '☁️', fit: 'Seniors & Puppies', sizes: false, isSale: true },
+            { id: 6, cat: 'Snuggle', name: 'Calming Blanket', price: 32, icon: '🛋️', fit: 'Anxious sleepers', sizes: false, isSale: true },
+            { id: 7, cat: 'Play', name: 'Pro-Tough Frisbee', price: 22, icon: '🥏', fit: 'High energy dogs', sizes: false },
+            { id: 8, cat: 'Play', name: 'Indestructible Bone', price: 18, icon: '🦴', fit: 'Power chewers', sizes: false }
         ];
 
         let cart = [];
@@ -288,15 +287,12 @@
             const list = document.getElementById('product-list');
             list.innerHTML = '';
             products.filter(p => p.cat === catName).forEach(p => {
-                const isDisc = p.discount ? 'sparkle-item' : '';
+                const displayPrice = p.isSale ? p.price / 2 : p.price;
                 list.innerHTML += `
-                    <div class="p-card ${isDisc}" onclick="viewProduct(${p.id})">
-                        <div class="p-img">
-                            ${p.discount ? '<div class="half-off-tag">SPRING 50% OFF</div>' : ''}
-                            ${p.icon}
-                        </div>
+                    <div class="p-card" onclick="viewProduct(${p.id})">
+                        <div class="p-img">${p.icon}</div>
                         <h3 style="font-family: var(--font-heading); font-size: 1.8rem;">${p.name}</h3>
-                        <p style="font-size: 1.3rem;">$${p.discount ? (p.price * p.discount).toFixed(2) : p.price + '.00'}</p>
+                        <p style="font-size: 1.3rem;">${p.isSale ? `<strike>$${p.price}</strike> $${displayPrice}.00` : `$${p.price}.00`}</p>
                     </div>`;
             });
         }
@@ -304,24 +300,24 @@
         function viewProduct(id) {
             const p = products.find(i => i.id === id);
             const content = document.getElementById('detail-content');
+            const displayPrice = p.isSale ? p.price / 2 : p.price;
             let sizeMarkup = p.sizes ? `
-                <div class="size-list">
-                    <div class="size-tile btn-3d" onclick="setS(this)">Small <span>Fits: Yorkies/Pugs</span></div>
-                    <div class="size-tile btn-3d selected" onclick="setS(this)">Medium <span>Fits: Beagles/Corgis</span></div>
-                    <div class="size-tile btn-3d" onclick="setS(this)">Large <span>Fits: Labs/Retrievers</span></div>
-                </div>` : '';
+                <div style="margin: 25px 0;">
+                    <div class="size-tile btn-3d" onclick="setS(this)">Small <span>(Yorkies/Pugs)</span></div>
+                    <div class="size-tile btn-3d selected" onclick="setS(this)">Medium <span>(Beagles/Corgis)</span></div>
+                    <div class="size-tile btn-3d" onclick="setS(this)">Large <span>(Labs)</span></div>
+                </div>` : `<p style="margin: 20px 0;"><strong>Best For:</strong> ${p.fit}</p>`;
 
             content.innerHTML = `
                 <button class="back-btn-box" onclick="openCat('${p.cat}')">← Back to ${p.cat}</button>
                 <div class="detail-container" style="margin-top: 40px;">
                     <div class="detail-img">${p.icon}</div>
                     <div>
-                        <div class="label-pill">${p.sizes ? 'Material: ' + p.mat : 'Fits Personality: ' + p.info}</div>
                         <h1 style="font-family: var(--font-heading); font-size: 4rem;">${p.name}</h1>
-                        <h2 style="font-size: 2.5rem; margin: 20px 0;">$${p.discount ? (p.price * p.discount).toFixed(2) : p.price + '.00'}</h2>
-                        <p style="font-size: 1.2rem; margin-bottom: 30px;">A signature piece from our 2026 collection, designed for durability and style.</p>
+                        <h2 style="font-size: 2.5rem; margin: 10px 0;">$${displayPrice}.00</h2>
+                        ${p.isSale ? '<p style="color: #ff4757; font-weight: bold;">🌸 SPRING SALE - 50% OFF</p>' : ''}
                         ${sizeMarkup}
-                        <button class="btn-3d" style="width:100%; background:var(--text); color:white; padding: 25px; font-size: 1.3rem;" onclick="addToCart(${p.id})">Add to Basket</button>
+                        <button class="btn-3d" style="width:100%; background:var(--text); color:white;" onclick="addToCart(${p.id})">Add to Basket</button>
                     </div>
                 </div>`;
             showPage('details');
@@ -334,9 +330,7 @@
 
         function addToCart(id) {
             const p = products.find(i => i.id === id);
-            const finalP = p.discount ? p.price * p.discount : p.price;
-            cart.push({...p, cartPrice: finalP});
-            if(p.cat === 'Costumes') alert("🎉 BOGO DEAL: You bought a costume! Add another to see the free discount at checkout!");
+            cart.push({...p, finalPrice: p.isSale ? p.price / 2 : p.price});
             updateUI();
             toggleCart(true);
         }
@@ -345,50 +339,31 @@
             document.getElementById('cart-sidebar').classList.toggle('open', open);
         }
 
-        function calculateCart() {
-            let total = 0;
-            let costumeItems = cart.filter(i => i.cat === 'Costumes').sort((a,b) => a.cartPrice - b.cartPrice);
-            cart.forEach(i => total += i.cartPrice);
-            
-            // BOGO Logic: Cheapest costume of every pair is free
-            let bogoDiscount = 0;
-            if(costumeItems.length >= 2) {
-                const pairs = Math.floor(costumeItems.length / 2);
-                for(let i = 0; i < pairs; i++) {
-                    bogoDiscount += costumeItems[i].cartPrice;
-                }
-            }
-            return { subtotal: total, discount: bogoDiscount, final: total - bogoDiscount };
-        }
-
         function updateUI() {
             document.getElementById('cart-count').innerText = cart.length;
             const list = document.getElementById('cart-items-list');
             list.innerHTML = '';
+            let total = 0;
             cart.forEach(i => {
-                list.innerHTML += `<div class="cart-item"><span>${i.name}</span><strong>$${i.cartPrice.toFixed(2)}</strong></div>`;
+                total += i.finalPrice;
+                list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee;"><span>${i.name}</span><strong>$${i.finalPrice}.00</strong></div>`;
             });
-            document.getElementById('cart-total-val').innerText = `$${calculateCart().final.toFixed(2)}`;
+            document.getElementById('cart-total-val').innerText = `$${total}.00`;
         }
 
         function renderCheckout() {
             const list = document.getElementById('checkout-items');
-            const data = calculateCart();
             list.innerHTML = '';
+            let total = 0;
+            let hasSale = false;
             cart.forEach(i => {
-                list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:1.2rem;">
-                    <span>${i.name}</span><span>$${i.cartPrice.toFixed(2)}</span>
-                </div>`;
+                total += i.finalPrice;
+                if(i.isSale) hasSale = true;
+                list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${i.name}</span><span>$${i.finalPrice}.00</span></div>`;
             });
-            if(data.discount > 0) {
-                list.innerHTML += `<div style="display:flex; justify-content:space-between; color:#ff4757; font-weight:bold;">
-                    <span>BOGO Costume Discount</span><span>-$${data.discount.toFixed(2)}</span>
-                </div>`;
-                document.getElementById('bogo-msg').style.display = 'block';
-            }
-            document.getElementById('checkout-total').innerText = `$${data.final.toFixed(2)}`;
+            document.getElementById('sale-msg').style.display = hasSale ? 'block' : 'none';
+            document.getElementById('checkout-total').innerText = `$${total}.00`;
         }
     </script>
 </body>
 </html>
-        
