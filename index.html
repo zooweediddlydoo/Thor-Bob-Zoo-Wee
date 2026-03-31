@@ -1,413 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DailyFix Dropshipping</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background: #f0f4f8;
-      color: #333;
-    }
-    header {
-      background: #0d6efd;
-      color: white;
-      padding: 1.5rem;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-    header p {
-      margin: 0.3rem 0 0;
-      font-size: 1rem;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      background: #ffffff;
-      padding: 0.5rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    nav button {
-      background: #0d6efd;
-      border: none;
-      color: white;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background 0.2s;
-    }
-    nav button:hover {
-      background: #0b5ed7;
-    }
-    .container {
-      padding: 1rem 2rem;
-      display: flex;
-      gap: 2rem;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.5rem;
-      flex: 1;
-    }
-    .card {
-      background: white;
-      padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.12);
-    }
-    .card img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 0.8rem;
-    }
-    .card h3 {
-      margin: 0.5rem 0 0.3rem;
-      font-size: 1.1rem;
-    }
-    .card p {
-      margin: 0;
-      font-weight: bold;
-      color: #0d6efd;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      padding: 1rem;
-    }
-    .modal-content {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    }
-    .modal-content img {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-    }
-    .close-btn, .add-cart {
-      border: none;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      border-radius: 8px;
-      font-weight: bold;
-      margin-top: 1rem;
-    }
-    .close-btn {
-      background: #dc3545;
-      color: white;
-    }
-    .add-cart {
-      background: #198754;
-      color: white;
-    }
-    .modal-content select, .modal-content input {
-      margin-top: 0.5rem;
-      padding: 0.5rem;
-      width: 80%;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-    /* Cart Sidebar */
-    .cart {
-      width: 300px;
-      background: white;
-      padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 80px;
-      height: fit-content;
-    }
-    .cart h2 {
-      margin-top: 0;
-      text-align: center;
-    }
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-      align-items: center;
-    }
-    .cart-item button {
-      background: #dc3545;
-      color: white;
-      border: none;
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: #0d6efd;
-      color: white;
-      margin-top: 2rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thor & Pearl Co. | Minimalist Pet Goods</title>
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --accent: #f2f2f2;
+            --border: #e0e0e0;
+            --transition: 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            cursor: pointer;
+        }
+
+        .nav-links button {
+            background: none;
+            border: 1px solid var(--text);
+            padding: 0.5rem 1.2rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links button:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        /* Hero / Categories Section */
+        header {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 1000px;
+            margin: 2rem auto;
+        }
+
+        .cat-card {
+            border: 1px solid var(--text);
+            padding: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .cat-card:hover {
+            background: var(--accent);
+        }
+
+        /* Product Grid */
+        .products-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            position: relative;
+            border: 1px solid var(--border);
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: #fafafa;
+        }
+
+        .product-image-placeholder {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-info {
+            text-align: center;
+        }
+
+        /* The Pop-up Overlay on Hover */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay h3 {
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .overlay p {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-view {
+            border: 1px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem;
+            font-size: 0.7rem;
+            color: #888;
+            border-top: 1px solid var(--border);
+        }
+
+        .hidden { display: none; }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>DailyFix Dropshipping</h1>
-    <p>Trendy Products Ready for Your Store</p>
-  </header>
 
-  <nav>
-    <button onclick="filterProducts('all')">All</button>
-    <button onclick="filterProducts('health')">Health</button>
-    <button onclick="filterProducts('pets')">Pets</button>
-    <button onclick="filterProducts('car')">Car</button>
-    <button onclick="filterProducts('home')">Home</button>
-    <button onclick="filterProducts('kitchen')">Kitchen</button>
-  </nav>
+    <nav>
+        <div class="logo" onclick="showHome()">THOR & PEARL CO.</div>
+        <div class="nav-links">
+            <button onclick="showHome()">HOME</button>
+        </div>
+    </nav>
 
-  <div class="container">
-    <div class="grid" id="productGrid"></div>
-    <div class="cart">
-      <h2>Cart</h2>
-      <div id="cartItems"></div>
-      <p id="cartTotal"><strong>Total:</strong> $0.00</p>
-    </div>
-  </div>
+    <section id="home-page">
+        <header>
+            <h1>ESSENTIALS FOR THE MODERN PET</h1>
+            <p>Thoughtfully designed. Minimalist aesthetic.</p>
+        </header>
 
-  <div class="modal" id="productModal">
-    <div class="modal-content" id="modalContent">
-      <img id="modalImg" src="" />
-      <h2 id="modalName"></h2>
-      <p id="modalDesc"></p>
-      <p id="modalPrice"></p>
-      <p id="modalShipping">Shipping: $4.99</p>
-      <div id="sizeSelectContainer"></div>
-      <input type="number" id="modalQuantity" min="1" value="1"/>
-      <button class="add-cart" onclick="addToCart()">Add to Cart</button>
-      <button class="close-btn" onclick="closeModal()">Close</button>
-    </div>
-  </div>
+        <div class="category-grid">
+            <div class="cat-card" onclick="showCategory('Rest')">Rest & Sleep</div>
+            <div class="cat-card" onclick="showCategory('Play')">Interactive Play</div>
+            <div class="cat-card" onclick="showCategory('Style')">Signature Style</div>
+        </div>
+    </section>
 
-  <footer>
-    <p>© 2026 DailyFix Dropshipping</p>
-  </footer>
+    <section id="shop-page" class="hidden">
+        <header>
+            <h2 id="category-title">CATEGORY</h2>
+            <p>Discover our curated selection.</p>
+        </header>
 
-  <script>
-    const products = [
-      // Set 1
-      {
-        name: "AlignMate Posture Sensor",
-        category: "health",
-        price: 39.99,
-        img: "https://via.placeholder.com/200?text=AlignMate",
-        desc: "Discrete shoulder sensors that vibrate to remind you to straighten up, helping reduce back pain and improve confidence within 14 days.",
-        sizes: ["S","M","L"]
-      },
-      {
-        name: "CalmCompanion Pet Wrap",
-        category: "pets",
-        price: 24.99,
-        img: "https://via.placeholder.com/200?text=CalmCompanion",
-        desc: "Weighted anxiety wrap for dogs and cats that mimics a heartbeat to soothe stress while you're away."
-      },
-      {
-        name: "AutoTidy Organizer",
-        category: "car",
-        price: 19.99,
-        img: "https://via.placeholder.com/200?text=AutoTidy",
-        desc: "Compact multi-compartment organizer that fits gaps and cup holders, keeping your car interior neat and accessible."
-      },
-      {
-        name: "SudsMaster Foot Scrubber",
-        category: "home",
-        price: 14.99,
-        img: "https://via.placeholder.com/200?text=SudsMaster",
-        desc: "Ergonomic shower foot scrubber with anti-slip suction for effortless cleaning and spa-like relaxation."
-      },
-      {
-        name: "GlowPath LED Motion Light",
-        category: "home",
-        price: 29.99,
-        img: "https://via.placeholder.com/200?text=GlowPath",
-        desc: "Motion-activated LED strips for closets, hallways, or under furniture, ensuring safety and ambient lighting."
-      },
-      {
-        name: "ChefEase Micro Tool Kit",
-        category: "kitchen",
-        price: 22.99,
-        img: "https://via.placeholder.com/200?text=ChefEase",
-        desc: "Multi-functional kitchen set including ergonomic peelers, oil sprayers, and sealing clips to speed up prep work."
-      },
-      // Set 2
-      {
-        name: "NeckRelief Massager",
-        category: "health",
-        price: 49.99,
-        img: "https://via.placeholder.com/200?text=NeckRelief",
-        desc: "Portable neck and shoulder massager with heat function that relaxes stiff muscles and improves posture."
-      },
-      {
-        name: "FurFriend Grooming Kit",
-        category: "pets",
-        price: 34.99,
-        img: "https://via.placeholder.com/200?text=FurFriend",
-        desc: "Complete grooming kit including brushes, nail clippers, and deshedding tools to maintain your pet's coat healthy and shiny."
-      },
-      {
-        name: "SmartGrip Cup Holder",
-        category: "car",
-        price: 17.99,
-        img: "https://via.placeholder.com/200?text=SmartGrip",
-        desc: "Expandable cup holder with anti-slip lining that securely holds beverages while driving."
-      },
-      {
-        name: "EcoFoam Bath Pillow",
-        category: "home",
-        price: 27.99,
-        img: "https://via.placeholder.com/200?text=EcoFoam",
-        desc: "Memory foam bath pillow with suction pads that conform to your neck and back for ultimate relaxation in the tub."
-      },
-      {
-        name: "KitchenWiz Smart Spatula",
-        category: "kitchen",
-        price: 18.99,
-        img: "https://via.placeholder.com/200?text=KitchenWiz",
-        desc: "Heat-resistant spatula with built-in measuring markings and ergonomic grip, perfect for precise cooking."
-      }
-    ];
+        <div class="products-container" id="product-list">
+            </div>
+    </section>
 
-    const cart = [];
-    const grid = document.getElementById('productGrid');
-    const modal = document.getElementById('productModal');
-    const modalImg = document.getElementById('modalImg');
-    const modalName = document.getElementById('modalName');
-    const modalDesc = document.getElementById('modalDesc');
-    const modalPrice = document.getElementById('modalPrice');
-    const modalShipping = document.getElementById('modalShipping');
-    const sizeSelectContainer = document.getElementById('sizeSelectContainer');
-    const modalQuantity = document.getElementById('modalQuantity');
-    const cartItemsDiv = document.getElementById('cartItems');
-    const cartTotal = document.getElementById('cartTotal');
-    let currentProduct = null;
+    <footer>
+        &copy; 2024 THOR & PEARL CO. ALL RIGHTS RESERVED.
+    </footer>
 
-    function displayProducts(list) {
-      grid.innerHTML = "";
-      list.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <img src="${p.img}" />
-          <h3>${p.name}</h3>
-          <p>$${p.price.toFixed(2)}</p>
-        `;
-        card.addEventListener('click', () => openModal(p));
-        grid.appendChild(card);
-      });
-    }
+    <script>
+        const products = [
+            { id: 1, cat: 'Rest', name: 'Cloud Pillow', desc: 'Ergonomic memory foam for deep REM sleep.', price: '$45' },
+            { id: 2, cat: 'Rest', name: 'Bouclé Snuggle Pad', desc: 'On-trend textured fabric for modern interiors.', price: '$60' },
+            { id: 3, cat: 'Play', name: 'Monochrome Rope', desc: 'Hand-dyed cotton for heavy chewers.', price: '$22' },
+            { id: 4, cat: 'Play', name: 'Marble Rubber Bone', desc: 'Minimalist aesthetic meets durable design.', price: '$18' },
+            { id: 5, cat: 'Style', name: 'Vegan Leather Lead', desc: 'Sleek black hardware with reinforced stitching.', price: '$35' },
+            { id: 6, cat: 'Style', name: 'Matte Ceramic Bowl', desc: 'Heavyweight design to prevent spills.', price: '$28' }
+        ];
 
-    function filterProducts(category) {
-      if(category === 'all') {
-        displayProducts(products);
-      } else {
-        displayProducts(products.filter(p => p.category === category));
-      }
-    }
+        function showHome() {
+            document.getElementById('home-page').classList.remove('hidden');
+            document.getElementById('shop-page').classList.add('hidden');
+        }
 
-    function openModal(product) {
-      currentProduct = product;
-      modal.style.display = 'flex';
-      modalImg.src = product.img;
-      modalName.textContent = product.name;
-      modalDesc.textContent = product.desc;
-      modalPrice.textContent = "Price: $" + product.price.toFixed(2);
-      modalQuantity.value = 1;
+        function showCategory(category) {
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('shop-page').classList.remove('hidden');
+            document.getElementById('category-title').innerText = category;
 
-      if(product.sizes) {
-        sizeSelectContainer.innerHTML = `<select id="modalSize">${product.sizes.map(s => `<option>${s}</option>`).join('')}</select>`;
-      } else {
-        sizeSelectContainer.innerHTML = "";
-      }
-    }
+            const list = document.getElementById('product-list');
+            list.innerHTML = '';
 
-    function closeModal() {
-      modal.style.display = 'none';
-    }
+            const filtered = products.filter(p => p.cat === category);
 
-    function addToCart() {
-      const qty = parseInt(modalQuantity.value);
-      const size = document.getElementById('modalSize') ? document.getElementById('modalSize').value : null;
-      const cartItem = {...currentProduct, qty, size};
-      cart.push(cartItem);
-      updateCart();
-      closeModal();
-    }
-
-    function updateCart() {
-      cartItemsDiv.innerHTML = "";
-      let total = 0;
-      cart.forEach((item, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'cart-item';
-        const sizeText = item.size ? ` (${item.size})` : "";
-        itemDiv.innerHTML = `<span>${item.name}${sizeText} x${item.qty}</span> 
-                             <button onclick="removeCartItem(${index})">X</button>`;
-        cartItemsDiv.appendChild(itemDiv);
-        total += item.price * item.qty;
-      });
-      cartTotal.innerHTML = "<strong>Total:</strong> $" + total.toFixed(2);
-    }
-
-    function removeCartItem(index) {
-      cart.splice(index, 1);
-      updateCart();
-    }
-
-    modal.addEventListener('click', e => {
-      if(e.target === modal) closeModal();
-    });
-
-    displayProducts(products);
-  </script>
-</body>
-</html>
-
-    function closeModal() {
-      modal.style.display = 'none';
-    }
-
-    modal.addEventListener('click', e => {
-      if(e.target === modal) closeModal();
-    });
-
-    displayProducts(products);
-  </script>
+            filtered.forEach(p => {
+                list.innerHTML += `
+                    <div class="product-card">
+                        <div class="product-image-placeholder">●</div>
+                        <div class="product-info">
+                            <strong>${p.name}</strong>
+                            <p>${p.price}</p>
+                        </div>
+                        <div class="overlay">
+                            <h3>${p.name}</h3>
+                            <p>${p.desc}</p>
+                            <a href="#" class="btn-view">QUICK ADD</a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    </script>
 </body>
 </html>
