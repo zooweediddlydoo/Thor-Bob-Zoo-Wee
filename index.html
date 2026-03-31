@@ -3,253 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thor & Pearl Co. | Minimalist Pet Goods</title>
+    <title>Thor & Pearl Co. | Friendly Finds for Furry Friends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables for easy theme management */
         :root {
             --bg: #ffffff;
-            --text: #000000;
-            --accent: #f2f2f2;
-            --border: #e0e0e0;
-            --transition: 0.3s ease;
+            --text: #1a1a1a;
+            --accent: #f9f9f9;
+            --border: #333333;
+            --font-main: 'Lora', serif;
+            --font-heading: 'Playfair Display', serif;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
         body {
             background-color: var(--bg);
             color: var(--text);
+            font-family: var(--font-main);
             line-height: 1.6;
         }
 
         /* Navigation */
         nav {
-            padding: 2rem;
+            padding: 1.5rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 2px solid var(--text);
             position: sticky;
             top: 0;
             background: white;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 700;
             cursor: pointer;
+            font-style: italic;
         }
 
         .nav-links button {
             background: none;
-            border: 1px solid var(--text);
-            padding: 0.5rem 1.2rem;
+            border: none;
+            margin-left: 20px;
             cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition);
+            font-family: var(--font-main);
+            font-size: 1rem;
+            text-decoration: underline;
         }
 
-        .nav-links button:hover {
-            background: var(--text);
-            color: var(--bg);
-        }
-
-        /* Hero / Categories Section */
+        /* Hero */
         header {
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             text-align: center;
+            background-color: var(--accent);
         }
 
+        header h1 {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Category Grid */
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            max-width: 1000px;
-            margin: 2rem auto;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: -2rem auto 4rem auto;
+            padding: 0 20px;
         }
 
         .cat-card {
-            border: 1px solid var(--text);
-            padding: 2rem;
+            background: white;
+            border: 2px solid var(--text);
+            padding: 3rem 1rem;
+            text-align: center;
             cursor: pointer;
-            transition: var(--transition);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
+            transition: transform 0.2s;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            box-shadow: 5px 5px 0px var(--text);
         }
 
         .cat-card:hover {
-            background: var(--accent);
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0px var(--text);
         }
 
-        /* Product Grid */
+        /* Products */
         .products-container {
             padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
         }
 
         .product-card {
-            position: relative;
-            border: 1px solid var(--border);
-            aspect-ratio: 1 / 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            background: #fafafa;
+            cursor: pointer;
+            text-align: center;
         }
 
-        .product-image-placeholder {
-            font-size: 3rem;
+        .img-box {
+            border: 2px solid var(--text);
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
             margin-bottom: 1rem;
+            background: #fff;
+            position: relative;
         }
 
-        .product-info {
-            text-align: center;
+        .product-card:hover .img-box {
+            background: var(--accent);
         }
 
-        /* The Pop-up Overlay on Hover */
-        .overlay {
+        /* Simple Hover Overlay */
+        .hover-note {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            display: flex;
-            flex-direction: column;
+            bottom: 10px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        /* Modal / Detail View */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            transition: var(--transition);
-            padding: 20px;
-            text-align: center;
         }
 
-        .product-card:hover .overlay {
-            opacity: 1;
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            border: 3px solid var(--text);
         }
 
-        .overlay h3 {
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
         }
 
-        .overlay p {
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
+        .detail-flex {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
-        .btn-view {
-            border: 1px solid white;
+        select, button.add-to-cart {
+            padding: 0.8rem;
+            border: 2px solid var(--text);
+            background: white;
+            font-family: var(--font-main);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button.add-to-cart:hover {
+            background: var(--text);
             color: white;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            font-size: 0.8rem;
         }
 
-        footer {
-            text-align: center;
-            padding: 4rem;
-            font-size: 0.7rem;
-            color: #888;
-            border-top: 1px solid var(--border);
+        /* Cart Sidebar */
+        #cart-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 350px;
+            height: 100%;
+            background: white;
+            border-left: 3px solid var(--text);
+            z-index: 3000;
+            padding: 2rem;
+            transition: 0.4s;
+        }
+
+        #cart-sidebar.open { right: 0; }
+
+        .cart-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
         }
 
         .hidden { display: none; }
+
+        footer { text-align: center; padding: 5rem; border-top: 1px solid #eee; margin-top: 4rem; font-style: italic;}
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo" onclick="showHome()">THOR & PEARL CO.</div>
+        <div class="logo" onclick="showHome()">Thor & Pearl Co.</div>
         <div class="nav-links">
-            <button onclick="showHome()">HOME</button>
+            <button onclick="showHome()">Home</button>
+            <button onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
         </div>
     </nav>
 
-    <section id="home-page">
+    <div id="home-page">
         <header>
-            <h1>ESSENTIALS FOR THE MODERN PET</h1>
-            <p>Thoughtfully designed. Minimalist aesthetic.</p>
+            <h1>Happy Tails & Cozy Details</h1>
+            <p>Hand-picked treasures for your favorite four-legged friends.</p>
         </header>
 
         <div class="category-grid">
-            <div class="cat-card" onclick="showCategory('Rest')">Rest & Sleep</div>
-            <div class="cat-card" onclick="showCategory('Play')">Interactive Play</div>
-            <div class="cat-card" onclick="showCategory('Style')">Signature Style</div>
+            <div class="cat-card" onclick="showCategory('Costumes')">Wag-worthy Costumes</div>
+            <div class="cat-card" onclick="showCategory('Snuggle')">Sweet Dreams & Snuggles</div>
+            <div class="cat-card" onclick="showCategory('Play')">Tough Toys & Fun</div>
         </div>
-    </section>
+    </div>
 
-    <section id="shop-page" class="hidden">
-        <header>
-            <h2 id="category-title">CATEGORY</h2>
-            <p>Discover our curated selection.</p>
-        </header>
+    <div id="shop-page" class="hidden">
+        <div style="padding: 2rem; text-align: center;">
+            <h2 id="category-title" style="font-family: var(--font-heading); font-size: 2.5rem;">Category</h2>
+            <p onclick="showHome()" style="cursor:pointer; text-decoration: underline;">&larr; Back to all categories</p>
+        </div>
+        <div class="products-container" id="product-list"></div>
+    </div>
 
-        <div class="products-container" id="product-list">
-            </div>
-    </section>
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modal-body" class="detail-flex">
+                </div>
+        </div>
+    </div>
+
+    <div id="cart-sidebar">
+        <h2 style="font-family: var(--font-heading);">Your Basket</h2>
+        <hr><br>
+        <div id="cart-items-list"></div>
+        <br>
+        <button class="add-to-cart" style="width: 100%;" onclick="alert('Checkout coming soon!')">Checkout</button>
+        <br><br>
+        <button onclick="toggleCart()" style="background: none; border: none; text-decoration: underline; cursor: pointer;">Close</button>
+    </div>
 
     <footer>
-        &copy; 2024 THOR & PEARL CO. ALL RIGHTS RESERVED.
+        Established with love for Thor & Pearl. &copy; 2024.
     </footer>
 
     <script>
         const products = [
-            { id: 1, cat: 'Rest', name: 'Cloud Pillow', desc: 'Ergonomic memory foam for deep REM sleep.', price: '$45' },
-            { id: 2, cat: 'Rest', name: 'Bouclé Snuggle Pad', desc: 'On-trend textured fabric for modern interiors.', price: '$60' },
-            { id: 3, cat: 'Play', name: 'Monochrome Rope', desc: 'Hand-dyed cotton for heavy chewers.', price: '$22' },
-            { id: 4, cat: 'Play', name: 'Marble Rubber Bone', desc: 'Minimalist aesthetic meets durable design.', price: '$18' },
-            { id: 5, cat: 'Style', name: 'Vegan Leather Lead', desc: 'Sleek black hardware with reinforced stitching.', price: '$35' },
-            { id: 6, cat: 'Style', name: 'Matte Ceramic Bowl', desc: 'Heavyweight design to prevent spills.', price: '$28' }
+            { id: 1, cat: 'Costumes', name: 'The Fancy Hotdog', price: 28, emoji: '🌭', desc: 'The classic! Soft plush "buns" with a mustard swirl. Perfect for dachshunds or anyone with a sense of humor.', hasSizes: true },
+            { id: 2, cat: 'Costumes', name: 'Space Explorer', price: 35, emoji: '🚀', desc: 'A shiny silver jumpsuit for the dog that’s out of this world. Includes a soft helmet!', hasSizes: true },
+            { id: 3, cat: 'Snuggle', name: 'Deep Sleep Pillow', price: 45, emoji: '☁️', desc: 'A cloud-like bed designed for pets who love to burrow and feel safe.', hasSizes: false },
+            { id: 4, cat: 'Snuggle', name: 'Weighted Calming Blanket', price: 30, emoji: '🛋️', desc: 'Help soothe anxiety with our pet-safe micro-weighted blanket.', hasSizes: false },
+            { id: 5, cat: 'Play', name: 'Indestructible Bone', price: 15, emoji: '🦴', desc: 'Made from sustainably sourced rubber. Bounces high and lasts long.', hasSizes: false },
+            { id: 6, cat: 'Play', name: 'Tennis Ball Launcher', price: 20, emoji: '🎾', desc: 'Save your arm! Launch balls up to 50 feet for the ultimate fetch.', hasSizes: false }
         ];
+
+        let cart = [];
 
         function showHome() {
             document.getElementById('home-page').classList.remove('hidden');
             document.getElementById('shop-page').classList.add('hidden');
         }
 
-        function showCategory(category) {
+        function showCategory(cat) {
             document.getElementById('home-page').classList.add('hidden');
             document.getElementById('shop-page').classList.remove('hidden');
-            document.getElementById('category-title').innerText = category;
-
+            document.getElementById('category-title').innerText = cat;
+            
             const list = document.getElementById('product-list');
             list.innerHTML = '';
-
-            const filtered = products.filter(p => p.cat === category);
-
-            filtered.forEach(p => {
-                list.innerHTML += `
-                    <div class="product-card">
-                        <div class="product-image-placeholder">●</div>
-                        <div class="product-info">
-                            <strong>${p.name}</strong>
-                            <p>${p.price}</p>
-                        </div>
-                        <div class="overlay">
-                            <h3>${p.name}</h3>
-                            <p>${p.desc}</p>
-                            <a href="#" class="btn-view">QUICK ADD</a>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-    </script>
-</body>
-</html>
+            
+            products.filter(p => p.cat === cat).forEach(p =>
