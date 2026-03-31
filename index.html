@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thor & Pearl Co. | Friendly Finds for Furry Friends</title>
+    <title>Thor & Pearl Co. | Friendly Finds</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,28 +13,41 @@
             --border: #333333;
             --font-main: 'Lora', serif;
             --font-heading: 'Playfair Display', serif;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --adobe-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--bg);
             color: var(--text);
             font-family: var(--font-main);
-            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* --- UI ELEMENTS (The "Adobe" Look) --- */
+        button, .cat-card, .size-tile, .thumb-item {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1.5px solid var(--text);
+            border-radius: 6px;
+            background: white;
+            font-family: var(--font-main);
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--adobe-shadow);
+        }
+
+        /* Nav */
         nav {
-            padding: 1.5rem 5%;
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--text);
+            border-bottom: 1px solid #eee;
             position: sticky;
             top: 0;
             background: white;
@@ -43,176 +56,160 @@
 
         .logo {
             font-family: var(--font-heading);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             cursor: pointer;
             font-style: italic;
         }
 
         .nav-links button {
-            background: none;
-            border: none;
-            margin-left: 20px;
-            cursor: pointer;
-            font-family: var(--font-main);
-            font-size: 1rem;
-            text-decoration: underline;
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 10px;
         }
 
-        /* Hero */
+        /* Hero & Home */
         header {
-            padding: 5rem 2rem;
+            padding: 6rem 2rem;
             text-align: center;
             background-color: var(--accent);
         }
 
-        header h1 {
-            font-family: var(--font-heading);
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+        header h1 { font-family: var(--font-heading); font-size: 3.2rem; margin-bottom: 1rem; }
 
-        /* Category Grid */
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
             max-width: 1100px;
-            margin: -2rem auto 4rem auto;
+            margin: -3rem auto 4rem;
             padding: 0 20px;
         }
 
         .cat-card {
-            background: white;
-            border: 2px solid var(--text);
-            padding: 3rem 1rem;
+            padding: 45px 20px;
             text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s;
             font-family: var(--font-heading);
             font-weight: 700;
-            box-shadow: 5px 5px 0px var(--text);
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
         }
 
-        .cat-card:hover {
-            transform: translate(-3px, -3px);
-            box-shadow: 8px 8px 0px var(--text);
-        }
-
-        /* Products */
+        /* Shop Grid */
         .products-container {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 3rem;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
 
-        .product-card {
-            cursor: pointer;
-            text-align: center;
-        }
+        .product-card { text-align: center; cursor: pointer; }
 
         .img-box {
-            border: 2px solid var(--text);
+            border: 1.5px solid var(--text);
+            border-radius: 8px;
             aspect-ratio: 1/1;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 4rem;
-            margin-bottom: 1rem;
-            background: #fff;
-            position: relative;
+            margin-bottom: 15px;
+            background: white;
         }
 
-        .product-card:hover .img-box {
+        /* --- THE FULL SCREEN PRODUCT PAGE --- */
+        #product-page {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 2000;
+            display: none;
+            overflow-y: auto;
+            padding: 80px 5% 40px;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 100px; left: 5%;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: underline;
+            z-index: 2100;
+        }
+
+        .product-layout {
+            display: flex;
+            gap: 5%;
+            max-width: 1200px;
+            margin: 40px auto 0;
+        }
+
+        /* Gallery */
+        .product-gallery { flex: 1.2; display: flex; gap: 20px; }
+
+        .thumb-column { display: flex; flex-direction: column; gap: 12px; }
+
+        .thumb-item {
+            width: 70px; height: 70px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            border: 1px solid #ddd;
+        }
+
+        .thumb-item.active { border-color: var(--text); background: var(--accent); }
+
+        .main-display {
+            flex: 1;
+            aspect-ratio: 1/1;
+            border: 1.5px solid var(--text);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10rem;
             background: var(--accent);
         }
 
-        /* Simple Hover Overlay */
-        .hover-note {
-            position: absolute;
-            bottom: 10px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.6;
-        }
+        /* Buying Info */
+        .product-buying { flex: 0.8; padding-top: 20px; }
 
-        /* Modal / Detail View */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-        }
+        .product-buying h1 { font-family: var(--font-heading); font-size: 3rem; line-height: 1.1; }
 
-        .modal-content {
-            background: white;
-            padding: 3rem;
-            max-width: 600px;
-            width: 90%;
-            position: relative;
-            border: 3px solid var(--text);
-        }
+        .price-tag { font-size: 1.8rem; font-weight: bold; margin: 15px 0 30px; }
 
-        .close-modal {
-            position: absolute;
-            top: 10px; right: 20px;
-            font-size: 2rem;
-            cursor: pointer;
-        }
+        .size-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0 30px; }
 
-        .detail-flex {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
+        .size-tile { padding: 12px; text-align: center; font-weight: bold; }
 
-        select, button.add-to-cart {
-            padding: 0.8rem;
-            border: 2px solid var(--text);
-            background: white;
-            font-family: var(--font-main);
-            font-weight: bold;
-            cursor: pointer;
-        }
+        .size-tile.selected { background: var(--text); color: white; }
 
-        button.add-to-cart:hover {
-            background: var(--text);
-            color: white;
+        .add-btn {
+            width: 100%; padding: 18px;
+            background: var(--text); color: white;
+            text-transform: uppercase; letter-spacing: 2px; font-weight: bold;
         }
 
         /* Cart Sidebar */
         #cart-sidebar {
             position: fixed;
-            right: -400px;
-            top: 0;
-            width: 350px;
-            height: 100%;
+            right: -100%; top: 0;
+            width: 380px; height: 100%;
             background: white;
-            border-left: 3px solid var(--text);
+            border-left: 1.5px solid var(--text);
             z-index: 3000;
-            padding: 2rem;
-            transition: 0.4s;
+            padding: 40px;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        #cart-sidebar.open { right: 0; }
-
-        .cart-item {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-            display: flex;
-            justify-content: space-between;
-        }
+        #cart-sidebar.active { right: 0; }
 
         .hidden { display: none; }
 
-        footer { text-align: center; padding: 5rem; border-top: 1px solid #eee; margin-top: 4rem; font-style: italic;}
+        @media (max-width: 900px) {
+            .product-layout { flex-direction: column; }
+            .product-gallery { margin-bottom: 30px; }
+        }
     </style>
 </head>
 <body>
@@ -228,13 +225,13 @@
     <div id="home-page">
         <header>
             <h1>Happy Tails & Cozy Details</h1>
-            <p>Hand-picked treasures for your favorite four-legged friends.</p>
+            <p>Thoughtfully hand-picked treasures for your favorite furry friends.</p>
         </header>
 
         <div class="category-grid">
-            <div class="cat-card" onclick="showCategory('Costumes')">Wag-worthy Costumes</div>
-            <div class="cat-card" onclick="showCategory('Snuggle')">Sweet Dreams & Snuggles</div>
-            <div class="cat-card" onclick="showCategory('Play')">Tough Toys & Fun</div>
+            <div class="cat-card" onclick="openCategory('Costumes')">Wag-worthy Costumes</div>
+            <div class="cat-card" onclick="openCategory('Snuggle')">Sweet Dreams & Snuggles</div>
+            <div class="cat-card" onclick="openCategory('Play')">Tough Toys & Fun</div>
         </div>
     </div>
 
@@ -246,22 +243,21 @@
         <div class="products-container" id="product-list"></div>
     </div>
 
-    <div id="product-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <div id="modal-body" class="detail-flex">
-                </div>
-        </div>
-    </div>
+    <div id="product-page"></div>
 
     <div id="cart-sidebar">
-        <h2 style="font-family: var(--font-heading);">Your Basket</h2>
-        <hr><br>
-        <div id="cart-items-list"></div>
-        <br>
-        <button class="add-to-cart" style="width: 100%;" onclick="alert('Checkout coming soon!')">Checkout</button>
-        <br><br>
-        <button onclick="toggleCart()" style="background: none; border: none; text-decoration: underline; cursor: pointer;">Close</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+            <h2 style="font-family: var(--font-heading);">Your Basket</h2>
+            <span style="cursor:pointer; font-size:1.5rem;" onclick="toggleCart()">&times;</span>
+        </div>
+        <div id="cart-list" style="max-height: 70%; overflow-y:auto;"></div>
+        <div style="margin-top:20px; border-top:1px solid #eee; padding-top:20px;">
+            <div style="display:flex; justify-content:space-between; font-weight:bold; margin-bottom:20px;">
+                <span>Total</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button class="add-btn" onclick="alert('Checkout integration coming soon!')">Checkout</button>
+        </div>
     </div>
 
     <footer>
@@ -269,283 +265,127 @@
     </footer>
 
     <script>
-        const products = [
-            { id: 1, cat: 'Costumes', name: 'The Fancy Hotdog', price: 28, emoji: '🌭', desc: 'The classic! Soft plush "buns" with a mustard swirl. Perfect for dachshunds or anyone with a sense of humor.', hasSizes: true },
-            { id: 2, cat: 'Costumes', name: 'Space Explorer', price: 35, emoji: '🚀', desc: 'A shiny silver jumpsuit for the dog that’s out of this world. Includes a soft helmet!', hasSizes: true },
-            { id: 3, cat: 'Snuggle', name: 'Deep Sleep Pillow', price: 45, emoji: '☁️', desc: 'A cloud-like bed designed for pets who love to burrow and feel safe.', hasSizes: false },
-            { id: 4, cat: 'Snuggle', name: 'Weighted Calming Blanket', price: 30, emoji: '🛋️', desc: 'Help soothe anxiety with our pet-safe micro-weighted blanket.', hasSizes: false },
-            { id: 5, cat: 'Play', name: 'Indestructible Bone', price: 15, emoji: '🦴', desc: 'Made from sustainably sourced rubber. Bounces high and lasts long.', hasSizes: false },
-            { id: 6, cat: 'Play', name: 'Tennis Ball Launcher', price: 20, emoji: '🎾', desc: 'Save your arm! Launch balls up to 50 feet for the ultimate fetch.', hasSizes: false }
+        const inventory = [
+            { id: 1, cat: 'Costumes', name: 'The Fancy Hotdog', price: 28, icon: '🌭', desc: 'The classic boutique favorite! Plush buns with a soft mustard swirl.', hasSizes: true },
+            { id: 2, cat: 'Costumes', name: 'Space Explorer', price: 35, icon: '🚀', desc: 'Shiny silver protective jumpsuit for the dog that is out of this world.', hasSizes: true },
+            { id: 3, cat: 'Snuggle', name: 'Deep Sleep Pillow', price: 45, icon: '☁️', desc: 'A cloud-like bed designed for pets who love to burrow and feel safe.', hasSizes: false },
+            { id: 4, cat: 'Snuggle', name: 'Calming Blanket', price: 30, icon: '🛋️', desc: 'Help soothe anxiety with our pet-safe micro-weighted blanket.', hasSizes: false },
+            { id: 5, cat: 'Play', name: 'Indestructible Bone', price: 15, icon: '🦴', desc: 'Made from sustainably sourced rubber. Bounces high and lasts long.', hasSizes: false },
+            { id: 6, cat: 'Play', name: 'Ball Launcher', price: 20, icon: '🎾', desc: 'Save your arm! Launch balls up to 50 feet for the ultimate fetch.', hasSizes: false }
         ];
 
         let cart = [];
+        const viewIcons = ['🔎', '📸', '✨']; 
 
         function showHome() {
-            document.getElementById('home-page').classList.remove('hidden');
+            document.getElementById('home-page').style.display = 'block';
             document.getElementById('shop-page').classList.add('hidden');
+            document.getElementById('product-page').style.display = 'none';
         }
 
-        function showCategory(cat) {
-            document.getElementById('home-page').classList.add('hidden');
+        function openCategory(cat) {
+            document.getElementById('home-page').style.display = 'none';
             document.getElementById('shop-page').classList.remove('hidden');
             document.getElementById('category-title').innerText = cat;
             
             const list = document.getElementById('product-list');
             list.innerHTML = '';
             
-            products.filter(p => p.cat === cat).forEach(p => {
+            inventory.filter(p => p.cat === cat).forEach(p => {
                 list.innerHTML += `
-                    <div class="product-card" onclick="openProduct(${p.id})">
-                        <div class="img-box">
-                            ${p.emoji}
-                            <div class="hover-note">View Details</div>
-                        </div>
+                    <div class="product-card" onclick="viewProduct(${p.id})">
+                        <div class="img-box">${p.icon}</div>
                         <h3>${p.name}</h3>
-                        <p>$${p.price}</p>
+                        <p>$${p.price}.00</p>
                     </div>
                 `;
             });
         }
 
-        function openProduct(id) {
-            const p = products.find(item => item.id === id);
-            const modalBody = document.getElementById('modal-body');
+        function viewProduct(id) {
+            const p = inventory.find(i => i.id === id);
+            const page = document.getElementById('product-page');
             
             let sizeHtml = p.hasSizes ? `
-                <label>Choose Size:</label>
-                <select id="size-select">
-                    <option>Extra Small</option>
-                    <option>Small</option>
-                    <option>Medium</option>
-                    <option>Large</option>
-                    <option>Extra Large</option>
-                </select>
+                <label style="font-weight:bold; text-transform:uppercase; font-size:0.8rem;">Select Size</label>
+                <div class="size-grid">
+                    <div class="size-tile" onclick="selectSize(this)">XS</div>
+                    <div class="size-tile selected" onclick="selectSize(this)">M</div>
+                    <div class="size-tile" onclick="selectSize(this)">XL</div>
+                </div>
             ` : '';
 
-            modalBody.innerHTML = `
-                <h1 style="font-family: var(--font-heading)">${p.name}</h1>
-                <p style="font-size: 1.2rem; font-weight: bold;">$${p.price}</p>
-                <p>${p.desc}</p>
-                ${sizeHtml}
-                <button class="add-to-cart" onclick="addToCart(${p.id})">Add to Basket</button>
+            page.innerHTML = `
+                <div class="back-btn" onclick="closeProductPage()">← Back to ${p.cat}</div>
+                <div class="product-layout">
+                    <div class="product-gallery">
+                        <div class="thumb-column">
+                            <div class="thumb-item active" onclick="swapView(this, '${p.icon}')">${p.icon}</div>
+                            <div class="thumb-item" onclick="swapView(this, '${viewIcons[0]}')">${viewIcons[0]}</div>
+                            <div class="thumb-item" onclick="swapView(this, '${viewIcons[1]}')">${viewIcons[1]}</div>
+                        </div>
+                        <div class="main-display" id="main-view">${p.icon}</div>
+                    </div>
+                    <div class="product-buying">
+                        <h1>${p.name}</h1>
+                        <div class="price-tag">$${p.price}.00</div>
+                        <p style="margin-bottom:30px; line-height:1.8;">${p.desc}</p>
+                        ${sizeHtml}
+                        <button class="add-btn" onclick="addToCart(${p.id})">Add to Basket</button>
+                    </div>
+                </div>
             `;
-            document.getElementById('product-modal').style.display = 'flex';
+            document.getElementById('shop-page').classList.add('hidden');
+            page.style.display = 'block';
+            window.scrollTo(0,0);
         }
 
-        function closeModal() {
-            document.getElementById('product-modal').style.display = 'none';
+        function closeProductPage() {
+            document.getElementById('product-page').style.display = 'none';
+            document.getElementById('shop-page').classList.remove('hidden');
+        }
+
+        function swapView(el, icon) {
+            document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('main-view').innerText = icon;
+        }
+
+        function selectSize(el) {
+            document.querySelectorAll('.size-tile').forEach(t => t.classList.remove('selected'));
+            el.classList.add('selected');
         }
 
         function addToCart(id) {
-            const p = products.find(item => item.id === id);
-            const size = p.hasSizes ? document.getElementById('size-select').value : 'One Size';
+            const p = inventory.find(i => i.id === id);
+            const size = p.hasSizes ? document.querySelector('.size-tile.selected').innerText : 'Standard';
             cart.push({ ...p, selectedSize: size });
             updateCartUI();
-            closeModal();
             toggleCart(true);
         }
 
         function updateCartUI() {
             document.getElementById('cart-count').innerText = cart.length;
-            const list = document.getElementById('cart-items-list');
+            const list = document.getElementById('cart-list');
+            let total = 0;
             list.innerHTML = '';
-            cart.forEach((item, index) => {
+            cart.forEach(item => {
+                total += item.price;
                 list.innerHTML += `
-                    <div class="cart-item">
-                        <div>
-                            <strong>${item.name}</strong><br>
-                            <small>${item.selectedSize}</small>
-                        </div>
-                        <span>$${item.price}</span>
+                    <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid #eee;">
+                        <div><strong>${item.name}</strong><br><small>${item.selectedSize}</small></div>
+                        <span>$${item.price}.00</span>
                     </div>
                 `;
             });
+            document.getElementById('cart-total').innerText = `$${total}.00`;
         }
 
         function toggleCart(forceOpen = false) {
             const side = document.getElementById('cart-sidebar');
-            if (forceOpen) side.classList.add('open');
-            else side.classList.toggle('open');
-        }
-
-        // Close modal on outside click
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('product-modal')) closeModal();
+            if (forceOpen) side.classList.add('active');
+            else side.classList.toggle('active');
         }
     </script>
 </body>
 </html>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thor & Pearl Co. | Friendly Finds</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #ffffff;
-            --text: #1a1a1a;
-            --accent: #f9f9f9;
-            --border: #333333;
-            --font-main: 'Lora', serif;
-            --font-heading: 'Playfair Display', serif;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: var(--font-main);
-            overflow-x: hidden;
-        }
-
-        /* Nav */
-        nav {
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--text);
-            position: sticky;
-            top: 0;
-            background: white;
-            z-index: 1000;
-        }
-
-        .logo {
-            font-family: var(--font-heading);
-            font-size: 1.8rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .nav-links button {
-            background: none;
-            border: 1px solid var(--text);
-            padding: 8px 15px;
-            margin-left: 10px;
-            cursor: pointer;
-            font-family: var(--font-main);
-            transition: 0.2s;
-        }
-
-        .nav-links button:hover {
-            background: var(--text);
-            color: white;
-        }
-
-        /* Hero */
-        header {
-            padding: 6rem 2rem;
-            text-align: center;
-            background-color: var(--accent);
-        }
-
-        header h1 {
-            font-family: var(--font-heading);
-            font-size: 3.2rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Categories */
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            max-width: 1100px;
-            margin: -3rem auto 4rem;
-            padding: 0 20px;
-        }
-
-        .cat-card {
-            background: white;
-            border: 2px solid var(--text);
-            padding: 40px 20px;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 6px 6px 0px var(--text);
-            transition: 0.2s;
-        }
-
-        .cat-card:hover {
-            transform: translate(-3px, -3px);
-            box-shadow: 10px 10px 0px var(--text);
-        }
-
-        /* Products */
-        .products-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .product-card {
-            cursor: pointer;
-            text-align: center;
-            border: 1px solid transparent;
-            padding: 15px;
-            transition: 0.3s;
-        }
-
-        .product-card:hover {
-            border-color: #eee;
-        }
-
-        .img-box {
-            border: 2px solid var(--text);
-            aspect-ratio: 1/1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            margin-bottom: 15px;
-            background: white;
-        }
-
-        /* Modal Details */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            border: 3px solid var(--text);
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 20px;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        select, .add-btn {
-            width: 100%;
-            padding: 12px;
-            margin-top: 15px;
-            border: 2px solid var(--text);
-            font-family: var(--font-main);
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .add-btn { background: var(--text); color: white; }
-
-        /* Cart Sidebar */
-        #cart-sidebar {
-            position: fixed;
-            right: -100%;
-            top: 0;
-            width: 3
