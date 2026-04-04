@@ -29,7 +29,7 @@
         }
 
         /* --- UI COMPONENTS --- */
-        .btn-3d, .cat-card, .size-tile, .back-btn-box {
+        .btn-3d, .cat-card, .size-tile, .back-btn-box, .p-card {
             cursor: pointer;
             transition: all 0.2s ease;
             border: 2px solid var(--border);
@@ -46,11 +46,18 @@
             padding: 10px 18px;
         }
 
-        .btn-3d:hover, .cat-card:hover, .size-tile:hover, .back-btn-box:hover {
+        .btn-3d:hover, .cat-card:hover, .size-tile:hover, .back-btn-box:hover, .p-card:hover {
             top: -2px;
             transform: rotate(-1deg);
             box-shadow: var(--btn-shadow-hover);
             background: var(--accent);
+        }
+
+        /* Size Selection State */
+        .size-tile.selected {
+            background: var(--primary) !important;
+            color: white !important;
+            box-shadow: 2px 2px 0px var(--text);
         }
 
         .btn-3d:active { top: 2px; box-shadow: 1px 1px 0px var(--text); }
@@ -67,6 +74,7 @@
             z-index: 1000;
         }
 
+        .nav-btns { display: flex; gap: 10px; }
         .logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; cursor: pointer; color: var(--primary); }
         
         .banner {
@@ -89,10 +97,21 @@
         .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
         .cat-card { padding: 40px 20px; font-size: 1.2rem; flex-direction: column; }
 
+        /* Snuggle Dynamic Sale Styling */
+        .snuggle-sale:hover {
+            transform: scale(1.05) rotate(1deg) !important;
+            background: #fffcf0 !important;
+            border-color: var(--primary);
+        }
+
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 30px; }
-        .p-card { text-align: center; cursor: pointer; }
-        .p-img { border: 2px solid var(--border); border-radius: 12px; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; font-size: 4rem; background: white; margin-bottom: 12px; transition: 0.2s; }
-        .p-card:hover .p-img { background: var(--accent); }
+        .p-card { flex-direction: column; padding: 20px; }
+        .p-img { border: 2px solid var(--border); border-radius: 12px; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; font-size: 4rem; background: white; margin-bottom: 12px; transition: 0.2s; width: 100%; }
+
+        /* Search bar integration */
+        .search-container { margin-bottom: 20px; display: none; }
+        .search-container.active { display: flex; gap: 10px; }
+        .search-input { flex-grow: 1; padding: 10px; border: 2px solid var(--border); border-radius: 8px; }
 
         /* --- CHECKOUT UI --- */
         .checkout-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
@@ -126,9 +145,16 @@
     <nav>
         <div class="logo" onclick="showPage('home')">THOR & PEARL CO.</div>
         <div class="nav-btns">
+            <button class="btn-3d" onclick="toggleSearch()">🔍 SEARCH</button>
             <button class="btn-3d" onclick="toggleCart(true)">CART (<span id="cart-count">0</span>)</button>
         </div>
     </nav>
+
+    <div id="search-section" class="view-section" style="padding-bottom: 0;">
+        <div class="search-container active">
+            <input type="text" id="main-search" class="search-input" placeholder="Find toys, costumes, or snuggle gear..." onkeyup="runSearch()">
+        </div>
+    </div>
 
     <div id="home" class="view-section active">
         <div class="hero">
@@ -139,7 +165,7 @@
 
         <div class="cat-grid">
             <div class="cat-card" onclick="openCat('Costumes')">Wag-worthy Costumes</div>
-            <div class="cat-card" onclick="openCat('Snuggle')" style="background: var(--accent);">
+            <div class="cat-card snuggle-sale" onclick="openCat('Snuggle')" style="background: var(--accent);">
                 <span style="font-size: 0.7rem; color: var(--primary); font-weight: 800;">SPRING SALE</span>
                 Snuggle Essentials
             </div>
@@ -151,8 +177,8 @@
         <button class="back-btn-box" onclick="showPage('home')">← BACK</button>
         <div style="max-width: 700px; margin: 40px auto; text-align: center;">
             <h2 style="font-family: var(--font-heading); font-size: 2.5rem;">The Summer of 2026</h2>
-            <p>During the summer of 2026, we realized that our own dogs were consistently underwhelmed by the toys available on the market, which often failed to hit the mark on both durability and genuine fun. We observed that most products were either indestructible but boring, or engaging but easily shredded within minutes.</p>
-            <p>Driven by the desire to provide Thor and Pearl with better options, we began prototyping our own designs that combined high-engagement textures with professional-grade materials. Today, Thor & Pearl Co. stands as a testament to that mission, ensuring every pup has access to gear that is as playful as it is permanent.</p>
+            <p>During the summer of 2026, we realized that our own dogs were consistently underwhelmed by the toys available on the market, which often failed to hit the mark on both durability and genuine fun.</p>
+            <p>Driven by the desire to provide Thor and Pearl with better options, we began prototyping our own designs that combined high-engagement textures with professional-grade materials.</p>
         </div>
     </div>
 
@@ -167,54 +193,27 @@
     </div>
 
     <div id="checkout" class="view-section">
+        <button class="back-btn-box" onclick="showPage('home')" style="margin-bottom: 20px;">← BACK TO SHOP</button>
         <h2 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 30px;">Checkout</h2>
         <div class="checkout-container">
             <div class="checkout-panel">
                 <h3 style="margin-top:0">Shipping & Contact</h3>
-                <div class="input-group">
-                    <label>Email Address</label>
-                    <input type="email" placeholder="you@example.com">
-                </div>
+                <div class="input-group"><label>Email Address</label><input type="email" placeholder="you@example.com"></div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                     <div class="input-group"><label>First Name</label><input type="text"></div>
                     <div class="input-group"><label>Last Name</label><input type="text"></div>
                 </div>
                 <div class="input-group"><label>Address</label><input type="text"></div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
-                    <div class="input-group"><label>City</label><input type="text"></div>
-                    <div class="input-group"><label>State</label><input type="text"></div>
-                    <div class="input-group"><label>Zip</label><input type="text"></div>
-                </div>
-                <div class="input-group">
-                    <label>Mobile Number (For Shipping Updates)</label>
-                    <input type="tel" placeholder="(555) 000-0000">
-                </div>
-                <div style="margin-top: 10px;">
-                    <input type="checkbox" id="save-info"> <label for="save-info" style="font-size:0.85rem">Save my information for next time</label>
-                </div>
-                <h3 style="margin-top:30px">Payment Method</h3>
                 <div class="input-group"><label>Card Number</label><input type="text" placeholder="xxxx xxxx xxxx xxxx"></div>
             </div>
 
             <div class="checkout-panel" style="background: var(--accent);">
                 <h3 style="margin-top:0">Order Summary</h3>
                 <div id="checkout-items" style="margin-bottom: 20px;"></div>
-                
-                <div class="input-group" style="display:flex; gap:10px;">
-                    <input type="text" id="coupon-input" placeholder="Promo Code">
-                    <button class="btn-3d" onclick="applyCoupon()" style="background:var(--secondary)">APPLY</button>
-                </div>
-
                 <div class="summary-row"><span>Subtotal</span><span id="sum-sub">$0.00</span></div>
                 <div class="summary-row"><span>Estimated Shipping</span><span>$5.99</span></div>
-                <div class="summary-row"><span>Taxes</span><span id="sum-tax">$0.00</span></div>
-                <div class="summary-row" id="coupon-row" style="display:none; color: var(--primary); font-weight:700;">
-                    <span>Discount (ThorSpring)</span><span>-$10.00</span>
-                </div>
-                <div class="summary-row total-row">
-                    <span>Total</span><span id="sum-total">$0.00</span>
-                </div>
-                <button class="btn-3d" style="width:100%; background:var(--primary); color:white; margin-top:20px; font-size:1.1rem;" onclick="alert('Order Successfully Processed!')">PAY NOW</button>
+                <div class="summary-row total-row"><span>Total</span><span id="sum-total">$0.00</span></div>
+                <button class="btn-3d" style="width:100%; background:var(--primary); color:white; margin-top:20px;" onclick="alert('Order Successfully Processed!')">PAY NOW</button>
             </div>
         </div>
     </div>
@@ -232,34 +231,50 @@
 
     <script>
         const products = [
-            { id: 1, cat: 'Costumes', name: 'Fancy Hotdog', price: 28, icon: '🌭', desc: 'Adjustable velcro straps. Best for: Dachshunds or slender breeds.', sizes: true },
-            { id: 2, cat: 'Costumes', name: 'Space Explorer', price: 35, icon: '🚀', desc: 'Breathable mesh. Best for: Active dogs who like attention.', sizes: true },
-            { id: 4, cat: 'Snuggle', name: 'Spa Brush', price: 55, icon: '💆‍♂️', desc: 'Best for: Long-haired breeds needing daily grooming.', sizes: false, isSale: true },
-            { id: 5, cat: 'Snuggle', name: 'Deep Sleep', price: 45, icon: '☁️', desc: 'Memory foam. Best for: Senior dogs or heavy sleepers.', sizes: false, isSale: true },
-            { id: 7, cat: 'Play', name: 'Pro Frisbee', price: 22, icon: '🥏', desc: 'Flexible rubber. Best for: High-energy retrievers.', sizes: false },
-            { id: 8, cat: 'Play', name: 'Tough Bone', price: 18, icon: '🦴', desc: 'Indestructible nylon. Best for: Extreme chewers (Pitbulls/Labs).', sizes: false }
+            { id: 1, cat: 'Costumes', name: 'Fancy Hotdog', price: 28, icon: '🌭', desc: 'Adjustable velcro straps. Best for: Dachshunds.', sizes: true },
+            { id: 2, cat: 'Costumes', name: 'Space Explorer', price: 35, icon: '🚀', desc: 'Breathable mesh. Best for: Active dogs.', sizes: true },
+            { id: 4, cat: 'Snuggle', name: 'Spa Brush', price: 55, icon: '💆‍♂️', desc: 'Best for: Long-haired breeds.', sizes: false, isSale: true },
+            { id: 5, cat: 'Snuggle', name: 'Deep Sleep', price: 45, icon: '☁️', desc: 'Memory foam. Best for: Senior dogs.', sizes: false, isSale: true },
+            { id: 7, cat: 'Play', name: 'Pro Frisbee', price: 22, icon: '🥏', desc: 'Flexible rubber.', sizes: false },
+            { id: 8, cat: 'Play', name: 'Tough Bone', price: 18, icon: '🦴', desc: 'Indestructible nylon.', sizes: false }
         ];
 
         let cart = [];
-        let couponApplied = false;
 
         function showPage(pageId) {
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
+            if(pageId !== 'home') document.getElementById('search-section').classList.remove('active');
             toggleCart(false);
-            window.scrollTo(0,0);
             if(pageId === 'checkout') renderCheckout();
+        }
+
+        function toggleSearch() {
+            document.getElementById('search-section').classList.toggle('active');
+            document.getElementById('main-search').focus();
+        }
+
+        function runSearch() {
+            const query = document.getElementById('main-search').value.toLowerCase();
+            const results = products.filter(p => p.name.toLowerCase().includes(query));
+            showPage('category');
+            document.getElementById('cat-title').innerText = "Search Results";
+            renderList(results);
         }
 
         function openCat(catName) {
             showPage('category');
             document.getElementById('cat-title').innerText = catName;
+            renderList(products.filter(p => p.cat === catName));
+        }
+
+        function renderList(items) {
             const list = document.getElementById('product-list');
             list.innerHTML = '';
-            products.filter(p => p.cat === catName).forEach(p => {
+            items.forEach(p => {
                 const displayPrice = p.isSale ? p.price / 2 : p.price;
                 list.innerHTML += `
-                    <div class="p-card" onclick="viewProduct(${p.id})">
+                    <div class="p-card ${p.cat === 'Snuggle' ? 'snuggle-sale' : ''}" onclick="viewProduct(${p.id})">
                         <div class="p-img">${p.icon}</div>
                         <h3 style="margin:0">${p.name}</h3>
                         <p>$${displayPrice.toFixed(2)} ${p.isSale ? '<span style="color:red">SALE</span>' : ''}</p>
@@ -272,20 +287,19 @@
             const content = document.getElementById('detail-content');
             const displayPrice = p.isSale ? p.price / 2 : p.price;
             let sizeMarkup = p.sizes ? `
-                <div style="margin: 20px 0;">
-                    <div class="size-tile" onclick="setS(this)">S <span style="font-weight:400; font-size:0.8rem; margin-left:10px;">Fits: Terriers/Pugs</span></div>
-                    <div class="size-tile selected" onclick="setS(this)">M <span style="font-weight:400; font-size:0.8rem; margin-left:10px;">Fits: Beagles/Spaniels</span></div>
-                    <div class="size-tile" onclick="setS(this)">L <span style="font-weight:400; font-size:0.8rem; margin-left:10px;">Fits: Retreivers/Huskies</span></div>
-                </div>` : `<p style="margin: 20px 0; border:1px solid #ccc; padding:10px;"><strong>NOTE:</strong> ${p.desc}</p>`;
+                <div style="margin: 20px 0; display:flex; flex-direction:column; gap:10px;">
+                    <div class="size-tile" onclick="setS(this)">S <small>(Pugs)</small></div>
+                    <div class="size-tile selected" onclick="setS(this)">M <small>(Beagles)</small></div>
+                    <div class="size-tile" onclick="setS(this)">L <small>(Labs)</small></div>
+                </div>` : `<p><strong>NOTE:</strong> ${p.desc}</p>`;
 
             content.innerHTML = `
                 <button class="back-btn-box" onclick="openCat('${p.cat}')">← BACK</button>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:40px; margin-top:30px;">
-                    <div class="p-img" style="font-size:8rem">${p.icon}</div>
+                    <div class="p-img" style="font-size:8rem; height:300px;">${p.icon}</div>
                     <div>
-                        <h1 style="font-family:var(--font-heading); font-size:3rem; margin:0;">${p.name}</h1>
+                        <h1>${p.name}</h1>
                         <h2 style="color:var(--primary)">$${displayPrice.toFixed(2)}</h2>
-                        <p>${p.desc}</p>
                         ${sizeMarkup}
                         <button class="btn-3d" style="width:100%; background:var(--primary); color:white;" onclick="addToCart(${p.id})">ADD TO BASKET</button>
                     </div>
@@ -294,7 +308,7 @@
         }
 
         function setS(el) {
-            document.querySelectorAll('.size-tile').forEach(t => t.classList.remove('selected'));
+            el.parentElement.querySelectorAll('.size-tile').forEach(t => t.classList.remove('selected'));
             el.classList.add('selected');
         }
 
@@ -307,44 +321,22 @@
 
         function updateUI() {
             document.getElementById('cart-count').innerText = cart.length;
-            const list = document.getElementById('cart-items-list');
-            list.innerHTML = cart.map((i, index) => `
+            document.getElementById('cart-items-list').innerHTML = cart.map(i => `
                 <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee;">
-                    <span>${i.name}</span>
-                    <strong>$${i.finalPrice.toFixed(2)}</strong>
+                    <span>${i.name}</span><strong>$${i.finalPrice.toFixed(2)}</strong>
                 </div>`).join('');
         }
 
         function toggleCart(open) { document.getElementById('cart-sidebar').classList.toggle('open', open); }
 
-        function applyCoupon() {
-            const code = document.getElementById('coupon-input').value;
-            if(code === 'ThorSpring') {
-                couponApplied = true;
-                document.getElementById('coupon-row').style.display = 'flex';
-                renderCheckout();
-            } else { alert("Invalid Code"); }
-        }
-
         function renderCheckout() {
-            const list = document.getElementById('checkout-items');
-            let subtotal = 0;
-            list.innerHTML = cart.map(i => {
-                subtotal += i.finalPrice;
+            let sub = 0;
+            document.getElementById('checkout-items').innerHTML = cart.map(i => {
+                sub += i.finalPrice;
                 return `<div class="summary-row"><span>${i.name}</span><span>$${i.finalPrice.toFixed(2)}</span></div>`;
             }).join('');
-
-            const tax = subtotal * 0.08;
-            const discount = couponApplied ? 10 : 0;
-            const total = (subtotal + tax + 5.99) - discount;
-
-            document.getElementById('sum-sub').innerText = `$${subtotal.toFixed(2)}`;
-            document.getElementById('sum-tax').innerText = `$${tax.toFixed(2)}`;
-            document.getElementById('sum-total').innerText = `$${Math.max(0, total).toFixed(2)}`;
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('sum-sub').innerText = `$${sub.toFixed(2)}`;
+            document.getElementById('sum-total').innerText = `$${(sub + 5.99).toFixed(2)}`;
         }
     </script>
 </body>
