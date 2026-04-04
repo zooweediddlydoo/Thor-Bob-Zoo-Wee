@@ -85,12 +85,16 @@
         .search-area.active { display: block; }
         .search-input { width: 100%; padding: 15px; border: 2px solid var(--border); border-radius: 8px; font-size: 1.2rem; outline: none; }
 
-        /* --- CHECKOUT --- */
-        .checkout-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; max-width: 1200px; margin: 0 auto; }
-        .checkout-panel { border: 2px solid var(--border); padding: 25px; border-radius: 12px; background: white; }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
-        input { width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 6px; margin-top: 5px; margin-bottom: 15px; }
-
+        /* --- PROFESSIONAL CHECKOUT --- */
+        .checkout-container { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; max-width: 1400px; margin: 0 auto; }
+        .checkout-panel { border: 2px solid var(--border); padding: 30px; border-radius: 12px; background: white; }
+        .input-group { margin-bottom: 15px; }
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        label { display: block; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 1rem; }
+        .summary-line { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95rem; }
+        .total-line { border-top: 2px solid var(--border); margin-top: 15px; padding-top: 15px; font-weight: 800; font-size: 1.2rem; }
+        
         #cart-sidebar {
             position: fixed; right: -100%; top: 0; width: 350px; height: 100%;
             background: white; border-left: 3px solid var(--border); z-index: 2000;
@@ -98,7 +102,7 @@
         }
         #cart-sidebar.open { right: 0; }
 
-        @media (max-width: 768px) { .checkout-container { grid-template-columns: 1fr; } #cart-sidebar { width: 100%; } }
+        @media (max-width: 900px) { .checkout-container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -152,22 +156,74 @@
     </div>
 
     <div id="checkout" class="view-section">
-        <button class="back-btn-box" onclick="showPage('home')" style="margin-bottom: 20px;">← BACK TO SHOP</button>
+        <button class="back-btn-box" onclick="showPage('home')" style="margin-bottom: 30px;">← BACK TO SHOP</button>
         <div class="checkout-container">
             <div class="checkout-panel">
-                <h3>Shipping & Contact</h3>
-                <input type="email" placeholder="Email Address">
-                <input type="text" placeholder="Full Name">
-                <input type="text" placeholder="Shipping Address">
-                <input type="text" placeholder="Card Number">
-            </div>
-            <div class="checkout-panel" style="background: var(--accent);">
-                <h3>Summary</h3>
-                <div id="checkout-items"></div>
-                <div class="summary-row" style="font-weight:800; border-top: 2px solid black; padding-top:10px;">
-                    <span>Total</span><span id="sum-total">$0.00</span>
+                <h3 style="margin-top:0;">Contact Information</h3>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="thor@example.com">
                 </div>
-                <button class="btn-3d" style="width:100%; background:var(--primary); color:white; margin-top:20px;" onclick="alert('Order Successful!')">PAY NOW</button>
+                <div class="input-group" style="display:flex; align-items:center; gap:10px;">
+                    <input type="checkbox" id="save-info" style="width:auto;">
+                    <label for="save-info" style="margin:0;">Save my info for next time</label>
+                </div>
+                <div class="input-group">
+                    <label>Mobile Number (Optional)</label>
+                    <input type="tel" placeholder="(555) 000-0000">
+                </div>
+
+                <h3 style="margin-top:30px;">Shipping Address</h3>
+                <div class="input-row">
+                    <div class="input-group"><label>First Name</label><input type="text"></div>
+                    <div class="input-group"><label>Last Name</label><input type="text"></div>
+                </div>
+                <div class="input-group"><label>Address</label><input type="text" placeholder="Street Address"></div>
+                <div class="input-row">
+                    <div class="input-group"><label>City</label><input type="text"></div>
+                    <div class="input-group">
+                        <label>State</label>
+                        <select>
+                            <option>California</option>
+                            <option>New York</option>
+                            <option>Texas</option>
+                            <option>Florida</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3 style="margin-top:30px;">Payment</h3>
+                <div class="input-group"><label>Card Number</label><input type="text" placeholder="0000 0000 0000 0000"></div>
+                <div class="input-row">
+                    <div class="input-group"><label>Expiry</label><input type="text" placeholder="MM/YY"></div>
+                    <div class="input-group"><label>CVC</label><input type="text" placeholder="123"></div>
+                </div>
+            </div>
+
+            <div class="checkout-panel" style="background: var(--accent);">
+                <h3 style="margin-top:0;">Your Order</h3>
+                <div id="checkout-items" style="margin-bottom:20px;"></div>
+                
+                <div class="input-group">
+                    <label>Discount Code</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="coupon-input" placeholder="ThorSpring">
+                        <button class="btn-3d" onclick="applyCoupon()" style="padding:10px;">APPLY</button>
+                    </div>
+                    <div id="coupon-msg" style="font-size:0.8rem; margin-top:5px; font-weight:700;"></div>
+                </div>
+
+                <div style="margin-top:20px;">
+                    <div class="summary-line"><span>Subtotal</span><span id="subtotal-val">$0.00</span></div>
+                    <div class="summary-line"><span>Shipping</span><span>$5.99</span></div>
+                    <div class="summary-line"><span>Estimated Tax</span><span id="tax-val">$0.00</span></div>
+                    <div class="summary-line" id="discount-row" style="display:none; color: green; font-weight: 700;">
+                        <span>Discount (ThorSpring)</span><span>-$10.00</span>
+                    </div>
+                    <div class="summary-line total-line"><span>Total</span><span id="final-total">$0.00</span></div>
+                </div>
+
+                <button class="btn-3d" style="width:100%; background:var(--primary); color:white; margin-top:30px; padding:20px; font-size:1.1rem;" onclick="alert('Order Successful!')">PAY NOW</button>
             </div>
         </div>
     </div>
@@ -192,6 +248,7 @@
         ];
 
         let cart = [];
+        let discountApplied = false;
 
         function showPage(pageId) {
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
@@ -289,13 +346,36 @@
 
         function toggleCart(open) { document.getElementById('cart-sidebar').classList.toggle('open', open); }
 
+        function applyCoupon() {
+            const input = document.getElementById('coupon-input').value;
+            const msg = document.getElementById('coupon-msg');
+            if(input === "ThorSpring") {
+                discountApplied = true;
+                msg.innerText = "Coupon Applied: -$10.00 off!";
+                msg.style.color = "green";
+                renderCheckout();
+            } else {
+                msg.innerText = "Invalid Code";
+                msg.style.color = "red";
+            }
+        }
+
         function renderCheckout() {
-            let total = 0;
+            let subtotal = 0;
             document.getElementById('checkout-items').innerHTML = cart.map(i => {
-                total += i.finalPrice;
-                return `<div class="summary-row"><span>${i.name}</span><span>$${i.finalPrice.toFixed(2)}</span></div>`;
+                subtotal += i.finalPrice;
+                return `<div class="summary-line"><span>${i.name}</span><span>$${i.finalPrice.toFixed(2)}</span></div>`;
             }).join('');
-            document.getElementById('sum-total').innerText = `$${(total).toFixed(2)}`;
+
+            const tax = subtotal * 0.08;
+            const shipping = 5.99;
+            const discount = discountApplied ? 10 : 0;
+            const finalTotal = subtotal + tax + shipping - discount;
+
+            document.getElementById('subtotal-val').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tax-val').innerText = `$${tax.toFixed(2)}`;
+            document.getElementById('discount-row').style.display = discountApplied ? 'flex' : 'none';
+            document.getElementById('final-total').innerText = `$${Math.max(0, finalTotal).toFixed(2)}`;
         }
     </script>
 </body>
