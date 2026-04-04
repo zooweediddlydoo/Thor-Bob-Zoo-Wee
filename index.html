@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Thor & Pearl Co. | 2026 Collection</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <title>Thor & Pearl Co. | 2026 Chaos Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #ffffff;
             --text: #1a1a1a;
             --accent: #f9f9f9;
-            --border: #333333;
+            --pink: #ff00ff; /* Chaotic Pink */
+            --yellow: #f1f50e; /* Electric Yellow */
+            --border: #000000;
             --font-main: 'Lora', serif;
             --font-heading: 'Playfair Display', serif;
-            --btn-shadow: 0 6px 0px var(--text);
-            --btn-shadow-hover: 0 10px 0px var(--text);
+            --btn-shadow: 6px 6px 0px var(--text);
+            --btn-shadow-hover: 10px 10px 0px var(--pink);
         }
 
-        /* Prevent horizontal overflow globally */
         html, body {
             max-width: 100%;
             overflow-x: hidden;
@@ -26,7 +27,7 @@
             -webkit-text-size-adjust: 100%;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style="font-size:20px"><text y="18">🐾</text></svg>'), auto; }
 
         body {
             background-color: var(--bg);
@@ -35,211 +36,180 @@
             line-height: 1.5;
         }
 
-        /* --- 3D INTERACTIVE BUTTONS --- */
+        /* --- CHAOTIC 3D BUTTONS --- */
         .btn-3d, .cat-card, .size-tile, .pay-option, .back-btn-box {
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid var(--text);
-            border-radius: 12px;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid var(--text);
+            border-radius: 4px; /* Sharper, more brutalist */
             background: white;
             box-shadow: var(--btn-shadow);
             position: relative;
             top: 0;
-            font-weight: 700;
+            font-weight: 900;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             color: var(--text);
             padding: 12px 20px;
-            font-size: 1rem;
-            touch-action: manipulation; /* Optimizes mobile taps */
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn-3d:hover, .cat-card:hover, .size-tile:hover, .pay-option:hover, .back-btn-box:hover {
-            top: -4px;
+            top: -5px;
+            left: -2px;
             box-shadow: var(--btn-shadow-hover);
+            transform: rotate(-1deg);
+            background: var(--yellow);
         }
 
         .btn-3d:active {
-            top: 3px;
-            box-shadow: 0 2px 0px var(--text);
+            top: 4px;
+            box-shadow: 2px 2px 0px var(--text);
         }
 
-        /* Sale Arrow */
         .sale-pointer {
             position: absolute;
-            top: -50px;
+            top: -45px;
             left: 50%;
             transform: translateX(-50%);
-            font-family: var(--font-heading);
-            font-weight: bold;
-            animation: bounce-arrow 1.2s infinite;
-            white-space: nowrap;
-            font-size: 0.9rem;
+            background: var(--pink);
+            color: white;
+            padding: 5px 10px;
+            border: 2px solid black;
+            font-size: 0.7rem;
+            animation: wobble 0.5s infinite;
         }
 
-        @keyframes bounce-arrow {
-            0%, 100% { transform: translate(-50%, 0); }
-            50% { transform: translate(-50%, -10px); }
+        @keyframes wobble {
+            0%, 100% { transform: translateX(-50%) rotate(-5deg); }
+            50% { transform: translateX(-50%) rotate(5deg); }
         }
 
-        /* Navigation */
         nav {
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--text);
+            border-bottom: 4px solid var(--text);
             background: white;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        .logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; font-style: italic; }
+        .logo { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 900; font-style: italic; cursor: pointer; }
         
         .banner {
-            background: var(--text);
+            background: var(--pink);
             color: white;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
-            font-family: var(--font-heading);
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
+            font-weight: bold;
+            border-bottom: 2px solid black;
+            font-size: 0.9rem;
         }
 
-        /* Views */
         .view-section { display: none; padding: 20px 5%; min-height: 80vh; width: 100%; }
-        .active { display: block; }
+        .active { display: block; animation: slideIn 0.3s ease-out; }
 
-        .hero { text-align: center; padding: 60px 20px; background: var(--accent); border-bottom: 2px solid var(--text); margin-bottom: 40px; }
-        .hero h1 { font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 10px; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        /* Grid - 1 col on mobile, multi on desktop */
+        .hero { text-align: center; padding: 80px 20px; background: var(--yellow); border-bottom: 4px solid var(--text); }
+        .hero h1 { font-family: var(--font-heading); font-size: 3.5rem; line-height: 0.9; margin-bottom: 20px; }
+
         .cat-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 30px;
+            gap: 25px;
             max-width: 1200px;
-            margin: 0 auto 60px;
+            margin: 40px auto;
         }
-        .cat-card { padding: 60px 20px; font-size: 1.4rem; font-family: var(--font-heading); text-align: center; }
+        .cat-card { padding: 50px 20px; font-size: 1.5rem; text-align: center; }
 
         .product-grid { 
             display: grid; 
-            grid-template-columns: repeat(2, 1fr); /* 2 products per row on mobile */
-            gap: 20px; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 25px; 
         }
-        .p-card { text-align: center; width: 100%; }
+        .p-card { text-align: center; transition: 0.2s; }
+        .p-card:hover { transform: scale(1.02); }
         .p-img { 
-            border: 2px solid var(--text); border-radius: 15px; aspect-ratio: 1/1; 
+            border: 3px solid var(--text); border-radius: 8px; aspect-ratio: 1/1; 
             display: flex; align-items: center; justify-content: center; 
-            font-size: 3rem; background: white; margin-bottom: 10px;
+            font-size: 4rem; background: white; margin-bottom: 10px;
+            box-shadow: 4px 4px 0px var(--text);
         }
 
-        /* Detail Page - Responsive Split */
-        .detail-container { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 30px; 
-            max-width: 1100px; 
-            margin: 0 auto; 
-        }
-        .detail-img { border: 2px solid var(--text); border-radius: 20px; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; font-size: 6rem; background: var(--accent); width: 100%; }
+        .detail-container { display: flex; flex-direction: column; gap: 30px; max-width: 1100px; margin: 25px auto; }
+        .detail-img { border: 4px solid var(--text); border-radius: 12px; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; font-size: 8rem; background: white; width: 100%; box-shadow: 8px 8px 0px var(--yellow); }
         
-        .size-tile { justify-content: space-between; padding: 15px; margin-bottom: 10px; width: 100%; }
-        .size-tile.selected { background: var(--text); color: white; }
+        .size-tile { width: 100%; margin-bottom: 10px; justify-content: space-between; }
+        .size-tile.selected { background: var(--pink) !important; color: white; }
 
-        /* Story & Contact */
-        .story-box { background: var(--accent); padding: 60px 5%; border-top: 2px solid var(--text); text-align: center; }
-        
-        .contact-panel {
-            background: white;
-            padding: 60px 5%;
-            border-top: 2px solid var(--text);
-            display: grid;
-            grid-template-columns: 1fr; /* Stacked on mobile */
-            gap: 40px;
-        }
+        .story-box { background: white; padding: 60px 5%; border: 4px solid var(--text); margin: 40px 0; text-align: center; transform: rotate(-1deg); }
 
-        /* Checkout */
-        .checkout-grid { display: flex; flex-direction: column; gap: 40px; }
-        
-        /* Sidebar Responsive */
         #cart-sidebar {
             position: fixed; right: -100%; top: 0; width: 90%; max-width: 400px; height: 100%;
-            background: white; border-left: 3px solid var(--text); z-index: 2000;
-            padding: 30px 20px; transition: 0.3s ease;
+            background: white; border-left: 5px solid var(--text); z-index: 2000;
+            padding: 30px 20px; transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1);
         }
         #cart-sidebar.open { right: 0; }
 
-        footer { border-top: 2px solid var(--text); padding: 30px; text-align: center; background: var(--accent); font-size: 0.9rem; }
+        .empty-msg { text-align: center; padding: 40px 20px; font-style: italic; color: #666; }
 
-        /* DESKTOP ADJUSTMENTS */
+        footer { border-top: 4px solid var(--text); padding: 40px; text-align: center; background: var(--yellow); font-weight: bold; }
+
         @media (min-width: 768px) {
-            .logo { font-size: 2rem; }
-            .hero h1 { font-size: 4rem; }
+            .hero h1 { font-size: 6rem; }
             .cat-grid { grid-template-columns: repeat(3, 1fr); }
-            .product-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
-            .detail-container { flex-direction: row; }
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+            .detail-container { flex-direction: row; align-items: center; }
             .detail-img { flex: 1; }
-            .detail-info { flex: 1; }
-            .contact-panel { grid-template-columns: 1fr 1fr; }
-            .checkout-grid { flex-direction: row; }
-            .checkout-grid > div { flex: 1; }
-            .view-section { padding: 40px 10%; }
+            .detail-info { flex: 1; padding-left: 40px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="banner">SPRING SALE: 50% OFF ALL SNUGGLE ITEMS! 🌸</div>
+    <div class="banner">✨ HOLY PAWS! 50% OFF SNUGGLE ITEMS — DON'T BARK AT US, JUST BUY! ✨</div>
 
     <nav>
-        <div class="logo" onclick="showPage('home')">Thor & Pearl Co.</div>
+        <div class="logo" onclick="showPage('home')">THOR & PEARL</div>
         <div class="nav-btns">
-            <button class="btn-3d" onclick="toggleCart(true)">Cart (<span id="cart-count">0</span>)</button>
+            <button class="btn-3d" onclick="toggleCart(true)">🛒 <span id="cart-count">0</span></button>
         </div>
     </nav>
 
     <div id="home" class="view-section active">
         <div class="hero">
-            <h1>Thor & Pearl Co.</h1>
-            <p>Boutique essentials for your best friend.</p>
+            <h1>STUFF FOR DOGS (AND COOL HUMANS)</h1>
+            <p style="font-weight: bold; font-size: 1.2rem;">Boutique essentials that'll make the neighbor's cat jealous.</p>
         </div>
 
         <div class="cat-grid">
             <div class="cat-card" onclick="openCat('Costumes')">Wag-worthy Costumes</div>
-            <div class="cat-card" onclick="openCat('Snuggle')">
-                <div class="sale-pointer">⬇ SPRING SALE! ⬇</div>
-                Sweet Dreams & Snuggles
+            <div class="cat-card" onclick="openCat('Snuggle')" style="background: var(--pink); color: white;">
+                <div class="sale-pointer">CHAOS SALE!</div>
+                Nap-Time Essentials
             </div>
-            <div class="cat-card" onclick="openCat('Play')">Tough Toys & Fun</div>
+            <div class="cat-card" onclick="openCat('Play')">Tough Toys</div>
         </div>
 
         <div class="story-box">
-            <h2>Our Story ✨</h2>
-            <p>It all began one humid June afternoon in 2026. Two best friends realized that the joy of a dog remains constant. We set out to create toys and treats that were as playful as our own pets.</p>
-        </div>
-
-        <div class="contact-panel">
-            <div class="contact-col">
-                <h3>Get in Touch</h3>
-                <p>Email: <a href="mailto:hello@thorandpearl.com" style="color:var(--text)">hello@thorandpearl.com</a></p>
-                <p>Location: Worldwide Shipping 🌎</p>
-            </div>
-            <div class="contact-col">
-                <h3>Founders</h3>
-                <p><strong>[Your Name]</strong> & <strong>[Friend's Name]</strong></p>
-                <p>Est. 2026</p>
-            </div>
+            <h2 style="font-family: var(--font-heading); font-size: 2.5rem;">OUR ORIGIN STORY 🦴</h2>
+            <p>It was June 2026. The vibes were immaculate. Thor barked at a squirrel, Pearl stole a sock, and we realized: <strong>Dogs deserve better gear.</strong> We build stuff that survives zoomies and teething tantrums.</p>
         </div>
     </div>
 
     <div id="category" class="view-section">
-        <button class="back-btn-box" onclick="showPage('home')">← Home</button>
-        <h2 id="cat-title" style="font-family: var(--font-heading); font-size: 2rem; margin: 25px 0;">Category</h2>
+        <button class="back-btn-box" onclick="showPage('home')">← ESCAPE TO HOME</button>
+        <h2 id="cat-title" style="font-family: var(--font-heading); font-size: 3rem; margin: 30px 0; text-transform: uppercase;">Category</h2>
         <div class="product-grid" id="product-list"></div>
     </div>
 
@@ -248,53 +218,46 @@
     </div>
 
     <div id="checkout" class="view-section">
-        <button class="back-btn-box" onclick="showPage('home')">← Cancel</button>
-        <div class="checkout-grid">
-            <div>
-                <h2 style="font-family: var(--font-heading); font-size: 2rem; margin: 20px 0;">Your Order</h2>
-                <div id="checkout-items"></div>
-                <div id="sale-msg" style="color: #ff4757; font-weight: bold; margin: 15px 0; display: none;">🌸 SPRING DISCOUNT APPLIED!</div>
-                <div style="border-top: 2px solid var(--text); padding-top: 15px; font-size: 1.5rem; display: flex; justify-content: space-between;">
-                    <strong>Total:</strong>
-                    <span id="checkout-total">$0.00</span>
-                </div>
+        <button class="back-btn-box" onclick="showPage('home')">← I CHANGED MY MIND</button>
+        <div style="max-width: 800px; margin: 40px auto; border: 4px solid black; padding: 30px; background: white; box-shadow: 12px 12px 0px var(--pink);">
+            <h2 style="font-family: var(--font-heading); font-size: 2.5rem; margin-top: 0;">FINAL HAUL</h2>
+            <div id="checkout-items"></div>
+            <div id="sale-msg" style="color: var(--pink); font-weight: 900; margin: 20px 0; display: none; font-size: 1.2rem;">🔥 CHAOS DISCOUNT APPLIED!</div>
+            <div style="border-top: 4px solid var(--text); padding-top: 20px; font-size: 2rem; display: flex; justify-content: space-between;">
+                <strong>TOTAL:</strong>
+                <span id="checkout-total">$0.00</span>
             </div>
-            <div class="pay-list" style="display: flex; flex-direction: column; gap: 12px;">
-                <h2 style="font-family: var(--font-heading); font-size: 2rem;">Payment</h2>
-                <div class="pay-option">💳 Credit Card</div>
-                <div class="pay-option">📱 Apple Pay</div>
-                <button class="btn-3d" style="background: var(--text); color: white; width: 100%;" onclick="alert('Order Placed!')">Complete Purchase</button>
-            </div>
+            <button class="btn-3d" style="background: var(--yellow); width: 100%; margin-top: 30px; font-size: 1.5rem;" onclick="placeOrder()">GIVE IT TO ME!</button>
         </div>
     </div>
 
     <div id="cart-sidebar">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2 style="font-family: var(--font-heading); font-size: 1.8rem;">Basket</h2>
-            <span style="font-size: 2rem; cursor: pointer;" onclick="toggleCart(false)">&times;</span>
+            <h2 style="font-family: var(--font-heading); font-size: 2rem;">THE BASKET</h2>
+            <span style="font-size: 3rem; cursor: pointer;" onclick="toggleCart(false)">&times;</span>
         </div>
         <div id="cart-items-list"></div>
-        <div style="margin-top: 20px; border-top: 2px solid var(--text); padding-top: 15px;">
-            <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px;">
+        <div id="cart-footer" style="margin-top: 20px; border-top: 3px solid var(--text); padding-top: 15px;">
+            <div style="display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: bold; margin-bottom: 20px;">
                 <span>Total:</span>
                 <span id="cart-total-val">$0.00</span>
             </div>
-            <button class="btn-3d" style="width: 100%; background: var(--text); color: white;" onclick="showPage('checkout')">Checkout</button>
+            <button class="btn-3d" style="width: 100%; background: var(--pink); color: white;" onclick="showPage('checkout')">READY TO BUY</button>
         </div>
     </div>
 
-    <footer>Thor & Pearl Co. • 2026</footer>
+    <footer>Thor & Pearl Co. • Est. 2026 • Bark Loudly.</footer>
 
     <script>
         const products = [
-            { id: 1, cat: 'Costumes', name: 'Fancy Hotdog', price: 28, icon: '🌭', mat: 'Cotton-Poly', sizes: true },
-            { id: 2, cat: 'Costumes', name: 'Space Explorer', price: 35, icon: '🚀', mat: 'Aero-Mesh', sizes: true },
-            { id: 3, cat: 'Costumes', name: 'Sweet Banana', price: 24, icon: '🍌', mat: 'Cotton', sizes: true },
-            { id: 4, cat: 'Snuggle', name: 'Spa Brush', price: 55, icon: '💆‍♂️', fit: 'Long-haired breeds', sizes: false, isSale: true },
-            { id: 5, cat: 'Snuggle', name: 'Deep Sleep', price: 45, icon: '☁️', fit: 'Seniors & Puppies', sizes: false, isSale: true },
-            { id: 6, cat: 'Snuggle', name: 'Calm Blanket', price: 32, icon: '🛋️', fit: 'Anxious sleepers', sizes: false, isSale: true },
-            { id: 7, cat: 'Play', name: 'Pro Frisbee', price: 22, icon: '🥏', fit: 'High energy', sizes: false },
-            { id: 8, cat: 'Play', name: 'Tough Bone', price: 18, icon: '🦴', fit: 'Power chewers', sizes: false }
+            { id: 1, cat: 'Costumes', name: 'Fancy Hotdog', price: 28, icon: '🌭', desc: 'Transform your dog into the snack they always dream of. Mustard included.', mat: 'Plush Poly', sizes: true },
+            { id: 2, cat: 'Costumes', name: 'Space Explorer', price: 35, icon: '🚀', desc: 'To infinity and the backyard! Aero-mesh for breathable moon-walking.', mat: 'Aero-Mesh', sizes: true },
+            { id: 3, cat: 'Costumes', name: 'Sweet Banana', price: 24, icon: '🍌', desc: 'An appealing look for any pup. High in potassium vibes.', mat: 'Soft Cotton', sizes: true },
+            { id: 4, cat: 'Snuggle', name: 'Spa Brush', price: 55, icon: '💆‍♂️', desc: 'A deep-tissue massage for the goodest boys and girls.', fit: 'All breeds', sizes: false, isSale: true },
+            { id: 5, cat: 'Snuggle', name: 'Deep Sleep', price: 45, icon: '☁️', desc: 'Like sleeping on a marshmallow. Orthopedic foam for tired paws.', fit: 'Puppies & Seniors', sizes: false, isSale: true },
+            { id: 6, cat: 'Snuggle', name: 'Calm Blanket', price: 32, icon: '🛋️', desc: 'Weighted for anxiety. Feels like a hug from you.', fit: 'Anxious sleepers', sizes: false, isSale: true },
+            { id: 7, cat: 'Play', name: 'Pro Frisbee', price: 22, icon: '🥏', desc: 'Aerodynamic enough to reach the neighbors yard.', fit: 'High energy', sizes: false },
+            { id: 8, cat: 'Play', name: 'Tough Bone', price: 18, icon: '🦴', desc: 'Virtually indestructible. We challenge your dog.', fit: 'Power chewers', sizes: false }
         ];
 
         let cart = [];
@@ -317,8 +280,8 @@
                 list.innerHTML += `
                     <div class="p-card" onclick="viewProduct(${p.id})">
                         <div class="p-img">${p.icon}</div>
-                        <h3 style="font-size: 1.1rem; margin-bottom:5px;">${p.name}</h3>
-                        <p>${p.isSale ? `<strike>$${p.price}</strike> $${displayPrice}.00` : `$${p.price}.00`}</p>
+                        <h3 style="font-size: 1.2rem; margin-bottom:5px;">${p.name}</h3>
+                        <p style="font-weight:bold;">${p.isSale ? `<strike style="color:#999;">$${p.price.toFixed(2)}</strike> <span style="color:var(--pink)">$${displayPrice.toFixed(2)}</span>` : `$${p.price.toFixed(2)}`}</p>
                     </div>`;
             });
         }
@@ -329,21 +292,22 @@
             const displayPrice = p.isSale ? p.price / 2 : p.price;
             let sizeMarkup = p.sizes ? `
                 <div style="margin: 20px 0;">
-                    <div class="size-tile btn-3d" onclick="setS(this)">S <span>(Small)</span></div>
-                    <div class="size-tile btn-3d selected" onclick="setS(this)">M <span>(Medium)</span></div>
-                    <div class="size-tile btn-3d" onclick="setS(this)">L <span>(Large)</span></div>
-                </div>` : `<p style="margin: 15px 0;"><strong>Best For:</strong> ${p.fit}</p>`;
+                    <div class="size-tile btn-3d" onclick="setS(this)">S <span>(Tiny)</span></div>
+                    <div class="size-tile btn-3d selected" onclick="setS(this)">M <span>(Average)</span></div>
+                    <div class="size-tile btn-3d" onclick="setS(this)">L <span>(Chonk)</span></div>
+                </div>` : `<p style="margin: 20px 0; background:var(--yellow); padding:10px; border:2px solid black;"><strong>BEST FOR:</strong> ${p.fit}</p>`;
 
             content.innerHTML = `
-                <button class="back-btn-box" onclick="openCat('${p.cat}')">← Back</button>
-                <div class="detail-container" style="margin-top: 25px;">
+                <button class="back-btn-box" onclick="openCat('${p.cat}')">← GO BACK</button>
+                <div class="detail-container">
                     <div class="detail-img">${p.icon}</div>
                     <div class="detail-info">
-                        <h1 style="font-family: var(--font-heading); font-size: 2.5rem; line-height:1.1;">${p.name}</h1>
-                        <h2 style="font-size: 1.8rem; margin: 10px 0;">$${displayPrice}.00</h2>
-                        ${p.isSale ? '<p style="color: #ff4757; font-weight: bold; margin-bottom:10px;">🌸 50% OFF</p>' : ''}
+                        <h1 style="font-family: var(--font-heading); font-size: 3.5rem; line-height:1; margin:0;">${p.name}</h1>
+                        <h2 style="font-size: 2rem; margin: 15px 0;">$${displayPrice.toFixed(2)}</h2>
+                        <p style="font-size: 1.1rem; line-height: 1.4;">${p.desc}</p>
+                        ${p.isSale ? '<p style="color: var(--pink); font-weight: 900; letter-spacing:1px;">🔥 50% CHAOS DISCOUNT</p>' : ''}
                         ${sizeMarkup}
-                        <button class="btn-3d" style="width:100%; background:var(--text); color:white;" onclick="addToCart(${p.id})">Add to Basket</button>
+                        <button class="btn-3d" style="width:100%; background:var(--text); color:white; font-size:1.2rem; padding:20px;" onclick="addToCart(${p.id})">ADD TO BASKET</button>
                     </div>
                 </div>`;
             showPage('details');
@@ -368,13 +332,34 @@
         function updateUI() {
             document.getElementById('cart-count').innerText = cart.length;
             const list = document.getElementById('cart-items-list');
+            const foot = document.getElementById('cart-footer');
             list.innerHTML = '';
+            
+            if(cart.length === 0) {
+                list.innerHTML = '<div class="empty-msg">Your basket is looking a bit lonely. 🐾</div>';
+                foot.style.display = 'none';
+                return;
+            }
+
+            foot.style.display = 'block';
             let total = 0;
-            cart.forEach(i => {
+            cart.forEach((i, index) => {
                 total += i.finalPrice;
-                list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee; font-size:0.9rem;"><span>${i.name}</span><strong>$${i.finalPrice}.00</strong></div>`;
+                list.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:15px 0; border-bottom:2px solid #eee;">
+                        <div>
+                            <div style="font-weight:bold;">${i.name}</div>
+                            <div style="font-size:0.8rem; cursor:pointer; color:var(--pink);" onclick="removeItem(${index})">Remove</div>
+                        </div>
+                        <strong>$${i.finalPrice.toFixed(2)}</strong>
+                    </div>`;
             });
-            document.getElementById('cart-total-val').innerText = `$${total}.00`;
+            document.getElementById('cart-total-val').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateUI();
         }
 
         function renderCheckout() {
@@ -385,14 +370,18 @@
             cart.forEach(i => {
                 total += i.finalPrice;
                 if(i.isSale) hasSale = true;
-                list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.9rem;"><span>${i.name}</span><span>$${i.finalPrice}.00</span></div>`;
+                list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:1.1rem; border-bottom:1px dashed #ccc; padding-bottom:5px;"><span>${i.name}</span><span>$${i.finalPrice.toFixed(2)}</span></div>`;
             });
             document.getElementById('sale-msg').style.display = hasSale ? 'block' : 'none';
-            document.getElementById('checkout-total').innerText = `$${total}.00`;
+            document.getElementById('checkout-total').innerText = `$${total.toFixed(2)}`;
         }
-    </script>
-</body>
-</html>
+
+        function placeOrder() {
+            if(cart.length === 0) return alert("Your cart is empty, friend!");
+            alert('ORDER PLACED! Your pup will be so happy. 🐶🎉');
+            cart = [];
+            updateUI();
+            showPage('home');
         }
     </script>
 </body>
