@@ -85,12 +85,20 @@
         .search-area.active { display: block; }
         .search-input { width: 100%; padding: 15px; border: 2px solid var(--border); border-radius: 8px; font-size: 1.2rem; outline: none; }
 
+        /* --- CHECKOUT --- */
+        .checkout-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; max-width: 1200px; margin: 0 auto; }
+        .checkout-panel { border: 2px solid var(--border); padding: 25px; border-radius: 12px; background: white; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        input { width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 6px; margin-top: 5px; margin-bottom: 15px; }
+
         #cart-sidebar {
             position: fixed; right: -100%; top: 0; width: 350px; height: 100%;
             background: white; border-left: 3px solid var(--border); z-index: 2000;
             padding: 30px 20px; transition: 0.3s ease;
         }
         #cart-sidebar.open { right: 0; }
+
+        @media (max-width: 768px) { .checkout-container { grid-template-columns: 1fr; } #cart-sidebar { width: 100%; } }
     </style>
 </head>
 <body>
@@ -128,8 +136,8 @@
     <div id="story" class="view-section">
         <button class="back-btn-box" onclick="showPage('home')">← BACK</button>
         <div style="max-width: 800px; margin: 40px auto; text-align: center;">
-            <h2>Our Journey</h2>
-            <p>Founded in 2026, we focus on high-quality pet gear that lasts.</p>
+            <h2 style="font-family: var(--font-heading); font-size: 2.5rem;">How We Started</h2>
+            <p style="font-size: 1.2rem; margin-top: 20px;">In the summer of 2026, a friend and I noticed that the toys and gear his dogs were using were consistently failing and lacked any real quality. We realized that our pets deserved something significantly better—products that would truly outshine everything else on the market—so we decided to take matters into our own hands and build Thor & Pearl Co. from the ground up.</p>
         </div>
     </div>
 
@@ -143,13 +151,34 @@
         <div id="detail-content"></div>
     </div>
 
+    <div id="checkout" class="view-section">
+        <button class="back-btn-box" onclick="showPage('home')" style="margin-bottom: 20px;">← BACK TO SHOP</button>
+        <div class="checkout-container">
+            <div class="checkout-panel">
+                <h3>Shipping & Contact</h3>
+                <input type="email" placeholder="Email Address">
+                <input type="text" placeholder="Full Name">
+                <input type="text" placeholder="Shipping Address">
+                <input type="text" placeholder="Card Number">
+            </div>
+            <div class="checkout-panel" style="background: var(--accent);">
+                <h3>Summary</h3>
+                <div id="checkout-items"></div>
+                <div class="summary-row" style="font-weight:800; border-top: 2px solid black; padding-top:10px;">
+                    <span>Total</span><span id="sum-total">$0.00</span>
+                </div>
+                <button class="btn-3d" style="width:100%; background:var(--primary); color:white; margin-top:20px;" onclick="alert('Order Successful!')">PAY NOW</button>
+            </div>
+        </div>
+    </div>
+
     <div id="cart-sidebar">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <h3>Your Basket</h3>
             <span style="font-size: 2rem; cursor: pointer;" onclick="toggleCart(false)">&times;</span>
         </div>
         <div id="cart-items-list"></div>
-        <button class="btn-3d" style="width: 100%; background: var(--secondary); margin-top:20px;">CHECKOUT</button>
+        <button class="btn-3d" style="width: 100%; background: var(--secondary); margin-top:20px;" onclick="showPage('checkout')">CHECKOUT</button>
     </div>
 
     <script>
@@ -169,6 +198,8 @@
             document.getElementById(pageId).classList.add('active');
             if (pageId === 'home') document.getElementById('search-box').classList.remove('active');
             toggleCart(false);
+            window.scrollTo(0,0);
+            if(pageId === 'checkout') renderCheckout();
         }
 
         function toggleSearch() {
@@ -257,6 +288,15 @@
         }
 
         function toggleCart(open) { document.getElementById('cart-sidebar').classList.toggle('open', open); }
+
+        function renderCheckout() {
+            let total = 0;
+            document.getElementById('checkout-items').innerHTML = cart.map(i => {
+                total += i.finalPrice;
+                return `<div class="summary-row"><span>${i.name}</span><span>$${i.finalPrice.toFixed(2)}</span></div>`;
+            }).join('');
+            document.getElementById('sum-total').innerText = `$${(total).toFixed(2)}`;
+        }
     </script>
 </body>
 </html>
