@@ -9,8 +9,8 @@
         :root {
             --bg: #ffffff;
             --text: #1a1a1a;
-            --primary: #0056b3; /* Professional Blue */
-            --secondary: #ffd700; /* Golden Yellow */
+            --primary: #0056b3; 
+            --secondary: #ffd700; 
             --accent: #eef2f7;
             --border: #1a1a1a;
             --font-main: 'Inter', sans-serif;
@@ -20,16 +20,10 @@
         }
 
         * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: var(--font-main);
-            margin: 0;
-            line-height: 1.6;
-        }
+        body { background-color: var(--bg); color: var(--text); font-family: var(--font-main); margin: 0; line-height: 1.6; }
 
-        /* --- UI COMPONENTS --- */
-        .btn-3d, .cat-card, .size-tile, .back-btn-box {
+        /* --- DYNAMIC UI ELEMENTS --- */
+        .btn-3d, .cat-card, .size-tile, .back-btn-box, .p-card {
             cursor: pointer;
             transition: all 0.2s ease;
             border: 2px solid var(--border);
@@ -43,17 +37,27 @@
             justify-content: center;
             text-decoration: none;
             color: var(--text);
-            padding: 10px 18px;
+            top: 0;
         }
 
-        .btn-3d:hover, .cat-card:hover, .size-tile:hover, .back-btn-box:hover {
-            top: -2px;
+        /* Hover states for all interactive elements */
+        .btn-3d:hover, .cat-card:hover, .size-tile:hover, .back-btn-box:hover, .p-card:hover {
+            top: -3px;
             transform: rotate(-1deg);
             box-shadow: var(--btn-shadow-hover);
             background: var(--accent);
         }
 
-        .btn-3d:active { top: 2px; box-shadow: 1px 1px 0px var(--text); }
+        .size-tile.selected {
+            background: var(--primary) !important;
+            color: white !important;
+            transform: scale(1.02);
+            box-shadow: 2px 2px 0px var(--text);
+        }
+
+        /* Snuggle Sale Dynamic Flare */
+        .sale-item { border-color: var(--primary); }
+        .sale-item:hover { background: #f0f7ff !important; transform: rotate(1deg) scale(1.03) !important; }
 
         nav {
             padding: 1rem 5%;
@@ -67,56 +71,38 @@
             z-index: 1000;
         }
 
+        .nav-right { display: flex; gap: 15px; align-items: center; }
         .logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; cursor: pointer; color: var(--primary); }
         
-        .banner {
-            background: var(--primary);
-            color: white;
-            padding: 8px;
-            text-align: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
+        .banner { background: var(--primary); color: white; padding: 8px; text-align: center; font-size: 0.85rem; font-weight: 600; }
 
         /* --- LAYOUTS --- */
         .view-section { display: none; padding: 40px 5%; max-width: 1300px; margin: 0 auto; }
         .active { display: block; }
 
         .hero { text-align: center; padding: 60px 20px; background: var(--secondary); border: 2px solid var(--border); border-radius: 12px; margin-bottom: 40px; box-shadow: 8px 8px 0px var(--primary); }
-        .hero h1 { font-family: var(--font-heading); font-size: 3rem; margin: 0 0 10px 0; text-transform: uppercase; }
-
-        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .cat-card { padding: 40px 20px; font-size: 1.2rem; flex-direction: column; }
-
+        
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 30px; }
-        .p-card { text-align: center; cursor: pointer; }
-        .p-img { border: 2px solid var(--border); border-radius: 12px; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; font-size: 4rem; background: white; margin-bottom: 12px; transition: 0.2s; }
-        .p-card:hover .p-img { background: var(--accent); }
+        .p-card { flex-direction: column; padding: 20px; text-align: center; }
+        .p-img { font-size: 4rem; margin-bottom: 10px; }
 
-        /* --- CHECKOUT UI --- */
-        .checkout-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        /* --- CHECKOUT --- */
+        .checkout-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .checkout-panel { border: 2px solid var(--border); padding: 25px; border-radius: 12px; background: white; }
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 5px; }
-        input[type="text"], input[type="email"], input[type="tel"] {
-            width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 6px; font-family: var(--font-main);
-        }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem; }
-        .total-row { border-top: 2px solid var(--border); padding-top: 15px; font-weight: 800; font-size: 1.4rem; }
+        input { width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 6px; margin-top: 5px; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
 
-        /* --- SIDEBAR --- */
         #cart-sidebar {
             position: fixed; right: -100%; top: 0; width: 350px; height: 100%;
             background: white; border-left: 3px solid var(--border); z-index: 2000;
-            padding: 30px 20px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 30px 20px; transition: 0.3s ease;
         }
         #cart-sidebar.open { right: 0; }
 
-        @media (max-width: 768px) {
-            .checkout-container { grid-template-columns: 1fr; }
-            #cart-sidebar { width: 100%; }
-        }
+        .search-bar { width: 100%; max-width: 500px; margin: 0 auto 30px auto; display: none; }
+        .search-bar.visible { display: flex; gap: 10px; }
+
+        @media (max-width: 768px) { .checkout-container { grid-template-columns: 1fr; } #cart-sidebar { width: 100%; } }
     </style>
 </head>
 <body>
@@ -125,10 +111,17 @@
 
     <nav>
         <div class="logo" onclick="showPage('home')">THOR & PEARL CO.</div>
-        <div class="nav-btns">
+        <div class="nav-right">
+            <button class="btn-3d" onclick="toggleSearch()">🔍</button>
             <button class="btn-3d" onclick="toggleCart(true)">CART (<span id="cart-count">0</span>)</button>
         </div>
     </nav>
+
+    <div id="search-area" class="view-section" style="padding-bottom: 0;">
+        <div class="search-bar id='search-container'">
+            <input type="text" id="product-search" placeholder="Search for toys, costumes..." onkeyup="handleSearch()">
+        </div>
+    </div>
 
     <div id="home" class="view-section active">
         <div class="hero">
@@ -137,9 +130,9 @@
             <button class="btn-3d" onclick="showPage('story')" style="margin-top: 20px; background: white;">OUR STORY</button>
         </div>
 
-        <div class="cat-grid">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
             <div class="cat-card" onclick="openCat('Costumes')">Wag-worthy Costumes</div>
-            <div class="cat-card" onclick="openCat('Snuggle')" style="background: var(--accent);">
+            <div class="cat-card sale-item" onclick="openCat('Snuggle')" style="background: #fffdf0;">
                 <span style="font-size: 0.7rem; color: var(--primary); font-weight: 800;">SPRING SALE</span>
                 Snuggle Essentials
             </div>
@@ -148,16 +141,16 @@
     </div>
 
     <div id="story" class="view-section">
-        <button class="back-btn-box" onclick="showPage('home')">← BACK</button>
-        <div style="max-width: 700px; margin: 40px auto; text-align: center;">
-            <h2 style="font-family: var(--font-heading); font-size: 2.5rem;">The Summer of 2026</h2>
+        <button class="back-btn-box" onclick="showPage('home')">← BACK TO HOME</button>
+        <div style="max-width: 700px; margin: 40px auto;">
+            <h2 style="font-family: var(--font-heading); font-size: 2.5rem; text-align: center;">The Summer of 2026</h2>
             <p>During the summer of 2026, we realized that our own dogs were consistently underwhelmed by the toys available on the market, which often failed to hit the mark on both durability and genuine fun. We observed that most products were either indestructible but boring, or engaging but easily shredded within minutes.</p>
             <p>Driven by the desire to provide Thor and Pearl with better options, we began prototyping our own designs that combined high-engagement textures with professional-grade materials. Today, Thor & Pearl Co. stands as a testament to that mission, ensuring every pup has access to gear that is as playful as it is permanent.</p>
         </div>
     </div>
 
     <div id="category" class="view-section">
-        <button class="back-btn-box" onclick="showPage('home')">← HOME</button>
+        <button class="back-btn-box" onclick="showPage('home')">← BACK TO HOME</button>
         <h2 id="cat-title" style="font-family: var(--font-heading); font-size: 2.5rem; margin: 25px 0;">Category</h2>
         <div class="product-grid" id="product-list"></div>
     </div>
@@ -167,54 +160,42 @@
     </div>
 
     <div id="checkout" class="view-section">
-        <h2 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 30px;">Checkout</h2>
+        <button class="back-btn-box" onclick="showPage('home')" style="margin-bottom: 20px;">← CONTINUE SHOPPING</button>
         <div class="checkout-container">
             <div class="checkout-panel">
-                <h3 style="margin-top:0">Shipping & Contact</h3>
-                <div class="input-group">
-                    <label>Email Address</label>
-                    <input type="email" placeholder="you@example.com">
-                </div>
+                <h3>Shipping & Contact</h3>
+                <input type="email" placeholder="Email Address">
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <div class="input-group"><label>First Name</label><input type="text"></div>
-                    <div class="input-group"><label>Last Name</label><input type="text"></div>
+                    <input type="text" placeholder="First Name">
+                    <input type="text" placeholder="Last Name">
                 </div>
-                <div class="input-group"><label>Address</label><input type="text"></div>
+                <input type="text" placeholder="Address">
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
-                    <div class="input-group"><label>City</label><input type="text"></div>
-                    <div class="input-group"><label>State</label><input type="text"></div>
-                    <div class="input-group"><label>Zip</label><input type="text"></div>
+                    <input type="text" placeholder="City">
+                    <input type="text" placeholder="State">
+                    <input type="text" placeholder="Zip">
                 </div>
-                <div class="input-group">
-                    <label>Mobile Number (For Shipping Updates)</label>
-                    <input type="tel" placeholder="(555) 000-0000">
-                </div>
-                <div style="margin-top: 10px;">
-                    <input type="checkbox" id="save-info"> <label for="save-info" style="font-size:0.85rem">Save my information for next time</label>
-                </div>
-                <h3 style="margin-top:30px">Payment Method</h3>
-                <div class="input-group"><label>Card Number</label><input type="text" placeholder="xxxx xxxx xxxx xxxx"></div>
+                <input type="tel" placeholder="Mobile Number (Optional)">
+                <h3 style="margin-top:20px">Payment</h3>
+                <input type="text" placeholder="Card Number">
             </div>
 
             <div class="checkout-panel" style="background: var(--accent);">
-                <h3 style="margin-top:0">Order Summary</h3>
-                <div id="checkout-items" style="margin-bottom: 20px;"></div>
-                
-                <div class="input-group" style="display:flex; gap:10px;">
+                <h3>Order Summary</h3>
+                <div id="checkout-items"></div>
+                <div style="display:flex; gap:10px; margin: 15px 0;">
                     <input type="text" id="coupon-input" placeholder="Promo Code">
                     <button class="btn-3d" onclick="applyCoupon()" style="background:var(--secondary)">APPLY</button>
                 </div>
-
                 <div class="summary-row"><span>Subtotal</span><span id="sum-sub">$0.00</span></div>
-                <div class="summary-row"><span>Estimated Shipping</span><span>$5.99</span></div>
-                <div class="summary-row"><span>Taxes</span><span id="sum-tax">$0.00</span></div>
+                <div class="summary-row"><span>Shipping</span><span>$5.99</span></div>
                 <div class="summary-row" id="coupon-row" style="display:none; color: var(--primary); font-weight:700;">
                     <span>Discount (ThorSpring)</span><span>-$10.00</span>
                 </div>
-                <div class="summary-row total-row">
+                <div class="summary-row" style="font-weight:800; font-size:1.4rem; border-top:2px solid black; pt:10px;">
                     <span>Total</span><span id="sum-total">$0.00</span>
                 </div>
-                <button class="btn-3d" style="width:100%; background:var(--primary); color:white; margin-top:20px; font-size:1.1rem;" onclick="alert('Order Successfully Processed!')">PAY NOW</button>
+                <button class="btn-3d" style="width:100%; background:var(--primary); color:white; margin-top:20px;" onclick="alert('Order Processed!')">PAY NOW</button>
             </div>
         </div>
     </div>
@@ -226,7 +207,7 @@
         </div>
         <div id="cart-items-list"></div>
         <div style="margin-top: 20px; border-top: 2px solid var(--border); padding-top: 15px;">
-            <button class="btn-3d" style="width: 100%; background: var(--secondary);" onclick="showPage('checkout')">CHECKOUT</button>
+            <button class="btn-3d" style="width: 100%; background: var(--secondary);" onclick="showPage('checkout')">GO TO CHECKOUT</button>
         </div>
     </div>
 
@@ -237,7 +218,7 @@
             { id: 4, cat: 'Snuggle', name: 'Spa Brush', price: 55, icon: '💆‍♂️', desc: 'Best for: Long-haired breeds needing daily grooming.', sizes: false, isSale: true },
             { id: 5, cat: 'Snuggle', name: 'Deep Sleep', price: 45, icon: '☁️', desc: 'Memory foam. Best for: Senior dogs or heavy sleepers.', sizes: false, isSale: true },
             { id: 7, cat: 'Play', name: 'Pro Frisbee', price: 22, icon: '🥏', desc: 'Flexible rubber. Best for: High-energy retrievers.', sizes: false },
-            { id: 8, cat: 'Play', name: 'Tough Bone', price: 18, icon: '🦴', desc: 'Indestructible nylon. Best for: Extreme chewers (Pitbulls/Labs).', sizes: false }
+            { id: 8, cat: 'Play', name: 'Tough Bone', price: 18, icon: '🦴', desc: 'Indestructible nylon. Best for: Extreme chewers.', sizes: false }
         ];
 
         let cart = [];
@@ -247,54 +228,70 @@
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             toggleCart(false);
-            window.scrollTo(0,0);
             if(pageId === 'checkout') renderCheckout();
+        }
+
+        function toggleSearch() {
+            const bar = document.getElementById('search-area');
+            bar.classList.toggle('active');
+            document.querySelector('.search-bar').classList.toggle('visible');
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('product-search').value.toLowerCase();
+            const results = products.filter(p => p.name.toLowerCase().includes(query));
+            const list = document.getElementById('product-list');
+            showPage('category');
+            document.getElementById('cat-title').innerText = "Search Results";
+            renderProductGrid(results);
         }
 
         function openCat(catName) {
             showPage('category');
             document.getElementById('cat-title').innerText = catName;
+            const filtered = products.filter(p => p.cat === catName);
+            renderProductGrid(filtered);
+        }
+
+        function renderProductGrid(items) {
             const list = document.getElementById('product-list');
-            list.innerHTML = '';
-            products.filter(p => p.cat === catName).forEach(p => {
-                const displayPrice = p.isSale ? p.price / 2 : p.price;
-                list.innerHTML += `
-                    <div class="p-card" onclick="viewProduct(${p.id})">
+            list.innerHTML = items.map(p => {
+                const price = p.isSale ? p.price / 2 : p.price;
+                return `
+                    <div class="p-card ${p.isSale ? 'sale-item' : ''}" onclick="viewProduct(${p.id})">
                         <div class="p-img">${p.icon}</div>
-                        <h3 style="margin:0">${p.name}</h3>
-                        <p>$${displayPrice.toFixed(2)} ${p.isSale ? '<span style="color:red">SALE</span>' : ''}</p>
+                        <h3>${p.name}</h3>
+                        <p>$${price.toFixed(2)} ${p.isSale ? '<span style="color:var(--primary); font-weight:800;">SALE</span>' : ''}</p>
                     </div>`;
-            });
+            }).join('');
         }
 
         function viewProduct(id) {
             const p = products.find(i => i.id === id);
-            const content = document.getElementById('detail-content');
             const displayPrice = p.isSale ? p.price / 2 : p.price;
             let sizeMarkup = p.sizes ? `
-                <div style="margin: 20px 0;">
-                    <div class="size-tile" onclick="setS(this)">S <span style="font-weight:400; font-size:0.8rem; margin-left:10px;">Fits: Terriers/Pugs</span></div>
-                    <div class="size-tile selected" onclick="setS(this)">M <span style="font-weight:400; font-size:0.8rem; margin-left:10px;">Fits: Beagles/Spaniels</span></div>
-                    <div class="size-tile" onclick="setS(this)">L <span style="font-weight:400; font-size:0.8rem; margin-left:10px;">Fits: Retreivers/Huskies</span></div>
-                </div>` : `<p style="margin: 20px 0; border:1px solid #ccc; padding:10px;"><strong>NOTE:</strong> ${p.desc}</p>`;
+                <div style="margin: 20px 0; display: flex; flex-direction: column; gap: 10px;">
+                    <div class="size-tile" onclick="selectSize(this)">S <span style="font-size:0.7rem; opacity:0.7; margin-left:10px;">(Terriers/Pugs)</span></div>
+                    <div class="size-tile selected" onclick="selectSize(this)">M <span style="font-size:0.7rem; opacity:0.7; margin-left:10px;">(Beagles/Spaniels)</span></div>
+                    <div class="size-tile" onclick="selectSize(this)">L <span style="font-size:0.7rem; opacity:0.7; margin-left:10px;">(Retrievers/Labs)</span></div>
+                </div>` : `<p style="padding:15px; border:1px solid #ddd; margin:20px 0;">${p.desc}</p>`;
 
-            content.innerHTML = `
-                <button class="back-btn-box" onclick="openCat('${p.cat}')">← BACK</button>
+            document.getElementById('detail-content').innerHTML = `
+                <button class="back-btn-box" onclick="openCat('${p.cat}')">← BACK TO ${p.cat.toUpperCase()}</button>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:40px; margin-top:30px;">
-                    <div class="p-img" style="font-size:8rem">${p.icon}</div>
+                    <div class="p-card" style="font-size:8rem; height:300px;">${p.icon}</div>
                     <div>
-                        <h1 style="font-family:var(--font-heading); font-size:3rem; margin:0;">${p.name}</h1>
-                        <h2 style="color:var(--primary)">$${displayPrice.toFixed(2)}</h2>
-                        <p>${p.desc}</p>
+                        <h1 style="font-family:var(--font-heading); font-size:2.5rem; margin:0;">${p.name}</h1>
+                        <h2 style="color:var(--primary);">$${displayPrice.toFixed(2)}</h2>
                         ${sizeMarkup}
-                        <button class="btn-3d" style="width:100%; background:var(--primary); color:white;" onclick="addToCart(${p.id})">ADD TO BASKET</button>
+                        <button class="btn-3d" style="width:100%; background:var(--primary); color:white; padding:15px;" onclick="addToCart(${p.id})">ADD TO BASKET</button>
                     </div>
                 </div>`;
             showPage('details');
         }
 
-        function setS(el) {
-            document.querySelectorAll('.size-tile').forEach(t => t.classList.remove('selected'));
+        function selectSize(el) {
+            el.parentElement.querySelectorAll('.size-tile').forEach(t => t.classList.remove('selected'));
             el.classList.add('selected');
         }
 
@@ -307,44 +304,31 @@
 
         function updateUI() {
             document.getElementById('cart-count').innerText = cart.length;
-            const list = document.getElementById('cart-items-list');
-            list.innerHTML = cart.map((i, index) => `
+            document.getElementById('cart-items-list').innerHTML = cart.map(i => `
                 <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee;">
-                    <span>${i.name}</span>
-                    <strong>$${i.finalPrice.toFixed(2)}</strong>
+                    <span>${i.name}</span><strong>$${i.finalPrice.toFixed(2)}</strong>
                 </div>`).join('');
         }
 
         function toggleCart(open) { document.getElementById('cart-sidebar').classList.toggle('open', open); }
 
+        function renderCheckout() {
+            let sub = 0;
+            document.getElementById('checkout-items').innerHTML = cart.map(i => {
+                sub += i.finalPrice;
+                return `<div class="summary-row"><span>${i.name}</span><span>$${i.finalPrice.toFixed(2)}</span></div>`;
+            }).join('');
+            const total = (sub + 5.99) - (couponApplied ? 10 : 0);
+            document.getElementById('sum-sub').innerText = `$${sub.toFixed(2)}`;
+            document.getElementById('sum-total').innerText = `$${Math.max(0, total).toFixed(2)}`;
+        }
+
         function applyCoupon() {
-            const code = document.getElementById('coupon-input').value;
-            if(code === 'ThorSpring') {
+            if(document.getElementById('coupon-input').value === 'ThorSpring') {
                 couponApplied = true;
                 document.getElementById('coupon-row').style.display = 'flex';
                 renderCheckout();
-            } else { alert("Invalid Code"); }
-        }
-
-        function renderCheckout() {
-            const list = document.getElementById('checkout-items');
-            let subtotal = 0;
-            list.innerHTML = cart.map(i => {
-                subtotal += i.finalPrice;
-                return `<div class="summary-row"><span>${i.name}</span><span>$${i.finalPrice.toFixed(2)}</span></div>`;
-            }).join('');
-
-            const tax = subtotal * 0.08;
-            const discount = couponApplied ? 10 : 0;
-            const total = (subtotal + tax + 5.99) - discount;
-
-            document.getElementById('sum-sub').innerText = `$${subtotal.toFixed(2)}`;
-            document.getElementById('sum-tax').innerText = `$${tax.toFixed(2)}`;
-            document.getElementById('sum-total').innerText = `$${Math.max(0, total).toFixed(2)}`;
-        }
-    </script>
-</body>
-</html>
+            }
         }
     </script>
 </body>
