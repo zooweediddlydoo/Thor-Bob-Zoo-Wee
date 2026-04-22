@@ -42,7 +42,6 @@
         .p-card { padding: 15px; cursor: pointer; }
         .p-img { font-size: 3.5rem; text-align: center; margin-bottom: 10px; }
 
-        /* CHECKOUT & FORM STYLING */
         .checkout-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 1100px; margin: 0 auto; }
         @media (min-width: 800px) { .checkout-grid { grid-template-columns: 1.5fr 1fr; } }
 
@@ -56,7 +55,9 @@
         #cart-sidebar { position: fixed; right: -100%; top: 0; width: 100%; max-width: 380px; height: 100%; background: white; border-left: 3px solid var(--border); z-index: 2000; padding: 20px; transition: 0.3s ease; }
         #cart-sidebar.open { right: 0; }
 
-        .verdict-box { border-left: 4px solid var(--primary); padding-left: 15px; margin: 15px 0; font-style: italic; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
+        table td, table th { border: 1px solid var(--border); padding: 8px; text-align: left; }
+        table th { background: #eee; }
     </style>
 </head>
 <body>
@@ -97,9 +98,8 @@
     <div id="checkout" class="view-section">
         <h2 style="font-family: var(--font-heading);">Secure Checkout</h2>
         <div class="checkout-grid">
-            
             <div class="checkout-panel" style="padding: 20px;">
-                <h3 style="margin-top:0;">1. Shipping Information</h3>
+                <h3>1. Shipping Information</h3>
                 <div class="input-group">
                     <label>Dog's Name (For the surprise pack!)</label>
                     <input type="text" id="dog-name" placeholder="e.g. Thor">
@@ -110,21 +110,14 @@
                 </div>
                 <div class="input-group"><label>Address</label><input type="text" placeholder="123 Bark Street"></div>
                 
-                <h3 style="margin-top:30px;">2. Payment Method</h3>
-                <div class="input-group">
-                    <label>Card Number</label>
-                    <input type="text" placeholder="0000 0000 0000 0000">
-                </div>
+                <h3>2. Payment Method</h3>
+                <div class="input-group"><label>Card Number</label><input type="text" placeholder="0000 0000 0000 0000"></div>
                 <div class="card-row">
                     <div class="input-group"><label>Expiry</label><input type="text" placeholder="MM/YY"></div>
                     <div class="input-group"><label>CVC</label><input type="text" placeholder="123"></div>
                     <div class="input-group">
                         <label>Card Type</label>
-                        <select>
-                            <option>Visa</option>
-                            <option>Mastercard</option>
-                            <option>Amex</option>
-                        </select>
+                        <select><option>Visa</option><option>Mastercard</option><option>Amex</option></select>
                     </div>
                 </div>
 
@@ -134,26 +127,21 @@
                 </div>
 
                 <div id="billing-section" style="display:none; margin-top:20px; border-top: 1px solid #ddd; padding-top:20px;">
-                    <h3 style="margin-top:0;">3. Billing Address</h3>
-                    <div class="input-group">
-                        <label>Billing Street Address</label>
-                        <input type="text" placeholder="Street Address">
-                    </div>
+                    <h3>3. Billing Address</h3>
+                    <div class="input-group"><label>Billing Street Address</label><input type="text"></div>
                 </div>
             </div>
 
             <div class="checkout-panel" style="background: #fff; padding: 20px; height: fit-content;">
-                <h3 style="margin-top:0;">Order Summary</h3>
+                <h3>Order Summary</h3>
                 <div id="checkout-summary"></div>
                 <div style="border-top: 3px solid var(--border); margin-top: 20px; padding-top: 15px;">
                     <div style="display:flex; justify-content:space-between; font-weight: 900; font-size: 1.2rem;">
-                        <span>Total</span>
-                        <span id="final-total">$0.00</span>
+                        <span>Total</span><span id="final-total">$0.00</span>
                     </div>
                 </div>
                 <button class="btn-3d" style="width:100%; background:var(--primary); color:white; margin-top:20px; padding:20px;" onclick="placeOrder()">COMPLETE PURCHASE</button>
             </div>
-
         </div>
     </div>
 
@@ -171,23 +159,33 @@
             { 
                 id: 1, name: 'Tough Bone', price: 18, icon: '🦴',
                 bestFor: 'Heavy Chewers',
-                desc: 'Reinforced non-toxic nylon designed for dogs that usually destroy toys within minutes.',
-                thor: 'This is the only bone I haven’t managed to crack. It’s my daily go-to.',
-                pearl: 'A bit big for me, but I like to guard it while Thor naps.'
+                materials: 'Reinforced non-toxic nylon.',
+                desc: 'Textured surface helps clean teeth while standing up to high-pressure gnawing.'
             },
             { 
                 id: 2, name: 'Pro Frisbee', price: 22, icon: '🥏',
-                bestFor: 'High-Energy Pups',
-                desc: 'Lightweight but puncture-resistant. It flies true and stays visible in tall grass.',
-                thor: 'I will chase this until my legs give out. 10/10.',
-                pearl: 'It’s yellow, which is one of the few colors I see clearly. I love it.'
+                bestFor: 'High-Energy Dogs',
+                materials: 'BPA-free flexible polymer.',
+                desc: 'Soft-edge design prevents gum injury during mid-air catches. Floats in water.'
             },
             { 
                 id: 3, name: 'Cloud Bed', price: 55, icon: '☁️',
                 bestFor: 'All Day Lounging',
-                desc: 'Memory foam base with a removable, washable cover. Built to withstand nesting and scratching.',
-                thor: 'I am a king on this throne. No more sleeping on the hard wood.',
-                pearl: 'It’s so soft it feels like I’m floating. Perfect for my 14 daily naps.'
+                materials: 'Orthopedic memory foam / Microfiber cover.',
+                desc: 'Supports joints and maintains shape over time. Removable, machine-washable cover.'
+            },
+            { 
+                id: 4, name: 'Weather-Proof Coat', price: 35, icon: '🧥',
+                bestFor: 'Outdoor Adventure',
+                materials: 'Double-layered waterproof ripstop nylon with fleece lining.',
+                desc: 'Keep your dog dry and warm. Features a leash portal and adjustable belly straps.',
+                sizing: true
+            },
+            { 
+                id: 5, name: 'Reflective Safety Vest', price: 15, icon: '🦺',
+                bestFor: 'Night Walks',
+                materials: 'High-visibility neon mesh with 3M reflective strips.',
+                desc: 'Increases visibility from up to 500ft away. Lightweight and breathable for summer nights.'
             }
         ];
 
@@ -213,22 +211,28 @@
 
         function viewProduct(id) {
             const p = products.find(i => i.id === id);
+            let sizeTable = p.sizing ? `
+                <p><strong>SIZING GUIDE:</strong></p>
+                <table>
+                    <tr><th>Size</th><th>Fits Breeds Like...</th></tr>
+                    <tr><td>XS</td><td>Chihuahuas, Dachshunds, Toy Yorkies</td></tr>
+                    <tr><td>S</td><td>Corgis, Jack Russell Terriers, Pugs</td></tr>
+                    <tr><td>M</td><td>Beagles, Cocker Spaniels, Border Collies</td></tr>
+                    <tr><td>L</td><td>Golden Retrievers, Labs, Boxers</td></tr>
+                    <tr><td>XL</td><td>German Shepherds, Great Danes, Rottweilers</td></tr>
+                </table>
+            ` : '';
+
             document.getElementById('detail-content').innerHTML = `
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
                     <div class="p-card" style="font-size: 8rem; display: flex; align-items: center; justify-content: center; padding: 40px;">${p.icon}</div>
                     <div>
                         <h1 style="margin-top:0;">${p.name}</h1>
                         <h2 style="color:var(--primary);">$${p.price}</h2>
+                        <p><strong>MATERIALS:</strong> ${p.materials}</p>
                         <p><strong>BEST FOR:</strong> ${p.bestFor}</p>
                         <p>${p.desc}</p>
-                        
-                        <div class="verdict-box">
-                            <strong>Thor's Verdict:</strong> "${p.thor}"
-                        </div>
-                        <div class="verdict-box" style="border-color: var(--secondary);">
-                            <strong>Pearl's Verdict:</strong> "${p.pearl}"
-                        </div>
-                        
+                        ${sizeTable}
                         <button class="btn-3d" style="width:100%; background:var(--secondary); margin-top:20px;" onclick="addToCart(${p.id})">ADD TO BASKET</button>
                     </div>
                 </div>
@@ -263,16 +267,13 @@
         }
 
         function toggleBilling() {
-            const section = document.getElementById('billing-section');
-            section.style.display = document.getElementById('same-address').checked ? 'none' : 'block';
+            document.getElementById('billing-section').style.display = document.getElementById('same-address').checked ? 'none' : 'block';
         }
 
         function placeOrder() {
             const name = document.getElementById('dog-name').value || "your pup";
-            alert(`Purchase Complete! Thor & Pearl are doing a happy dance. We'll get this out to ${name} ASAP!`);
-            cart = [];
-            updateCart();
-            showPage('home');
+            alert(`Purchase Complete! We'll get this out to ${name} ASAP!`);
+            cart = []; updateCart(); showPage('home');
         }
 
         renderHome();
