@@ -20,7 +20,7 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg); color: var(--text); font-family: var(--font-main); margin: 0; line-height: 1.5; }
 
-        .btn-3d, .p-card, .checkout-panel, .info-box {
+        .btn-3d, .p-card, .checkout-panel {
             border: 3px solid var(--border);
             border-radius: 4px;
             background: white;
@@ -28,7 +28,7 @@
             position: relative;
         }
 
-        .btn-3d { cursor: pointer; font-weight: 900; text-transform: uppercase; padding: 12px; transition: 0.1s; display: inline-block; text-align: center; }
+        .btn-3d { cursor: pointer; font-weight: 900; text-transform: uppercase; padding: 12px; transition: 0.1s; display: inline-block; text-align: center; border: 3px solid var(--border); text-decoration: none; color: inherit; }
         .btn-3d:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--border); }
 
         nav { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--border); background: white; position: sticky; top: 0; z-index: 1000; }
@@ -44,29 +44,28 @@
 
         .input-group { margin-bottom: 15px; }
         label { display: block; font-weight: 800; font-size: 0.75rem; margin-bottom: 5px; text-transform: uppercase; }
-        input, select { width: 100%; padding: 12px; border: 2px solid var(--border); font-size: 16px; border-radius: 0; background: white; }
+        input, select { width: 100%; padding: 12px; border: 2px solid var(--border); font-size: 16px; border-radius: 0; background: white; font-family: inherit; }
         
         #cart-sidebar { position: fixed; right: -100%; top: 0; width: 100%; max-width: 380px; height: 100%; background: white; border-left: 3px solid var(--border); z-index: 2000; padding: 20px; transition: 0.3s ease; }
         #cart-sidebar.open { right: 0; }
 
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
-        table td, table th { border: 1px solid var(--border); padding: 8px; text-align: left; }
-        
         .empty-cart-msg { text-align: center; padding: 40px 20px; color: #666; font-weight: 700; }
+        .loader { border: 8px solid #f3f3f3; border-top: 8px solid var(--primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo" onclick="showPage('home')">THOR & PEARL 🐾</div>
+        <div class="logo" onclick="location.hash='home'">THOR & PEARL 🐾</div>
         <button class="btn-3d" onclick="toggleCart(true)">CART (<span id="cart-count">0</span>)</button>
     </nav>
 
-    <div id="home" class="view-section active">
+    <div id="home" class="view-section">
         <div style="background: white; border: 3px solid var(--border); padding: 40px 20px; text-align: center; margin-bottom: 30px;">
             <h1>Real Gear for Real Dogs.</h1>
             <p>Tested by Thor & Pearl. Built for your pup.</p>
-            <button class="btn-3d" onclick="showPage('story')" style="background: var(--secondary); margin-top: 10px;">READ OUR STORY</button>
+            <button class="btn-3d" onclick="location.hash='story'" style="background: var(--secondary); margin-top: 10px;">READ OUR STORY</button>
         </div>
         
         <div class="product-grid" id="main-grid"></div>
@@ -74,155 +73,136 @@
         <div style="background: var(--primary); color: white; border: 3px solid var(--border); padding: 40px 20px; text-align: center; margin-top: 40px; box-shadow: var(--btn-shadow);">
             <h2 style="font-family: var(--font-heading);">Join the Pack</h2>
             <p>Sign up to get benefits like <strong>complementary dog treats</strong> with every order and exclusive member discounts.</p>
-            <button class="btn-3d" onclick="showPage('signup')" style="background: var(--secondary); color: var(--text); margin-top: 10px; border: none;">SIGN UP NOW</button>
+            <button class="btn-3d" onclick="location.hash='signup'" style="background: var(--secondary); color: var(--text); margin-top: 10px;">SIGN UP NOW</button>
         </div>
     </div>
 
     <div id="story" class="view-section">
-        <button class="btn-3d" onclick="showPage('home')">← BACK</button>
+        <button class="btn-3d" onclick="location.hash='home'">← BACK</button>
         <div style="max-width: 700px; margin: 40px auto;">
             <h2 style="font-family: var(--font-heading); font-size: 2rem;">How We Started</h2>
             <p>In the **Summer of 2026**, a friend and I were watching his two Chihuahuas—**Thor** (a feisty boy) and **Pearl** (his graceful sister)—play in the backyard. We noticed a frustrating pattern: the toys and gear available weren't just low quality; they felt generic and disposable.</p>
-            <p>We realized our pets deserved gear that reflected the effort we put into caring for them. Instead of waiting for someone else to fix it, we decided to **take matters into our own hands**. We began sourcing and testing products that could survive the surprisingly high energy of two Chihuahuas and meet our standards for durability and design.</p>
-            
-            <div style="background: var(--secondary); border: 3px solid var(--border); padding: 25px; margin-top: 40px;">
-                <h3 style="margin-top: 0;">How You Can Help</h3>
-                <p style="margin-bottom: 0;">By choosing a small business like ours, you aren't just buying a toy—you're supporting a shift away from mass-produced, impersonal products. Your support allows us to focus on quality and thoughtful curation, helping us build a future where pet businesses are run by people who actually know and love dogs.</p>
-            </div>
+            <p>We realized our pets deserved gear that reflected the effort we put into caring for them.</p>
         </div>
     </div>
 
     <div id="details" class="view-section">
-        <button class="btn-3d" onclick="showPage('home')">← BACK TO SHOP</button>
+        <button class="btn-3d" onclick="location.hash='home'">← BACK TO SHOP</button>
         <div id="detail-content" style="margin-top: 30px;"></div>
     </div>
 
-    <div id="signup" class="view-section">
-        <button class="btn-3d" onclick="showPage('home')">← BACK</button>
-        <div style="max-width: 400px; margin: 40px auto;" class="checkout-panel; padding: 30px;">
+    <div id="auth" class="view-section">
+        <button class="btn-3d" onclick="location.hash='home'">← BACK</button>
+        <div style="max-width: 400px; margin: 40px auto; padding: 20px; border: 3px solid var(--border); background: white;">
             <h2 id="auth-title" style="font-family: var(--font-heading);">Sign-Up*</h2>
             <div class="input-group">
                 <label>Email Address</label>
                 <input type="email" placeholder="email@example.com">
             </div>
             <div class="input-group">
-                <label>Create Password</label>
+                <label id="pass-label">Create Password</label>
                 <input type="password" placeholder="••••••••">
             </div>
-            <button class="btn-3d" style="width: 100%; background: var(--primary); color: white;">CONTINUE</button>
+            <button id="auth-submit" class="btn-3d" style="width: 100%; background: var(--primary); color: white;">CONTINUE</button>
             <p style="text-align: center; margin-top: 20px;">
-                <a href="#" id="auth-toggle" onclick="toggleAuthMode()" style="color: var(--primary); font-weight: 700; text-decoration: none;">Already have an account? Log in</a>
+                <a href="javascript:void(0)" id="auth-toggle-btn" onclick="switchAuth()" style="color: var(--primary); font-weight: 700; text-decoration: none;">Already have an account? Log in</a>
             </p>
-            <p style="font-size: 0.8rem; color: #666; margin-top: 30px;">*work in progress. sign-up will work soon!</p>
+            <p style="font-size: 0.8rem; color: #666; margin-top: 30px;">*work in progress. system will work soon!</p>
+        </div>
+    </div>
+
+    <div id="redirect" class="view-section">
+        <div style="text-align: center; padding: 50px 20px;">
+            <h2 style="font-family: var(--font-heading);">Securing your gear...</h2>
+            <div class="loader"></div>
+            <p>Thor is grabbing the boxes, please wait a moment.</p>
         </div>
     </div>
 
     <div id="checkout" class="view-section">
         <h2 style="font-family: var(--font-heading);">Secure Checkout</h2>
-        <div class="checkout-grid" style="display: grid; gap: 20px;">
+        <div class="checkout-grid" style="display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
             <div class="checkout-panel" style="padding: 20px;">
                 <h3>1. Shipping Information</h3>
                 <div class="input-group">
-                    <label>Dog's Name (For the surprise pack!)</label>
+                    <label>Dog's Name</label>
                     <input type="text" id="dog-name" placeholder="e.g. Thor">
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <div class="input-group"><label>First Name</label><input type="text"></div>
-                    <div class="input-group"><label>Last Name</label><input type="text"></div>
-                </div>
                 <div class="input-group"><label>Address</label><input type="text" placeholder="123 Bark Street"></div>
-                
-                <h3>2. Payment Method</h3>
-                <div class="input-group"><label>Card Number</label><input type="text" placeholder="0000 0000 0000 0000"></div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
-                    <div class="input-group"><label>Expiry</label><input type="text" placeholder="MM/YY"></div>
-                    <div class="input-group"><label>CVC</label><input type="text" placeholder="123"></div>
-                    <div class="input-group">
-                        <label>Card Type</label>
-                        <select><option>Visa</option><option>Mastercard</option></select>
-                    </div>
-                </div>
             </div>
-
             <div class="checkout-panel" style="background: #fff; padding: 20px; height: fit-content;">
                 <h3>Order Summary</h3>
                 <div id="checkout-summary"></div>
-                <div style="border-top: 3px solid var(--border); margin-top: 20px; padding-top: 15px;">
-                    <div style="display:flex; justify-content:space-between; font-weight: 900; font-size: 1.2rem;">
-                        <span>Total</span><span id="final-total">$0.00</span>
-                    </div>
+                <div style="border-top: 3px solid var(--border); margin-top: 20px; padding-top: 15px; font-weight: 900;">
+                    Total: <span id="final-total">$0.00</span>
                 </div>
-                <button class="btn-3d" style="width:100%; background:var(--primary); color:white; margin-top:20px; padding:20px;" onclick="placeOrder()">COMPLETE PURCHASE</button>
+                <button class="btn-3d" style="width:100%; background:var(--primary); color:white; margin-top:20px;" onclick="placeOrder()">COMPLETE PURCHASE</button>
             </div>
         </div>
     </div>
 
     <div id="cart-sidebar">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2 style="margin:0;">Basket</h2>
+            <h2>Basket</h2>
             <span style="font-size: 1.5rem; cursor: pointer; font-weight: 900;" onclick="toggleCart(false)">×</span>
         </div>
-        <div id="cart-items-list" style="margin-top: 20px;"></div>
+        <div id="cart-items-list"></div>
         <div id="cart-footer">
-            <button class="btn-3d" style="width: 100%; background: var(--secondary); margin-top:20px;" onclick="showPage('checkout')">CHECKOUT</button>
+            <button class="btn-3d" style="width: 100%; background: var(--secondary); margin-top:20px;" onclick="location.hash='checkout'">CHECKOUT</button>
         </div>
     </div>
 
     <script>
         const products = [
-            { 
-                id: 1, name: 'Tough Bone', price: 18.99, icon: '🦴',
-                bestFor: 'Bulldogs, Pitbulls, and Power Chewers.',
-                materials: 'Reinforced non-toxic nylon.',
-                desc: 'Textured surface helps clean teeth while standing up to high-pressure gnawing.'
-            },
-            { 
-                id: 2, name: 'Pro Frisbee', price: 22.49, icon: '🥏',
-                bestFor: 'Border Collies, Labs, and High-Energy Pups.',
-                materials: 'BPA-free flexible polymer.',
-                desc: 'Soft-edge design prevents gum injury during mid-air catches. Floats in water.'
-            },
-            { 
-                id: 3, name: 'Cloud Bed', price: 55.99, icon: '☁️',
-                bestFor: 'Older Dogs or Breeds prone to Joint Issues (Greyhounds, Labs).',
-                materials: 'Orthopedic memory foam / Microfiber cover.',
-                desc: 'Supports joints and maintains shape over time. Removable, machine-washable cover.'
-            },
-            { 
-                id: 4, name: 'Weather-Proof Coat', price: 35.95, icon: '🧥',
-                bestFor: 'Shorthair Breeds (Dachshunds, Chihuahuas) and Outdoor Adventurers.',
-                materials: 'Double-layered waterproof ripstop nylon.',
-                desc: 'Keep your dog dry and warm. Features a leash portal and adjustable belly straps.',
-                sizing: true
-            },
-            { 
-                id: 5, name: 'Reflective Safety Vest', price: 15.99, icon: '🦺',
-                bestFor: 'Any dog walked near roads or in low-light conditions.',
-                materials: 'High-visibility neon mesh with 3M reflective strips.',
-                desc: 'Increases visibility from up to 500ft away. Lightweight and breathable mesh.'
-            }
+            { id: 1, name: 'Tough Bone', price: 18.99, icon: '🦴', bestFor: 'Bulldogs, Pitbulls.', materials: 'Reinforced nylon.', desc: 'Built for power chewers.' },
+            { id: 2, name: 'Pro Frisbee', price: 22.49, icon: '🥏', bestFor: 'Collies, Labs.', materials: 'BPA-free polymer.', desc: 'Aerodynamic and safe.' },
+            { id: 3, name: 'Cloud Bed', price: 55.99, icon: '☁️', bestFor: 'Greyhounds, Older dogs.', materials: 'Memory foam.', desc: 'Joint support.' },
+            { id: 4, name: 'Weather-Proof Coat', price: 35.95, icon: '🧥', bestFor: 'Chihuahuas, Dachshunds.', materials: 'Ripstop nylon.', desc: 'Adjustable sizing.', sizing: true },
+            { id: 5, name: 'Safety Vest', price: 15.99, icon: '🦺', bestFor: 'All breeds.', materials: 'Neon mesh.', desc: 'High visibility.' }
         ];
 
         let cart = [];
-        let isLoginMode = false;
 
-        function showPage(pageId) {
+        // ROUTER SYSTEM
+        function router() {
+            const hash = location.hash.replace('#', '') || 'home';
+            const [page, id] = hash.split('/');
+            
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
             toggleCart(false);
+
+            if (page === 'details' && id) {
+                renderProductDetails(id);
+                document.getElementById('details').classList.add('active');
+            } else if (page === 'signup' || page === 'login') {
+                updateAuthView(page);
+                document.getElementById('auth').classList.add('active');
+            } else {
+                const target = document.getElementById(page);
+                if (target) target.classList.add('active');
+                if (page === 'home') renderHome();
+                if (page === 'checkout') renderCheckout();
+            }
             window.scrollTo(0,0);
-            if(pageId === 'checkout') renderCheckout();
         }
 
-        function toggleAuthMode() {
-            isLoginMode = !isLoginMode;
-            document.getElementById('auth-title').innerText = isLoginMode ? 'Log-in*' : 'Sign-Up*';
-            document.getElementById('auth-toggle').innerText = isLoginMode ? 'Need an account? Sign up' : 'Already have an account? Log in';
+        window.addEventListener('hashchange', router);
+        window.addEventListener('load', router);
+
+        function updateAuthView(mode) {
+            const isLogin = mode === 'login';
+            document.getElementById('auth-title').innerText = isLogin ? 'Log-in*' : 'Sign-Up*';
+            document.getElementById('pass-label').innerText = isLogin ? 'Password' : 'Create Password';
+            document.getElementById('auth-submit').innerText = isLogin ? 'LOG IN' : 'CONTINUE';
+            document.getElementById('auth-toggle-btn').innerText = isLogin ? 'Need an account? Sign up' : 'Already have an account? Log in';
+            document.getElementById('auth-toggle-btn').onclick = () => location.hash = isLogin ? 'signup' : 'login';
         }
+
+        function switchAuth() { /* Handled by location.hash via updateAuthView */ }
 
         function renderHome() {
             document.getElementById('main-grid').innerHTML = products.map(p => `
-                <div class="p-card" onclick="viewProduct(${p.id})">
+                <div class="p-card" onclick="location.hash='details/${p.id}'">
                     <div class="p-img">${p.icon}</div>
                     <strong>${p.name}</strong><br>
                     <span style="color:var(--primary);">$${p.price.toFixed(2)}</span>
@@ -230,38 +210,27 @@
             `).join('');
         }
 
-        function viewProduct(id) {
-            const p = products.find(i => i.id === id);
-            let sizeTable = p.sizing ? `
-                <p><strong>SIZING GUIDE:</strong></p>
-                <table>
-                    <tr><th>Size</th><th>Best For...</th></tr>
-                    <tr><td>XS</td><td>Chihuahuas, Dachshunds, Toy Yorkies</td></tr>
-                    <tr><td>S</td><td>Corgis, Pugs</td></tr>
-                    <tr><td>M</td><td>Beagles, Cocker Spaniels</td></tr>
-                    <tr><td>L</td><td>Labs, Boxers</td></tr>
-                </table>
-            ` : '';
-
+        function renderProductDetails(id) {
+            const p = products.find(i => i.id == id);
+            if(!p) return;
+            let sizeUI = p.sizing ? `<label>Select Size:</label><select id="selected-size"><option value="XS">XS (Chihuahuas)</option><option value="S">S (Pugs)</option></select>` : '';
             document.getElementById('detail-content').innerHTML = `
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
-                    <div class="p-card" style="font-size: 8rem; display: flex; align-items: center; justify-content: center; padding: 40px;">${p.icon}</div>
+                    <div class="p-card" style="font-size: 8rem; text-align:center;">${p.icon}</div>
                     <div>
-                        <h1 style="margin-top:0;">${p.name}</h1>
+                        <h1>${p.name}</h1>
                         <h2 style="color:var(--primary);">$${p.price.toFixed(2)}</h2>
                         <p><strong>BEST FOR:</strong> ${p.bestFor}</p>
-                        <p><strong>MATERIALS:</strong> ${p.materials}</p>
-                        <p>${p.desc}</p>
-                        ${sizeTable}
+                        ${sizeUI}
                         <button class="btn-3d" style="width:100%; background:var(--secondary); margin-top:20px;" onclick="addToCart(${p.id})">ADD TO BASKET</button>
                     </div>
-                </div>
-            `;
-            showPage('details');
+                </div>`;
         }
 
         function addToCart(id) {
-            const p = products.find(i => i.id === id);
+            const p = {...products.find(i => i.id == id)};
+            const sz = document.getElementById('selected-size');
+            if(sz) p.name += ` (${sz.value})`;
             cart.push(p);
             updateCart();
             toggleCart(true);
@@ -271,39 +240,33 @@
             document.getElementById('cart-count').innerText = cart.length;
             const list = document.getElementById('cart-items-list');
             const footer = document.getElementById('cart-footer');
-            
             if (cart.length === 0) {
                 list.innerHTML = `<div class="empty-cart-msg">Your basket is currently empty. 🐾</div>`;
                 footer.style.display = 'none';
             } else {
-                list.innerHTML = cart.map(i => `
-                    <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee;">
-                        <span>${i.name}</span><strong>$${i.price.toFixed(2)}</strong>
-                    </div>`).join('');
+                list.innerHTML = cart.map(i => `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee;"><span>${i.name}</span><strong>$${i.price.toFixed(2)}</strong></div>`).join('');
                 footer.style.display = 'block';
             }
         }
 
-        function toggleCart(open) { 
-            if (open) updateCart();
-            document.getElementById('cart-sidebar').classList.toggle('open', open); 
-        }
+        function toggleCart(open) { document.getElementById('cart-sidebar').classList.toggle('open', open); }
 
         function renderCheckout() {
             let total = 0;
             document.getElementById('checkout-summary').innerHTML = cart.map(i => {
                 total += i.price;
-                return `<div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>${i.name}</span><span>$${i.price.toFixed(2)}</span></div>`;
+                return `<div>${i.name}: $${i.price.toFixed(2)}</div>`;
             }).join('');
             document.getElementById('final-total').innerText = `$${(total + 5.99).toFixed(2)}`;
         }
 
         function placeOrder() {
-            alert(`Order placed! We'll get this out ASAP.`);
-            cart = []; updateCart(); showPage('home');
+            location.hash = 'redirect';
+            setTimeout(() => {
+                alert(`Order Complete! Thor is on it.`);
+                cart = []; updateCart(); location.hash = 'home';
+            }, 3000);
         }
-
-        renderHome();
     </script>
 </body>
 </html>
