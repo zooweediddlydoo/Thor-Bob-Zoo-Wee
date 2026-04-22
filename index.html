@@ -51,7 +51,7 @@
     <nav>
         <div class="logo" onclick="location.hash='home'">THOR & PEARL 🐾</div>
         <div style="display: flex; gap: 10px;">
-            <button class="btn-3d" id="nav-auth-btn" onclick="location.hash='login'" style="font-size: 0.7rem; padding: 8px;">LOG IN</button>
+            <button class="btn-3d" onclick="alert('Tracking system coming soon!')" style="font-size: 0.7rem; padding: 8px; background: #eee;">TRACK ORDER</button>
             <button class="btn-3d" onclick="toggleCart(true)">CART (<span id="cart-count">0</span>)</button>
         </div>
     </nav>
@@ -64,9 +64,9 @@
         </div>
         <div class="product-grid" id="main-grid"></div>
         <div style="background: var(--primary); color: white; border: 3px solid var(--border); padding: 40px 20px; text-align: center; margin-top: 40px; box-shadow: var(--btn-shadow);">
-            <h2 style="font-family: var(--font-heading);">Join the Pack</h2>
-            <p>Sign up to get benefits like <strong>complementary dog treats</strong> with every order and exclusive member discounts.</p>
-            <button class="btn-3d" onclick="location.hash='signup'" style="background: var(--secondary); color: var(--text); margin-top: 10px;">SIGN UP NOW</button>
+            <h2 style="font-family: var(--font-heading);">Stay in the Loop</h2>
+            <p>Follow our social medias for exclusive discount codes and photos of Thor & Pearl testing new gear!</p>
+            <button class="btn-3d" onclick="alert('Social links coming soon!')" style="background: var(--secondary); color: var(--text); margin-top: 10px;">FOLLOW THE PACK</button>
         </div>
     </div>
 
@@ -74,37 +74,20 @@
         <button class="btn-3d" onclick="location.hash='home'">← BACK</button>
         <div style="max-width: 700px; margin: 40px auto;">
             <h2 style="font-family: var(--font-heading); font-size: 2rem;">How We Started</h2>
-            <p>In the **Summer of 2026**, we noticed a frustrating pattern: the toys and gear available weren't just low quality; they felt generic and disposable. We wanted gear that reflected the effort we put into caring for our dogs.</p>
+            <p>In the **Summer of 2026**, a friend and I were watching his two Chihuahuas—**Thor** (a feisty boy) and **Pearl** (his graceful sister)—play in the backyard. We noticed a frustrating pattern: the toys and gear available weren't just low quality; they felt generic and disposable.</p>
+            <p>We realized our pets deserved gear that reflected the effort we put into caring for them. Instead of waiting for someone else to fix it, we decided to **take matters into our own hands**. We began sourcing and testing products that could survive the surprisingly high energy of two Chihuahuas and meet our standards for durability and design.</p>
+            
+            <hr style="margin: 30px 0; border: 1px solid var(--border);">
+            
+            <h2 style="font-family: var(--font-heading); font-size: 1.5rem;">How You Can Help</h2>
+            <p>Supporting small businesses like ours means supporting real people starting early to make a difference. When you shop with **Thor & Pearl Co.**, you aren't just buying a dog toy—you're helping a dream grow. </p>
+            <p>Every purchase, share on social media, and word-of-mouth recommendation helps us continue to provide high-quality gear for pups everywhere. Thank you for being a part of our pack!</p>
         </div>
     </div>
 
     <div id="details" class="view-section">
         <button class="btn-3d" onclick="location.hash='home'">← BACK TO SHOP</button>
         <div id="detail-content" style="margin-top: 30px;"></div>
-    </div>
-
-    <div id="auth" class="view-section">
-        <button class="btn-3d" onclick="location.hash='home'">← BACK</button>
-        <div style="max-width: 400px; margin: 40px auto; padding: 20px; border: 3px solid var(--border); background: white;">
-            <h2 id="auth-title" style="font-family: var(--font-heading);">Sign-Up*</h2>
-            <div class="input-group">
-                <label>Email Address</label>
-                <input type="email" id="auth-email" placeholder="email@example.com">
-            </div>
-            <div class="input-group">
-                <label id="pass-label">Create Password</label>
-                <input type="password" id="auth-pass" placeholder="••••••••">
-            </div>
-            <button id="auth-submit" class="btn-3d" style="width: 100%; background: var(--primary); color: white;" onclick="handleAuth()">CONTINUE</button>
-            
-            <p style="text-align: center; margin-top: 20px;">
-                <a href="javascript:void(0)" id="auth-toggle-btn" style="color: var(--primary); font-weight: 700; text-decoration: none;">Already have an account? Log in</a>
-            </p>
-            
-            <p style="font-size: 0.8rem; color: #666; margin-top: 30px; border-top: 1px dashed #ccc; pt: 10px;">
-                *work in progress. sign-up will work soon!
-            </p>
-        </div>
     </div>
 
     <div id="checkout" class="view-section">
@@ -135,6 +118,7 @@
                         <input type="text" id="promo-input" placeholder="Enter code">
                         <button class="btn-3d" onclick="applyPromo()" style="padding:5px 10px;">APPLY</button>
                     </div>
+                    <small style="color:#666; display:block; margin-top:5px;">Find codes on our social medias (*WIP)</small>
                 </div>
 
                 <div id="summary-math" style="font-weight: 700;">
@@ -185,32 +169,12 @@
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
             toggleCart(false);
             if (page === 'details' && id) { renderProductDetails(id); document.getElementById('details').classList.add('active'); }
-            else if (page === 'signup' || page === 'login') { updateAuthView(page); document.getElementById('auth').classList.add('active'); }
             else { const t = document.getElementById(page); if(t) t.classList.add('active'); if(page === 'home') renderHome(); if(page === 'checkout') renderCheckout(); }
             window.scrollTo(0,0);
         }
 
         window.addEventListener('hashchange', router);
         window.addEventListener('load', router);
-
-        function updateAuthView(mode) {
-            const isLogin = mode === 'login';
-            document.getElementById('auth-title').innerText = isLogin ? 'Log-in*' : 'Sign-Up*';
-            document.getElementById('pass-label').innerText = isLogin ? 'Password' : 'Create Password';
-            document.getElementById('auth-submit').innerText = isLogin ? 'LOG IN' : 'LOG IN';
-            document.getElementById('auth-toggle-btn').innerText = isLogin ? 'Need an account? Sign up' : 'Already have an account? Log in';
-            document.getElementById('auth-toggle-btn').onclick = () => location.hash = isLogin ? 'signup' : 'login';
-        }
-
-        function handleAuth() {
-            const email = document.getElementById('auth-email').value;
-            const pass = document.getElementById('auth-pass').value;
-            if(!email || !pass) {
-                alert("Please fill in both fields!");
-                return;
-            }
-            alert("Note: work in progress. sign-up/log-in will work soon!");
-        }
 
         function renderHome() {
             document.getElementById('main-grid').innerHTML = products.map(p => `<div class="p-card" onclick="location.hash='details/${p.id}'"><div class="p-img">${p.icon}</div><strong>${p.name}</strong><br>$${p.price.toFixed(2)}</div>`).join('');
