@@ -4,126 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Thor & Pearl Co. | Real Gear for Real Dogs</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #fdfaf5; /* Warm Bone - feels less like a template */
+            --bg: #ffffff;
             --text: #1a1a1a;
-            --primary: #0056b3; 
-            --secondary: #ffd700; 
-            --accent: #ffffff;
+            --primary: #0056b3; /* Deep Blue */
+            --secondary: #ffd700; /* Bright Yellow */
             --border: #1a1a1a;
-            --font-main: 'Inter', sans-serif;
-            --font-heading: 'Space Grotesk', sans-serif;
-            --btn-shadow: 4px 4px 0px var(--border);
+            --btn-shadow: 6px 6px 0px var(--border);
         }
 
-        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
-        html, body { max-width: 100vw; overflow-x: hidden; width: 100%; background-color: var(--bg); color: var(--text); font-family: var(--font-main); margin: 0; line-height: 1.5; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.4; }
 
-        /* THE BOUTIQUE LOOK - Tighter borders, heavier shadows */
-        .btn-3d, .p-card, .checkout-panel {
-            cursor: pointer;
-            transition: transform 0.1s ease;
-            border: 3px solid var(--border);
-            border-radius: 4px;
+        /* PLAYFUL BUT BOLD COMPONENTS */
+        .btn-3d, .p-card, .checkout-panel, .info-box {
+            border: 4px solid var(--border);
+            border-radius: 12px;
             background: white;
             box-shadow: var(--btn-shadow);
             position: relative;
-            top: 0;
-            left: 0;
+            transition: 0.1s;
         }
 
-        .btn-3d:active, .p-card:active {
-            top: 2px;
-            left: 2px;
-            box-shadow: 1px 1px 0px var(--border);
+        .btn-3d { 
+            cursor: pointer; font-weight: 900; text-transform: uppercase; padding: 15px 25px; 
+            display: inline-block; font-size: 1rem; color: var(--text); text-decoration: none;
         }
+        .btn-3d:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0px var(--border); }
 
-        .badge {
-            background: var(--secondary);
-            border: 2px solid var(--border);
-            padding: 2px 8px;
-            font-size: 0.7rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            display: inline-block;
-            margin-bottom: 8px;
+        .p-card { cursor: pointer; text-align: center; padding: 20px; }
+        .p-card:hover { transform: rotate(-1deg); background: #f9f9f9; }
+
+        nav { 
+            padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 4px solid var(--border); background: white; position: sticky; top: 0; z-index: 1000; 
         }
+        .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--primary); letter-spacing: -1px; }
 
-        nav {
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--border);
-            background: white;
-            position: sticky; top: 0; z-index: 1000;
-        }
+        .view-section { display: none; padding: 30px 5%; max-width: 1200px; margin: 0 auto; }
+        .active { display: block; animation: popIn 0.3s ease-out; }
+        @keyframes popIn { from { transform: scale(0.98); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .logo { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 900; color: var(--text); text-decoration: none; }
-        .banner { background: var(--text); color: white; padding: 10px; text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
+        .p-img { font-size: 4rem; margin-bottom: 10px; }
 
-        .view-section { display: none; padding: 25px 5%; width: 100%; }
-        .active { display: block; animation: slideUp 0.3s ease-out; }
+        /* CHECKOUT TRADITIONAL UI */
+        .checkout-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        @media (min-width: 900px) { .checkout-grid { grid-template-columns: 1.5fr 1fr; } }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .hero { text-align: center; padding: 50px 20px; background: white; border: 3px solid var(--border); margin-bottom: 30px; }
-        
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; width: 100%; }
-        
-        /* MOBILE CARD IMPROVEMENTS */
-        .p-card { flex-direction: column; text-align: left; padding: 15px; display: flex; }
-        .p-img { font-size: 4rem; text-align: center; margin: 10px 0; }
-
-        /* CHECKOUT MOBILE FLOW */
-        .checkout-container { display: flex; flex-direction: column; gap: 20px; max-width: 1000px; margin: 0 auto; }
-        @media (min-width: 768px) { .checkout-container { flex-direction: row; } }
-        
-        .input-group { margin-bottom: 15px; }
         input, select { 
-            width: 100%; padding: 12px; border: 2px solid var(--border); 
-            font-size: 16px !important; /* Critical: Prevents iOS zoom */
-            border-radius: 0;
+            width: 100%; padding: 14px; border: 3px solid var(--border); font-size: 16px; 
+            border-radius: 8px; margin-top: 8px; font-weight: 600; font-family: inherit;
         }
+        
+        label { font-weight: 900; text-transform: uppercase; font-size: 0.75rem; color: var(--primary); }
 
-        #cart-sidebar {
-            position: fixed; right: -100%; top: 0; width: 100%; max-width: 380px; height: 100%;
-            background: var(--bg); border-left: 3px solid var(--border); z-index: 2000;
-            padding: 30px 20px; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        #cart-sidebar { 
+            position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%; 
+            background: white; border-left: 4px solid var(--border); z-index: 2000; padding: 30px; 
+            transition: 0.3s cubic-bezier(0.19, 1, 0.22, 1); 
         }
-        #cart-sidebar.open { right: 0; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
+        #cart-sidebar.open { right: 0; }
     </style>
 </head>
 <body>
 
-    <div class="banner">FREE STICKER PACK WITH EVERY "PLAY" CATEGORY ORDER 🦴</div>
-
     <nav>
         <div class="logo" onclick="showPage('home')">THOR & PEARL 🐾</div>
-        <div class="nav-right">
-            <button class="btn-3d" onclick="toggleCart(true)" style="padding: 8px 12px;">CART (<span id="cart-count">0</span>)</button>
-        </div>
+        <button class="btn-3d" onclick="toggleCart(true)" style="background: var(--secondary);">CART (<span id="cart-count">0</span>)</button>
     </nav>
 
     <div id="home" class="view-section active">
-        <div class="hero">
-            <div class="badge">Built by Hand in 2026</div>
-            <h1 style="margin: 10px 0;">Dog Gear for Dogs that actually play.</h1>
-            <p style="font-weight: 600;">Started because our own pups (Thor & Pearl) kept breaking their toys.</p>
-            <button class="btn-3d" onclick="showPage('story')" style="margin-top: 20px; background: var(--secondary);">WHY WE STARTED</button>
+        <div style="background: var(--primary); color: white; border: 4px solid var(--border); border-radius: 12px; padding: 60px 20px; text-align: center; margin-bottom: 40px;">
+            <h1 style="font-size: 3rem; margin: 0; font-family: 'Space Grotesk';">ENGINEERED FOR WAGGING TAILS</h1>
+            <p style="font-weight: 400; font-size: 1.2rem; opacity: 0.9;">No slop. Just durable gear tested by two very real Chihuahuas.</p>
+            <button class="btn-3d" onclick="showPage('story')" style="margin-top: 20px; background: var(--secondary);">OUR ORIGIN STORY</button>
         </div>
-        
-        <h3 style="text-transform: uppercase; font-size: 0.9rem;">Browse our favorites:</h3>
         <div class="product-grid" id="main-grid"></div>
     </div>
 
     <div id="story" class="view-section">
-        <button class="btn-3d" onclick="showPage('home')">← BACK</button>
-        <div style="max-width: 600px; margin: 40px auto; line-height: 1.8;">
-            <h2 style="font-family: var(--font-heading);">Not another "Pet Brand."</h2>
-            <p>We’re just two friends who got tired of watching $20 toys get shredded in 5 minutes. Every item we source is something we've personally let Thor or Pearl test first. If it's on this site, it's because it survived them.</p>
+        <button class="btn-3d" onclick="showPage('home')">← BACK TO SHOP</button>
+        <div style="max-width: 800px; margin: 40px auto;">
+            <h2 style="font-size: 2.5rem; color: var(--primary);">EST. SUMMER 2026</h2>
+            <p style="font-size: 1.2rem;">It started because we got tired of watching "premium" toys fail. My friend has two Chihuahuas: **Thor** (the boy) and **Pearl** (the girl). They might be small, but they are power-chewers. When we couldn't find gear that survived them, we decided to take matters into our own hands.</p>
+            
+            <div class="info-box" style="background: var(--secondary); padding: 30px; margin-top: 40px;">
+                <h3 style="margin-top: 0;">How You Can Help 🐾</h3>
+                <p>Supporting a small starting business like ours helps us build a future for pet brands that prioritize effort and durability over "slop" and shortcuts. Every purchase helps us keep testing and sourcing gear that actually works for real dogs.</p>
+            </div>
         </div>
     </div>
 
@@ -132,52 +103,99 @@
     </div>
 
     <div id="checkout" class="view-section">
-        <button class="btn-3d" onclick="showPage('home')" style="margin-bottom: 30px;">← KEEP SHOPPING</button>
-        <div class="checkout-container">
-            <div class="checkout-panel" style="flex: 1.2; padding: 25px;">
-                <h3 style="margin-top:0;">1. Personalize</h3>
-                <div class="input-group">
-                    <label style="font-weight: 800; font-size: 0.8rem;">WHO ARE WE SHOPPING FOR? (DOG'S NAME)</label>
-                    <input type="text" id="dog-name" placeholder="e.g. Buster">
+        <h2 style="font-size: 2rem; margin-bottom: 30px;">SECURE CHECKOUT</h2>
+        <div class="checkout-grid">
+            
+            <div class="checkout-panel" style="padding: 30px;">
+                <h3 style="margin-top:0; border-bottom: 3px solid var(--secondary); display: inline-block;">1. SHIPPING</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                    <div><label>First Name</label><input type="text"></div>
+                    <div><label>Last Name</label><input type="text"></div>
                 </div>
-                <h3>2. Shipping</h3>
-                <div class="input-group"><input type="email" placeholder="Email Address"></div>
-                <div class="input-group"><input type="text" placeholder="Full Name"></div>
-                <div class="input-group"><input type="text" placeholder="Shipping Address"></div>
+                <div style="margin-top: 15px;">
+                    <label>Dog's Name (Important!)</label>
+                    <input type="text" id="dog-name" placeholder="Who are we surprising?">
+                </div>
+                <div style="margin-top: 15px;">
+                    <label>Street Address</label>
+                    <input type="text">
+                </div>
+
+                <h3 style="margin-top:40px; border-bottom: 3px solid var(--secondary); display: inline-block;">2. PAYMENT</h3>
+                <div style="margin-top: 20px;">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="XXXX XXXX XXXX XXXX">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px;">
+                    <div><label>Expiry</label><input type="text" placeholder="MM/YY"></div>
+                    <div><label>CVC</label><input type="text" placeholder="123"></div>
+                    <div>
+                        <label>Type</label>
+                        <select><option>Visa</option><option>Mastercard</option></select>
+                    </div>
+                </div>
+
+                <h3 style="margin-top:40px; border-bottom: 30px solid var(--secondary); display: inline-block; height: 3px; line-height: 0;">3. BILLING</h3>
+                <div style="margin-top: 20px;">
+                    <select onchange="document.getElementById('billing-address-field').style.display = this.value == 'new' ? 'block' : 'none'">
+                        <option value="same">Same as Shipping</option>
+                        <option value="new">Use different billing address</option>
+                    </select>
+                    <div id="billing-address-field" style="display:none; margin-top:15px;">
+                        <label>Billing Street Address</label>
+                        <input type="text">
+                    </div>
+                </div>
             </div>
 
-            <div class="checkout-panel" style="flex: 0.8; background: var(--secondary); padding: 25px;">
-                <h3 style="margin-top:0;">Summary</h3>
-                <div id="checkout-items"></div>
-                <div style="border-top: 2px solid var(--border); margin-top: 20px; padding-top: 15px;">
-                    <div style="display:flex; justify-content:space-between; font-weight: 900;">
-                        <span>Total</span>
+            <div class="checkout-panel" style="background: var(--secondary); padding: 30px; height: fit-content;">
+                <h3 style="margin-top:0;">ORDER SUMMARY</h3>
+                <div id="checkout-summary"></div>
+                <div style="border-top: 4px solid var(--border); margin-top: 20px; padding-top: 20px; font-weight: 900; font-size: 1.4rem;">
+                    <div style="display:flex; justify-content:space-between;">
+                        <span>TOTAL:</span>
                         <span id="final-total">$0.00</span>
                     </div>
                 </div>
-                <button class="btn-3d" style="width:100%; background:var(--text); color:white; margin-top:30px; padding:20px;" onclick="placeOrder()">PAY WITH CARD</button>
+                <button class="btn-3d" style="width:100%; background:var(--primary); color:white; margin-top:30px;" onclick="placeOrder()">COMPLETE PURCHASE 🐾</button>
             </div>
+
         </div>
     </div>
 
     <div id="cart-sidebar">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2 style="margin:0;">Basket</h2>
-            <span style="font-size: 1.5rem; cursor: pointer; font-weight: 900;" onclick="toggleCart(false)">CLOSE</span>
-        </div>
-        <div id="cart-items-list" style="margin-top: 30px;"></div>
-        <button class="btn-3d" style="width: 100%; background: var(--secondary); margin-top:20px; padding: 15px;" onclick="showPage('checkout')">CHECKOUT NOW</button>
+        <h2 style="font-family: 'Space Grotesk';">YOUR BASKET</h2>
+        <div id="cart-items-list" style="margin-top: 20px;"></div>
+        <button class="btn-3d" style="width: 100%; background: var(--secondary); margin-top:30px;" onclick="showPage('checkout')">CHECKOUT</button>
+        <button class="btn-3d" style="width: 100%; background: #eee; margin-top:10px; font-size: 0.8rem;" onclick="toggleCart(false)">CLOSE</button>
     </div>
 
     <script>
         const products = [
-            { id: 1, name: 'Tough Bone', price: 18, icon: '🦴', badge: 'Thor Approved', desc: 'Heavy-duty nylon. Pearl couldn\'t even dent it.' },
-            { id: 2, name: 'Pro Frisbee', price: 22, icon: '🥏', badge: 'Weekend Fave', desc: 'Aerodynamic but soft enough on the gums.' },
-            { id: 3, name: 'Cloud Bed', price: 55, icon: '☁️', badge: 'Pearl Approved', desc: 'Orthopedic foam for long post-play naps.' },
-            { id: 4, name: 'Spa Brush', price: 12, icon: '💆‍♂️', badge: 'Grooming', desc: 'Deep cleaning massage brush for bath time.' }
+            { 
+                id: 1, name: 'The Tough Bone', price: 18, icon: '🦴', 
+                bestFor: 'Power Chewers', 
+                desc: 'Constructed from heavy-duty reinforced nylon that stands up to the most aggressive gnawing.',
+                thor: 'I’ve been chewing this for 3 days and haven’t made a dent. 10/10.',
+                pearl: 'A bit heavy, but great for keeping me busy during lunch!'
+            },
+            { 
+                id: 2, name: 'Pro Frisbee', price: 22, icon: '🥏',
+                bestFor: 'High-Energy Dogs',
+                desc: 'Soft on teeth but tough on impact. Designed to fly straight and survive rough landings.',
+                thor: 'I caught it once! Usually I just chase it into the bushes.',
+                pearl: 'It’s yellow, so I can see it in the grass easily. My favorite.'
+            },
+            { 
+                id: 3, name: 'Cloud Bed', price: 55, icon: '☁️',
+                bestFor: 'The Loungers',
+                desc: 'Orthopedic memory foam with a chew-resistant cover. The ultimate recovery spot.',
+                thor: 'Pearl tried to steal it, but I got there first. Very squishy.',
+                pearl: 'Best naps of my life. 100% Chihuahua approved.'
+            }
         ];
 
-        let cart = JSON.parse(localStorage.getItem('tp_cart')) || [];
+        let cart = [];
 
         function showPage(pageId) {
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
@@ -190,10 +208,10 @@
         function renderHome() {
             document.getElementById('main-grid').innerHTML = products.map(p => `
                 <div class="p-card" onclick="viewProduct(${p.id})">
-                    <div class="badge">${p.badge}</div>
+                    <div style="font-size: 0.7rem; font-weight: 900; background: var(--secondary); padding: 2px 8px; border: 2px solid #000; display: inline-block; margin-bottom: 10px;">${p.bestFor}</div>
                     <div class="p-img">${p.icon}</div>
-                    <strong style="font-size: 1.1rem;">${p.name}</strong>
-                    <span style="font-weight: 800; color: var(--primary);">$${p.price}</span>
+                    <strong style="font-size: 1.1rem;">${p.name}</strong><br>
+                    <span style="color:var(--primary); font-weight: 900;">$${p.price}</span>
                 </div>
             `).join('');
         }
@@ -201,14 +219,23 @@
         function viewProduct(id) {
             const p = products.find(i => i.id === id);
             document.getElementById('detail-content').innerHTML = `
-                <button class="btn-3d" onclick="showPage('home')">← BACK</button>
-                <div style="margin-top:30px; text-align: center;">
-                    <div class="p-img" style="font-size:8rem;">${p.icon}</div>
-                    <div class="badge">${p.badge}</div>
-                    <h1 style="font-size:2.5rem; margin:10px 0;">${p.name}</h1>
-                    <p style="max-width:400px; margin: 0 auto 20px;">${p.desc}</p>
-                    <h2 style="color:var(--primary);">$${p.price}</h2>
-                    <button class="btn-3d" style="width:100%; max-width:300px; background:var(--primary); color:white; padding:20px;" onclick="addToCart(${p.id})">ADD TO BASKET</button>
+                <button class="btn-3d" onclick="showPage('home')">← BACK TO SHOP</button>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top:40px;">
+                    <div class="p-card" style="font-size: 10rem; padding: 60px; background: #fafafa;">${p.icon}</div>
+                    <div>
+                        <h1 style="font-size: 3rem; margin: 0; font-family: 'Space Grotesk';">${p.name}</h1>
+                        <h2 style="color: var(--primary);">$${p.price}</h2>
+                        <p style="font-size: 1.2rem; font-weight: 500;">${p.desc}</p>
+                        
+                        <div class="info-box" style="padding: 20px; border-color: var(--primary); margin-top: 20px;">
+                            <strong>🐕 THOR'S VERDICT:</strong> "${p.thor}"
+                        </div>
+                        <div class="info-box" style="padding: 20px; border-color: var(--secondary); margin-top: 15px;">
+                            <strong>🐩 PEARL'S VERDICT:</strong> "${p.pearl}"
+                        </div>
+
+                        <button class="btn-3d" style="width: 100%; background: var(--secondary); margin-top: 40px;" onclick="addToCart(${p.id})">ADD TO BASKET</button>
+                    </div>
                 </div>`;
             showPage('details');
         }
@@ -221,42 +248,31 @@
         }
 
         function updateCart() {
-            localStorage.setItem('tp_cart', JSON.stringify(cart));
             document.getElementById('cart-count').innerText = cart.length;
-            document.getElementById('cart-items-list').innerHTML = cart.map((item, index) => `
-                <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:2px solid #eee;">
-                    <span><strong>${item.name}</strong></span>
-                    <span>$${item.price} <button onclick="removeItem(${index})" style="background:none; border:none; cursor:pointer; font-weight:900;">×</button></span>
+            document.getElementById('cart-items-list').innerHTML = cart.map(i => `
+                <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:2px solid #eee; font-weight: 800;">
+                    <span>${i.name}</span><strong>$${i.price}</strong>
                 </div>`).join('');
-        }
-
-        function removeItem(index) {
-            cart.splice(index, 1);
-            updateCart();
         }
 
         function toggleCart(open) { document.getElementById('cart-sidebar').classList.toggle('open', open); }
 
         function renderCheckout() {
             let total = 0;
-            document.getElementById('checkout-items').innerHTML = cart.map(i => {
+            document.getElementById('checkout-summary').innerHTML = cart.map(i => {
                 total += i.price;
-                return `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${i.name}</span><span>$${i.price}</span></div>`;
+                return `<div style="display:flex; justify-content:space-between; margin-bottom:10px; font-weight: 700;"><span>${i.name}</span><span>$${i.price}</span></div>`;
             }).join('');
             document.getElementById('final-total').innerText = `$${(total + 5.99).toFixed(2)}`;
         }
 
         function placeOrder() {
-            const name = document.getElementById('dog-name').value || "your pup";
-            alert(`Thanks! Thor & Pearl are getting the box ready for ${name} right now. You'll get an email soon!`);
-            cart = [];
-            updateCart();
-            showPage('home');
+            const name = document.getElementById('dog-name').value || "your dog";
+            alert(`SUCCESS! We're packing the box for ${name} now. Thor & Pearl are hyped!`);
+            cart = []; updateCart(); showPage('home');
         }
 
-        // Initialize
         renderHome();
-        updateCart();
     </script>
 </body>
 </html>
